@@ -19,7 +19,10 @@ export const CopyToClipboardButton = ({
       variant="ghost"
       size="xs"
       {...props}
-      className={cn("[&_svg]:size-3.5", className)}
+      className={cn(
+        "text-muted-foreground [&_svg]:size-3.5",
+        className
+      )}
       onClick={() => copyToClipboard(content)}
     >
       {isCopied ? (

@@ -21,3 +21,16 @@ export function camelToNormalCase(input: string): string {
     .toLowerCase()
     .replace(/^./, (match) => match.toUpperCase()) // Capitalize the first letter
 }
+
+export function toCamelCase(input: string) {
+  const words = input.split(" ")
+
+  return words
+    .map((word, index) => {
+      if (index === 0) {
+        return word.toLowerCase()
+      }
+      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+    })
+    .join("")
+}

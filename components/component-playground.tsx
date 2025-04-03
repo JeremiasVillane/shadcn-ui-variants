@@ -2,25 +2,21 @@
 
 import * as React from "react"
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle
-} from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import {
+  DescriptionTextSmall,
+  SubHeading,
+  SubHeadingSmall
+} from "@/app/components/typography"
 
 import { CodeBlock } from "./code-block"
-import { CopyToClipboardButton } from "./copy-to-clipboard-button"
-import { DownloadFileButton } from "./download-file.button"
 import { PlaygroundControls } from "./playground-controls"
+import { Card, CardContent } from "./ui/card"
 
 interface PlaygroundProps {
   title: string
   name: string
-  code: string
   playground: Record<string, (string | number)[] | string | number | boolean>
   PlaygroundComponent: (...args: any[]) => React.JSX.Element
   playgroundCode: (...args: any[]) => string
@@ -29,7 +25,6 @@ interface PlaygroundProps {
 export function ComponentPlayground({
   title,
   name,
-  code,
   playground,
   PlaygroundComponent,
   playgroundCode
@@ -57,65 +52,43 @@ export function ComponentPlayground({
   )
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>{`${title} Playground`}</CardTitle>
+    <div>
+      <header className="mb-6">
+        <SubHeading>{`${title} Playground`}</SubHeading>
         {name && (
-          <CardDescription>{`Customize the ${name} properties to see different variations.`}</CardDescription>
+          <DescriptionTextSmall>{`Customize the ${name} properties to see different variations.`}</DescriptionTextSmall>
         )}
-      </CardHeader>
+      </header>
 
-      <CardContent className="p-0">
-        <Tabs defaultValue="preview" className="w-full">
-          <div className="flex items-center justify-between px-4">
-            <TabsList className="w-full justify-start rounded-none border-b bg-transparent p-0">
-              <TabsTrigger
-                value="preview"
-                className="rounded-none border-b-2 border-b-transparent bg-transparent px-4 py-2 font-medium data-[state=active]:border-b-primary data-[state=active]:text-foreground"
-              >
-                Preview
-              </TabsTrigger>
-              <TabsTrigger
-                value="code"
-                className="rounded-none border-b-2 border-b-transparent bg-transparent px-4 py-2 font-medium data-[state=active]:border-b-primary data-[state=active]:text-foreground"
-              >
-                Code
-              </TabsTrigger>
-            </TabsList>
+      <Tabs variant="underlined" defaultValue="preview" className="w-full">
+        <TabsList>
+          <TabsTrigger value="preview">Preview</TabsTrigger>
+          <TabsTrigger value="code">Code</TabsTrigger>
+        </TabsList>
 
-            <section className="relative">
-              <div className="absolute right-0 top-0 flex -translate-y-1/2">
-                <CopyToClipboardButton content={currentPlaygroundCode} />
-                <DownloadFileButton
-                  sourceCode={currentPlaygroundCode}
-                  name={name}
-                />
-              </div>
-            </section>
+        <TabsContent value="preview" className="flex flex-col p-4">
+          <Card className="p-4 pt-9">
+            <CardContent>
+              <PlaygroundComponent {...playgroundState} />
+            </CardContent>
+          </Card>
+
+          <Separator className="mb-6 mt-8" />
+
+          <div className="space-y-4">
+            <SubHeadingSmall>Customize</SubHeadingSmall>
+            <PlaygroundControls
+              {...{ playground, playgroundState, updatePlaygroundState }}
+            />
           </div>
+        </TabsContent>
 
-          <TabsContent value="preview" className="p-4">
-            <div className="flex flex-col gap-8">
-              <div className="flex min-h-[200px] w-full items-center justify-center rounded-md border p-8">
-                <PlaygroundComponent {...playgroundState} />
-              </div>
+        <TabsContent value="code" className="p-4">
+          <CodeBlock name={name} code={currentPlaygroundCode} />
+        </TabsContent>
+      </Tabs>
 
-              <Separator />
-
-              <div className="space-y-4">
-                <h3 className="text-lg font-medium">Customize</h3>
-                <PlaygroundControls
-                  {...{ playground, playgroundState, updatePlaygroundState }}
-                />
-              </div>
-            </div>
-          </TabsContent>
-
-          <TabsContent value="code" className="p-4">
-            <CodeBlock code={currentPlaygroundCode} />
-          </TabsContent>
-        </Tabs>
-      </CardContent>
-    </Card>
+      <Separator className="my-6" />
+    </div>
   )
 }

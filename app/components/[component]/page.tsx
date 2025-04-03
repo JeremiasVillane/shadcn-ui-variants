@@ -4,6 +4,8 @@ import { componentsIndex } from "@/data/components-index"
 import { constructMetadata } from "@/lib/metadata"
 import { generateOgImageUrl } from "@/lib/og"
 import { absoluteUrl, cn } from "@/lib/utils"
+import { SelectSeparator } from "@/components/ui/select"
+import { Separator } from "@/components/ui/separator"
 import ComponentBlock from "@/components/component-block"
 import { DescriptionText, MainHeading } from "@/app/components/typography"
 
@@ -63,14 +65,17 @@ export default async function ComponentPage({ params }: ComponentPageProps) {
   return (
     <div>
       <MainHeading>{details.title}</MainHeading>
-      <DescriptionText className="mt-2">{details.description}</DescriptionText>
+      <DescriptionText>{details.description}</DescriptionText>
 
-      <div className={cn("mt-12 grid gap-2", details.className)}>
+      <SelectSeparator className="mb-8 mt-6" />
+
+      <div className={cn("grid gap-2", details.className)}>
         <ComponentBlock
           key={component}
           title={details.title}
           name={details.componentName}
           playground={details.playground}
+          cliCommand={details.cliCommand}
           PlaygroundComponent={details.PlaygroundComponent}
           playgroundCode={details.playgroundCode}
         />

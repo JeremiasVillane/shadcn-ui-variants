@@ -6,6 +6,7 @@ interface ComponentDetails {
   componentName: string
   description?: string
   playground: Record<string, string[] | string | number | boolean>
+  cliCommand?: string
   PlaygroundComponent: (...args: any[]) => React.JSX.Element
   playgroundCode: (...args: any[]) => string
   className?: string
@@ -20,12 +21,13 @@ export const componentsIndex: ComponentsIndex = {
     componentName: "tabs",
     description: "Custom tabs variants with different styles and animations.",
     playground: {
-      variant: ["default", "bootstrap"],
+      variant: ["default", "underlined", "bootstrap"],
       numberOfTabs: ["1", "2", "3"],
       tab1Title: "Tab 1",
       tab2Title: "Tab 2",
       tab3Title: "Tab 3"
     },
+    cliCommand: "add tabs",
     PlaygroundComponent: TabsPlayground,
     playgroundCode: tabsPlaygroundCode
   }

@@ -6,7 +6,7 @@ import { cva } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
 
-export type TabsVariant = "default" | "bootstrap"
+export type TabsVariant = "default" | "underlined" | "bootstrap"
 interface TabsContextValue {
   variant: TabsVariant
 }
@@ -19,7 +19,9 @@ const tabsListVariants = cva(
   {
     variants: {
       variant: {
-        default: "text-muted-foreground",
+        default:
+          "inline-flex h-9 items-center justify-center rounded-lg bg-muted p-1 text-muted-foreground",
+        underlined: "text-muted-foreground border-b h-10",
         bootstrap: "border-b"
       }
     },
@@ -30,12 +32,14 @@ const tabsListVariants = cva(
 )
 
 const tabsTriggerVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-background h-full rounded-none",
+  "inline-flex items-center justify-center whitespace-nowrap px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-full rounded-none",
   {
     variants: {
       variant: {
         default:
-          "data-[state=active]:bg-background border-b data-[state=active]:text-foreground data-[state=active]:border-b border-muted data-[state=active]:border-primary data-[state=active]:shadow-none",
+          "rounded-md w-full py-1 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow",
+        underlined:
+          "border-b border-transparent data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:border-b-[2px] data-[state=active]:border-primary data-[state=active]:shadow-none",
         bootstrap:
           "border border-transparent border-b-border data-[state=active]:border-border data-[state=active]:border-b-background data-[state=active]:shadow-none -mb-[2px] rounded-t"
       }
@@ -46,7 +50,7 @@ const tabsTriggerVariants = cva(
   }
 )
 
-interface TabsProps
+export interface TabsProps
   extends React.ComponentPropsWithoutRef<typeof TabsPrimitive.Root> {
   variant?: TabsVariant
 }
