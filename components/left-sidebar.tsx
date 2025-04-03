@@ -1,6 +1,6 @@
 import React from "react"
 import Link from "next/link"
-import { contentIndex } from "@/data/components-index"
+import { contentIndex } from "@/data/site-index"
 
 import { Separator } from "@/components/ui/separator"
 

@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation"
-import { componentsIndex } from "@/data/components-index"
+import { componentsIndex } from "@/data/site-index"
 
 import { constructMetadata } from "@/lib/metadata"
 import { generateOgImageUrl } from "@/lib/og"

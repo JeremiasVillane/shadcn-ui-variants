@@ -6,7 +6,7 @@ import { getHighlightedCodeNodes } from "@/lib/shiki"
 import { cn } from "@/lib/utils"
 
 import { CopyToClipboardButton } from "./copy-to-clipboard-button"
-import { DownloadFileButton } from "./download-file.button"
+import { DownloadFileButton } from "./download-file-button"
 import { ExpandableCodeBlock } from "./expandable-code-block"
 
 interface CodeBlockProps extends React.ComponentPropsWithoutRef<"div"> {
