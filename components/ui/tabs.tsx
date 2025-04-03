@@ -6,12 +6,28 @@ import { cva } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
 
-export type TabsVariant = "default" | "underlined" | "bootstrap"
+export type TabsVariant = "default" | "underlined" | "bootstrap" | "vercel"
+
 interface TabsContextValue {
   variant: TabsVariant
+  positions: { value: string; left: number; width: number }[]
+  setPositions: React.Dispatch<
+    React.SetStateAction<{ value: string; left: number; width: number }[]>
+  >
+  activeTab: string
+  setActiveTab: React.Dispatch<React.SetStateAction<string>>
+  hoveredTab: number | null
+  setHoveredTab: React.Dispatch<React.SetStateAction<number | null>>
 }
+
 const TabsContext = React.createContext<TabsContextValue>({
-  variant: "default"
+  variant: "default",
+  positions: [],
+  setPositions: () => {},
+  activeTab: "",
+  setActiveTab: () => {},
+  hoveredTab: null,
+  setHoveredTab: () => {}
 })
 
 const tabsListVariants = cva(
@@ -22,12 +38,11 @@ const tabsListVariants = cva(
         default:
           "inline-flex h-9 items-center justify-center rounded-lg bg-muted p-1 text-muted-foreground",
         underlined: "text-muted-foreground border-b h-10",
-        bootstrap: "border-b"
+        bootstrap: "border-b",
+        vercel: "relative h-[30px]"
       }
     },
-    defaultVariants: {
-      variant: "default"
-    }
+    defaultVariants: { variant: "default" }
   }
 )
 
@@ -39,14 +54,14 @@ const tabsTriggerVariants = cva(
         default:
           "rounded-md w-full py-1 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow",
         underlined:
-          "border-b border-transparent data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:border-b-[2px] data-[state=active]:border-primary data-[state=active]:shadow-none",
+          "h-10 border-b-2 border-transparent px-4 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:border-primary data-[state=active]:shadow-none",
         bootstrap:
-          "border border-transparent border-b-border data-[state=active]:border-border data-[state=active]:border-b-background data-[state=active]:shadow-none -mb-[2px] rounded-t"
+          "-mb-[2px] rounded-t border border-transparent border-b-border px-5 py-2.5 data-[state=active]:border-border data-[state=active]:border-b-background",
+        vercel:
+          "relative px-3 py-2 text-[#0e0f1199] data-[state=active]:text-[#0e0e10] transition-colors z-20"
       }
     },
-    defaultVariants: {
-      variant: "default"
-    }
+    defaultVariants: { variant: "default" }
   }
 )
 
@@ -55,10 +70,31 @@ export interface TabsProps
   variant?: TabsVariant
 }
 
-const Tabs = ({ variant = "default", children, ...props }: TabsProps) => {
+const Tabs = ({ variant = "default", ...props }: TabsProps) => {
+  const [positions, setPositions] = React.useState<
+    { value: string; left: number; width: number }[]
+  >([])
+  const [hoveredTab, setHoveredTab] = React.useState<number | null>(null)
+  const [activeTab, setActiveTab] = React.useState<string>(
+    (props.defaultValue as string) || (props.value as string) || ""
+  )
+
   return (
-    <TabsContext.Provider value={{ variant }}>
-      <TabsPrimitive.Root {...props}>{children}</TabsPrimitive.Root>
+    <TabsContext.Provider
+      value={{
+        variant: variant || "default",
+        positions,
+        setPositions,
+        activeTab,
+        setActiveTab,
+        hoveredTab,
+        setHoveredTab
+      }}
+    >
+      <TabsPrimitive.Root
+        onValueChange={(val) => setActiveTab(val)}
+        {...props}
+      />
     </TabsContext.Provider>
   )
 }
@@ -69,13 +105,41 @@ const TabsList = React.forwardRef<
   React.ComponentRef<typeof TabsPrimitive.List>,
   TabsListProps
 >(({ className, ...props }, ref) => {
-  const { variant } = React.useContext(TabsContext)
+  const { variant, positions, activeTab, hoveredTab } =
+    React.useContext(TabsContext)
+
+  const activePosition = positions.find((pos) => pos.value === activeTab)
+  const hoverPosition = hoveredTab !== null ? positions[hoveredTab] : null
+
   return (
     <TabsPrimitive.List
       ref={ref}
       className={cn(tabsListVariants({ variant }), className)}
       {...props}
-    />
+    >
+      {props.children}
+
+      {variant === "vercel" && (
+        <>
+          <div
+            className="absolute h-[30px] rounded-[6px] bg-[#0e0f1114] transition-all duration-300 dark:bg-[#ffffff1a]"
+            style={{
+              width: hoverPosition?.width ?? 0,
+              left: hoverPosition?.left ?? 0,
+              opacity: hoveredTab !== null ? 1 : 0
+            }}
+          />
+
+          <div
+            className="absolute bottom-[-6px] h-[2px] bg-[#0e0f11] transition-all duration-300 dark:bg-white"
+            style={{
+              width: activePosition?.width ?? 0,
+              left: activePosition?.left ?? 0
+            }}
+          />
+        </>
+      )}
+    </TabsPrimitive.List>
   )
 })
 TabsList.displayName = TabsPrimitive.List.displayName
@@ -87,12 +151,55 @@ type TabsTriggerProps = React.ComponentPropsWithoutRef<
 const TabsTrigger = React.forwardRef<
   React.ComponentRef<typeof TabsPrimitive.Trigger>,
   TabsTriggerProps
->(({ className, ...props }, ref) => {
-  const { variant } = React.useContext(TabsContext)
+>(({ className, value, ...props }, ref) => {
+  const { variant, setPositions, setHoveredTab } = React.useContext(TabsContext)
+  const tabRef = React.useRef<HTMLButtonElement>(null)
+  const index = React.useRef<number>(-1)
+
+  React.useEffect(() => {
+    if (variant === "vercel" && tabRef.current) {
+      const updatePosition = () => {
+        const parentRect =
+          tabRef.current?.parentElement?.getBoundingClientRect()
+        const rect = tabRef.current?.getBoundingClientRect()
+
+        if (rect && parentRect && index.current !== -1 && value) {
+          setPositions((prev) => {
+            const newPositions = [...prev]
+            newPositions[index.current] = {
+              value: value,
+              left: rect.left - parentRect.left,
+              width: rect.width
+            }
+            return newPositions
+          })
+        }
+      }
+
+      updatePosition()
+      const observer = new ResizeObserver(updatePosition)
+      observer.observe(tabRef.current)
+
+      return () => observer.disconnect()
+    }
+  }, [variant, value, setPositions])
+
   return (
     <TabsPrimitive.Trigger
-      ref={ref}
+      ref={(el) => {
+        if (el) {
+          tabRef.current = el
+          index.current = Array.from(el.parentNode?.children || [])
+            .filter((child) => child instanceof HTMLElement)
+            .indexOf(el)
+        }
+        if (typeof ref === "function") ref(el)
+        else if (ref) ref.current = el
+      }}
       className={cn(tabsTriggerVariants({ variant }), className)}
+      onMouseEnter={() => variant === "vercel" && setHoveredTab(index.current)}
+      onMouseLeave={() => variant === "vercel" && setHoveredTab(null)}
+      value={value}
       {...props}
     />
   )

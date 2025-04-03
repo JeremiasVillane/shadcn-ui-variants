@@ -21,7 +21,7 @@ export const componentsIndex: ComponentsIndex = {
     componentName: "tabs",
     description: "Custom tabs variants with different styles and animations.",
     playground: {
-      variant: ["default", "underlined", "bootstrap"],
+      variant: ["default", "underlined", "bootstrap", "vercel"],
       numberOfTabs: ["1", "2", "3"],
       tab1Title: "Tab 1",
       tab2Title: "Tab 2",
