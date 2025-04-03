@@ -1,5 +1,7 @@
 "use client"
 
+import * as React from "react"
+
 import { camelToNormalCase } from "@/lib/utils"
 import { SubHeadingSmall } from "@/components/typography"
 
@@ -12,14 +14,15 @@ import {
   SelectTrigger,
   SelectValue
 } from "./ui/select"
+import { Switch } from "./ui/switch"
 
 interface PlaygroundControlsProps {
-  playground: Record<string, string | number | boolean | (string | number)[]>
+  playground: Record<string, string | number | boolean | string[]>
   playgroundState: {
-    [x: string]: string | number | boolean | (string | number)[]
+    [x: string]: string | number | boolean | string[]
   }
   updatePlaygroundState: React.ActionDispatch<
-    [next: Record<string, string | number | boolean | (string | number)[]>]
+    [next: Record<string, string | number | boolean | string[]>]
   >
 }
 
@@ -40,7 +43,7 @@ export function PlaygroundControls({
                 <Label htmlFor={control}>{camelToNormalCase(control)}</Label>
                 <Select
                   defaultValue={value.at(-1)}
-                  value={playgroundState[control]}
+                  value={String(playgroundState[control])}
                   onValueChange={(val) =>
                     updatePlaygroundState({ [control]: val })
                   }
@@ -61,16 +64,33 @@ export function PlaygroundControls({
           }
 
           return (
-            <div key={index} className="space-y-2">
-              <Label htmlFor={control}>{camelToNormalCase(control)}</Label>
-              <Input
-                id={control}
-                value={playgroundState[control]}
-                onChange={(e) =>
-                  updatePlaygroundState({ [control]: e.target.value })
-                }
-              />
-            </div>
+            <React.Fragment key={index}>
+              {typeof playgroundState[control] === "boolean" ? (
+                <div className="flex h-10 items-center justify-between space-x-2 self-end rounded-md border px-6">
+                  <Label htmlFor={control}>{camelToNormalCase(control)}</Label>
+                  <Switch
+                    checked={playgroundState[control]}
+                    onCheckedChange={(val) =>
+                      updatePlaygroundState({ [control]: val })
+                    }
+                  />
+                </div>
+              ) : (
+                <div className="space-y-2">
+                  <Label htmlFor={control}>{camelToNormalCase(control)}</Label>
+                  <Input
+                    id={control}
+                    {...(typeof playgroundState[control] === "number"
+                      ? { type: "number" }
+                      : {})}
+                    value={playgroundState[control]}
+                    onChange={(e) =>
+                      updatePlaygroundState({ [control]: e.target.value })
+                    }
+                  />
+                </div>
+              )}
+            </React.Fragment>
           )
         })}
       </div>

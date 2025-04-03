@@ -2,10 +2,16 @@
 
 import React from "react"
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+  TabsVariant
+} from "@/components/ui/tabs"
 
 export interface TabsPlaygroundProps {
-  variant: "default" | "bootstrap"
+  variant: TabsVariant
   numberOfTabs: string
   tab1Title: string
   tab2Title: string

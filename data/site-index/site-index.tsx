@@ -1,3 +1,7 @@
+import { AccordionVariant } from "@/components/ui/accordion"
+import { TabsVariant } from "@/components/ui/tabs"
+
+import { AccordionPlayground, accordionPlaygroundCode } from "./accordion"
 import { TabsPlayground, tabsPlaygroundCode } from "./tabs"
 
 interface ComponentDetails {
@@ -31,7 +35,7 @@ export const componentsIndex: ComponentsIndex = {
         "segmented",
         "bootstrap",
         "vercel"
-      ],
+      ] satisfies TabsVariant[],
       numberOfTabs: ["1", "2", "3"],
       tab1Title: "Tab 1",
       tab2Title: "Tab 2",
@@ -40,6 +44,29 @@ export const componentsIndex: ComponentsIndex = {
     cliCommand: "add tabs",
     PlaygroundComponent: TabsPlayground,
     playgroundCode: tabsPlaygroundCode
+  },
+  accordion: {
+    title: "Accordion",
+    url: "/components/accordion",
+    componentName: "accordion",
+    description:
+      "Custom accordion variants with different styles and animations.",
+    playground: {
+      variant: [
+        "default",
+        "separated-outline",
+        "separated-fill",
+        "contained-outline",
+        "contained-fill",
+        "tabs-outline",
+        "tabs-fill"
+      ] satisfies AccordionVariant[],
+      type: ["multiple", "single"],
+      collapsible: true
+    },
+    cliCommand: "add accordion",
+    PlaygroundComponent: AccordionPlayground,
+    playgroundCode: accordionPlaygroundCode
   }
 }
 
