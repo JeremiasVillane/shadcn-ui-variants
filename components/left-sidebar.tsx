@@ -10,8 +10,8 @@ export default function LeftSidebar() {
       <div className="h-full py-6 pl-8 pr-6 lg:py-8">
         {contentIndex.map((section, index) => (
           <React.Fragment key={section.label}>
-            <div className="flex flex-col space-y-3">
-              <h4 className="font-medium">{section.label}</h4>
+            <div className="flex flex-col space-y-2">
+              <h4 className="font-medium text-sm">{section.label}</h4>
               <nav className="flex flex-col space-y-2">
                 {section.items.map((item) => {
                   if (typeof item === "object") {
@@ -19,7 +19,7 @@ export default function LeftSidebar() {
                       <Link
                         key={item.url}
                         href={item.url}
-                        className="text-muted-foreground hover:text-foreground"
+                        className="text-muted-foreground hover:text-foreground text-sm"
                       >
                         {item.title}
                       </Link>
@@ -29,7 +29,7 @@ export default function LeftSidebar() {
                     <Link
                       key={item}
                       href={`/components/${item}`}
-                      className="text-muted-foreground hover:text-foreground"
+                      className="text-muted-foreground hover:text-foreground text-sm"
                     >
                       {(item as string).charAt(0).toUpperCase() +
                         (item as string).slice(1)}
