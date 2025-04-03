@@ -19,7 +19,7 @@ import { Card, CardContent } from "./ui/card"
 interface PlaygroundProps {
   title: string
   name: string
-  playground: Record<string, (string | number)[] | string | number | boolean>
+  playground: Record<string, string[] | string | number | boolean>
   PlaygroundComponent: (...args: any[]) => React.JSX.Element
   playgroundCode: (...args: any[]) => string
 }

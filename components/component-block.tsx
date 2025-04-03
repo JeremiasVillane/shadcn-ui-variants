@@ -11,7 +11,7 @@ interface ComponentBlockProps {
     label: string
     link: string
   }
-  playground: Record<string, (string | number)[] | string | number | boolean>
+  playground: Record<string, string[] | string | number | boolean>
   cliCommand?: string
   PlaygroundComponent: (...args: any[]) => React.JSX.Element
   playgroundCode: (...args: any[]) => string
