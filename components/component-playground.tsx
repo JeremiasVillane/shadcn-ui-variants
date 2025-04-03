@@ -11,6 +11,8 @@ import {
 } from "@/components/typography"
 
 import { CodeBlock } from "./code-block"
+import { CopyToClipboardButton } from "./copy-to-clipboard-button"
+import { DownloadFileButton } from "./download-file-button"
 import { PlaygroundControls } from "./playground-controls"
 import { Card, CardContent } from "./ui/card"
 
@@ -66,10 +68,17 @@ export function ComponentPlayground({
           <TabsTrigger value="code">Code</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="preview" className="flex flex-col p-4">
-          <Card className="p-4 pt-9">
+        <TabsContent value="preview" className="p-4">
+          <Card className="relative p-4 pt-9">
             <CardContent>
               <PlaygroundComponent {...playgroundState} />
+              <div className="absolute right-2 top-2 flex">
+                <CopyToClipboardButton content={currentPlaygroundCode} />
+                <DownloadFileButton
+                  sourceCode={currentPlaygroundCode}
+                  name={`${name}-playground`}
+                />
+              </div>
             </CardContent>
           </Card>
 

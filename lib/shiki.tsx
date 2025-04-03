@@ -30,7 +30,7 @@ export async function highlight(
           {...props}
           className={cn(
             props.className,
-            "h-full overflow-auto py-4 px-2 text-sm dark:!bg-foreground/5 leading-none"
+            "h-full overflow-auto px-3 py-4 text-sm leading-none dark:!bg-foreground/5"
           )}
           style={{ ...props.style, backgroundColor: undefined }}
         />
