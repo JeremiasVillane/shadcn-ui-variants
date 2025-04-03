@@ -6,7 +6,15 @@ import { cva } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
 
-export type TabsVariant = "default" | "underlined" | "bootstrap" | "vercel"
+export type TabsVariant =
+  | "default"
+  | "underlined"
+  | "brutalist"
+  | "pill-filled"
+  | "pill-outlined"
+  | "pill-boxed"
+  | "bootstrap"
+  | "vercel"
 
 interface TabsContextValue {
   variant: TabsVariant
@@ -38,6 +46,10 @@ const tabsListVariants = cva(
         default:
           "inline-flex h-9 items-center justify-center rounded-lg bg-muted p-1 text-muted-foreground",
         underlined: "text-muted-foreground border-b h-10",
+        brutalist: "border-b",
+        "pill-filled": "h-auto gap-1",
+        "pill-outlined": "h-auto gap-1",
+        "pill-boxed": "rounded-2xl p-1 h-auto gap-1 border",
         bootstrap: "border-b",
         vercel: "relative h-[30px]"
       }
@@ -55,10 +67,18 @@ const tabsTriggerVariants = cva(
           "rounded-md w-full py-1 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow",
         underlined:
           "h-10 border-b-2 border-transparent px-4 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:border-primary data-[state=active]:shadow-none",
+        brutalist:
+          "rounded-none bg-background data-[state=active]:shadow-none border border-b-[3px] border-transparent data-[state=active]:border-primary",
+        "pill-filled":
+          "rounded-2xl data-[state=active]:bg-primary data-[state=active]:text-primary-foreground",
+        "pill-outlined":
+          "rounded-2xl border border-transparent data-[state=active]:border-border data-[state=active]:shadow-none",
+        "pill-boxed":
+          "rounded-2xl data-[state=active]:bg-primary data-[state=active]:text-primary-foreground",
         bootstrap:
           "-mb-[2px] rounded-t border border-transparent border-b-border px-5 py-2.5 data-[state=active]:border-border data-[state=active]:border-b-background",
         vercel:
-          "relative px-3 py-2 text-[#0e0f1199] data-[state=active]:text-[#0e0e10] transition-colors z-20"
+          "relative px-3 py-2 text-muted-foreground data-[state=active]:text-foreground transition-colors z-20"
       }
     },
     defaultVariants: { variant: "default" }
