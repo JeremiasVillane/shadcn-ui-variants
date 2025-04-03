@@ -1,6 +1,7 @@
 "use client"
 
 import { camelToNormalCase } from "@/lib/utils"
+import { SubHeadingSmall } from "@/components/typography"
 
 import { Input } from "./ui/input"
 import { Label } from "./ui/label"
@@ -28,47 +29,51 @@ export function PlaygroundControls({
   updatePlaygroundState
 }: PlaygroundControlsProps) {
   return (
-    <div className="grid gap-6 sm:grid-cols-2">
-      {Object.entries(playground).map(([control, value], index) => {
-        if (Array.isArray(value)) {
+    <div className="space-y-4">
+      <SubHeadingSmall id="customize">Customize</SubHeadingSmall>
+
+      <div className="grid gap-6 sm:grid-cols-2">
+        {Object.entries(playground).map(([control, value], index) => {
+          if (Array.isArray(value)) {
+            return (
+              <div key={index} className="space-y-2">
+                <Label htmlFor={control}>{camelToNormalCase(control)}</Label>
+                <Select
+                  defaultValue={value.at(-1)}
+                  value={playgroundState[control]}
+                  onValueChange={(val) =>
+                    updatePlaygroundState({ [control]: val })
+                  }
+                >
+                  <SelectTrigger id={control}>
+                    <SelectValue placeholder="Select an option" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {value.map((val, index) => (
+                      <SelectItem key={index} value={val}>
+                        {val}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            )
+          }
+
           return (
             <div key={index} className="space-y-2">
               <Label htmlFor={control}>{camelToNormalCase(control)}</Label>
-              <Select
-                defaultValue={value.at(-1)}
+              <Input
+                id={control}
                 value={playgroundState[control]}
-                onValueChange={(val) =>
-                  updatePlaygroundState({ [control]: val })
+                onChange={(e) =>
+                  updatePlaygroundState({ [control]: e.target.value })
                 }
-              >
-                <SelectTrigger id={control}>
-                  <SelectValue placeholder="Select an option" />
-                </SelectTrigger>
-                <SelectContent>
-                  {value.map((val, index) => (
-                    <SelectItem key={index} value={val}>
-                      {val}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              />
             </div>
           )
-        }
-
-        return (
-          <div key={index} className="space-y-2">
-            <Label htmlFor={control}>{camelToNormalCase(control)}</Label>
-            <Input
-              id={control}
-              value={playgroundState[control]}
-              onChange={(e) =>
-                updatePlaygroundState({ [control]: e.target.value })
-              }
-            />
-          </div>
-        )
-      })}
+        })}
+      </div>
     </div>
   )
 }

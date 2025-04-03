@@ -8,7 +8,7 @@ import {
   DescriptionTextSmall,
   SubHeading,
   SubHeadingSmall
-} from "@/app/components/typography"
+} from "@/components/typography"
 
 import { CodeBlock } from "./code-block"
 import { PlaygroundControls } from "./playground-controls"
@@ -54,7 +54,7 @@ export function ComponentPlayground({
   return (
     <div>
       <header className="mb-6">
-        <SubHeading>{`${title} Playground`}</SubHeading>
+        <SubHeading id="playground">{`${title} Playground`}</SubHeading>
         {name && (
           <DescriptionTextSmall>{`Customize the ${name} properties to see different variations.`}</DescriptionTextSmall>
         )}
@@ -75,12 +75,9 @@ export function ComponentPlayground({
 
           <Separator className="mb-6 mt-8" />
 
-          <div className="space-y-4">
-            <SubHeadingSmall>Customize</SubHeadingSmall>
-            <PlaygroundControls
-              {...{ playground, playgroundState, updatePlaygroundState }}
-            />
-          </div>
+          <PlaygroundControls
+            {...{ playground, playgroundState, updatePlaygroundState }}
+          />
         </TabsContent>
 
         <TabsContent value="code" className="p-4">

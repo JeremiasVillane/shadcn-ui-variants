@@ -35,13 +35,13 @@ export const componentsIndex: ComponentsIndex = {
 
 export const components = Object.values(componentsIndex)
 
-export const groups = [
+export const contentIndex = [
   {
     label: "Get Started",
     items: [
       {
         title: "Introduction",
-        url: "/components/introduction"
+        url: "/docs"
       }
     ]
   },

@@ -7,7 +7,7 @@ import { absoluteUrl, cn } from "@/lib/utils"
 import { SelectSeparator } from "@/components/ui/select"
 import { Separator } from "@/components/ui/separator"
 import ComponentBlock from "@/components/component-block"
-import { DescriptionText, MainHeading } from "@/app/components/typography"
+import { DescriptionText, MainHeading } from "@/components/typography"
 
 export const generateStaticParams = async () => {
   return Object.keys(componentsIndex).map((component) => ({

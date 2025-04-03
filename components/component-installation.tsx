@@ -8,7 +8,7 @@ import {
   TimelineItem,
   TimelineLine
 } from "@/components/ui/timeline"
-import { SubHeading } from "@/app/components/typography"
+import { SubHeading } from "@/components/typography"
 
 import { CodeBlock } from "./code-block"
 import PackageManagerTabs from "./package-manager-tabs"
@@ -27,9 +27,9 @@ export default function ComponentInstallation({
 }: ComponentInstallationProps) {
   return (
     <div>
-      <header className="mb-6">
-        <SubHeading>Installation</SubHeading>
-      </header>
+      <SubHeading id="installation" className="mb-6">
+        Installation
+      </SubHeading>
 
       <Tabs variant="underlined" defaultValue="manual">
         <TabsList>
