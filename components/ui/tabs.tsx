@@ -13,6 +13,7 @@ export type TabsVariant =
   | "pill-filled"
   | "pill-outlined"
   | "pill-boxed"
+  | "segmented"
   | "bootstrap"
   | "vercel"
 
@@ -50,6 +51,7 @@ const tabsListVariants = cva(
         "pill-filled": "h-auto gap-1",
         "pill-outlined": "h-auto gap-1",
         "pill-boxed": "rounded-2xl p-1 h-auto gap-1 border",
+        segmented: "rounded-md border overflow-hidden divide-x",
         bootstrap: "border-b",
         vercel: "relative h-[30px]"
       }
@@ -75,6 +77,8 @@ const tabsTriggerVariants = cva(
           "rounded-2xl border border-transparent data-[state=active]:border-border data-[state=active]:shadow-none",
         "pill-boxed":
           "rounded-2xl data-[state=active]:bg-primary data-[state=active]:text-primary-foreground",
+        segmented:
+          "w-full data-[state=active]:bg-primary data-[state=active]:text-primary-foreground",
         bootstrap:
           "-mb-[2px] rounded-t border border-transparent border-b-border px-5 py-2.5 data-[state=active]:border-border data-[state=active]:border-b-background",
         vercel:

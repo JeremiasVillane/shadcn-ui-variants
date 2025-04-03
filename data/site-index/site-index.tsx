@@ -28,6 +28,7 @@ export const componentsIndex: ComponentsIndex = {
         "pill-filled",
         "pill-outlined",
         "pill-boxed",
+        "segmented",
         "bootstrap",
         "vercel"
       ],
