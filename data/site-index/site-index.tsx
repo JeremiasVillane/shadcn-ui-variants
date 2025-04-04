@@ -1,7 +1,13 @@
 import { AccordionVariant } from "@/components/ui/accordion"
+import { alertVariantsObject } from "@/components/ui/alert"
 import { TabsVariant } from "@/components/ui/tabs"
 
 import { AccordionPlayground, accordionPlaygroundCode } from "./accordion"
+import {
+  AlertPlayground,
+  alertPlaygroundCode,
+  AlertPlaygroundProps
+} from "./alert"
 import { TabsPlayground, tabsPlaygroundCode } from "./tabs"
 
 interface ComponentDetails {
@@ -19,6 +25,52 @@ interface ComponentDetails {
 type ComponentsIndex = Record<string, ComponentDetails>
 
 export const componentsIndex: ComponentsIndex = {
+  accordion: {
+    title: "Accordion",
+    url: "/components/accordion",
+    componentName: "accordion",
+    description:
+      "Custom accordion variants with different styles and animations.",
+    playground: {
+      variant: [
+        "default",
+        "separated-outline",
+        "separated-fill",
+        "contained-outline",
+        "contained-fill",
+        "tabs-outline",
+        "tabs-fill"
+      ] satisfies AccordionVariant[],
+      type: ["multiple", "single"],
+      collapsible: true
+    },
+    cliCommand: "add accordion",
+    PlaygroundComponent: AccordionPlayground,
+    playgroundCode: accordionPlaygroundCode
+  },
+  alert: {
+    title: "Alert",
+    url: "/components/alert",
+    componentName: "alert",
+    description:
+      "Custom alert variants with different styles for different statuses.",
+    playground: {
+      variant: Object.keys(alertVariantsObject),
+      alertTitle: "Pay attention",
+      alertDescription: "The world is around you!",
+      withIcon: true,
+      customIcon: [
+        "CircleUserRound",
+        "CircleDollarSign",
+        "CircleHelp",
+        "CircleFadingArrowUp",
+        "none"
+      ]
+    } satisfies Record<keyof AlertPlaygroundProps, any>,
+    cliCommand: "add alert",
+    PlaygroundComponent: AlertPlayground,
+    playgroundCode: alertPlaygroundCode
+  },
   tabs: {
     title: "Tabs",
     url: "/components/tabs",
@@ -44,29 +96,6 @@ export const componentsIndex: ComponentsIndex = {
     cliCommand: "add tabs",
     PlaygroundComponent: TabsPlayground,
     playgroundCode: tabsPlaygroundCode
-  },
-  accordion: {
-    title: "Accordion",
-    url: "/components/accordion",
-    componentName: "accordion",
-    description:
-      "Custom accordion variants with different styles and animations.",
-    playground: {
-      variant: [
-        "default",
-        "separated-outline",
-        "separated-fill",
-        "contained-outline",
-        "contained-fill",
-        "tabs-outline",
-        "tabs-fill"
-      ] satisfies AccordionVariant[],
-      type: ["multiple", "single"],
-      collapsible: true
-    },
-    cliCommand: "add accordion",
-    PlaygroundComponent: AccordionPlayground,
-    playgroundCode: accordionPlaygroundCode
   }
 }
 
