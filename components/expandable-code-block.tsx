@@ -33,26 +33,14 @@ export function ExpandableCodeBlock({ children }: ExpandableCodeBlockProps) {
         {children}
       </article>
 
-      {showButton && !isExpanded && (
+      {showButton && (
         <section className="my-2 flex w-full justify-center">
           <Button
             variant="outline"
             size="sm"
-            onClick={() => setIsExpanded(true)}
+            onClick={() => setIsExpanded(!isExpanded)}
           >
-            Show more
-          </Button>
-        </section>
-      )}
-
-      {showButton && isExpanded && (
-        <section className="my-2 flex w-full justify-center">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => setIsExpanded(false)}
-          >
-            Show less
+            Show {isExpanded ? "less" : "more"}
           </Button>
         </section>
       )}

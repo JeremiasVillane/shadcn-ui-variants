@@ -5,7 +5,6 @@ import { constructMetadata } from "@/lib/metadata"
 import { generateOgImageUrl } from "@/lib/og"
 import { absoluteUrl, cn } from "@/lib/utils"
 import { SelectSeparator } from "@/components/ui/select"
-import { Separator } from "@/components/ui/separator"
 import ComponentBlock from "@/components/component-block"
 import { DescriptionText, MainHeading } from "@/components/typography"
 
