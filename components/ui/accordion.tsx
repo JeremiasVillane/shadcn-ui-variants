@@ -7,34 +7,19 @@ import { ChevronDown } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
-export type AccordionVariant =
-  | "default"
-  | "separated-outline"
-  | "separated-fill"
-  | "contained-outline"
-  | "contained-fill"
-  | "tabs-outline"
-  | "tabs-fill"
-
-interface AccordionContextValue {
-  variant: AccordionVariant
-}
-
-const AccordionContext = React.createContext<AccordionContextValue>({
-  variant: "default"
-})
+export const accordionVariantsObject = {
+  default: "",
+  "separated-outline": "space-y-2",
+  "separated-fill": "space-y-2",
+  "contained-outline": "",
+  "contained-fill": "",
+  "tabs-fill": "space-y-2",
+  "tabs-outline": "space-y-2"
+} as const
 
 const accordionVariants = cva("max-w-lg my-4 w-full", {
   variants: {
-    variant: {
-      default: "",
-      "separated-outline": "space-y-2",
-      "separated-fill": "space-y-2",
-      "contained-outline": "",
-      "contained-fill": "",
-      "tabs-fill": "space-y-2",
-      "tabs-outline": "space-y-2"
-    }
+    variant: accordionVariantsObject
   },
   defaultVariants: { variant: "default" }
 })
@@ -50,12 +35,13 @@ const accordionItemVariants = cva("border-b px-4", {
       "contained-fill":
         "last:border-none first:rounded-t-md last:rounded-b-md bg-muted",
       "tabs-fill": "border-none rounded-md data-[state=open]:bg-secondary",
-      "tabs-outline":
-        "border rounded-md data-[state=closed]:border-none"
+      "tabs-outline": "border rounded-md data-[state=closed]:border-none"
     }
   },
   defaultVariants: { variant: "default" }
 })
+
+export type AccordionVariant = keyof typeof accordionVariantsObject
 
 type AccordionPrimitiveRootProps = React.ComponentPropsWithoutRef<
   typeof AccordionPrimitive.Root
@@ -64,6 +50,14 @@ type AccordionPrimitiveRootProps = React.ComponentPropsWithoutRef<
 type AccordionProps = AccordionPrimitiveRootProps & {
   variant?: AccordionVariant
 }
+
+interface AccordionContextValue {
+  variant: AccordionVariant
+}
+
+const AccordionContext = React.createContext<AccordionContextValue>({
+  variant: "default"
+})
 
 const Accordion = ({
   variant = "default",
@@ -108,7 +102,8 @@ const AccordionTrigger = React.forwardRef<
       <AccordionPrimitive.Trigger
         ref={ref}
         className={cn(
-          "flex flex-1 items-center justify-between py-4 font-medium transition-all hover:underline [&[data-state=open]>svg]:rotate-180", variant.startsWith("tabs") ? "" : "",
+          "flex flex-1 items-center justify-between py-4 font-medium transition-all hover:underline [&[data-state=open]>svg]:rotate-180",
+          variant.startsWith("tabs") ? "data-[state=closed]:py-2" : "",
           className
         )}
         {...props}

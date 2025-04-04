@@ -1,14 +1,18 @@
 import { AccordionVariant } from "@/components/ui/accordion"
-import { alertVariantsObject } from "@/components/ui/alert"
+import { AlertVariant } from "@/components/ui/alert"
 import { TabsVariant } from "@/components/ui/tabs"
 
-import { AccordionPlayground, accordionPlaygroundCode } from "./accordion"
+import {
+  AccordionPlayground,
+  accordionPlaygroundCode,
+  AccordionPlaygroundProps
+} from "./accordion"
 import {
   AlertPlayground,
   alertPlaygroundCode,
   AlertPlaygroundProps
 } from "./alert"
-import { TabsPlayground, tabsPlaygroundCode } from "./tabs"
+import { TabsPlayground, tabsPlaygroundCode, TabsPlaygroundProps } from "./tabs"
 
 interface ComponentDetails {
   title: string
@@ -43,7 +47,7 @@ export const componentsIndex: ComponentsIndex = {
       ] satisfies AccordionVariant[],
       type: ["multiple", "single"],
       collapsible: true
-    },
+    } satisfies Record<keyof AccordionPlaygroundProps, any>,
     cliCommand: "add accordion",
     PlaygroundComponent: AccordionPlayground,
     playgroundCode: accordionPlaygroundCode
@@ -55,7 +59,23 @@ export const componentsIndex: ComponentsIndex = {
     description:
       "Custom alert variants with different styles for different statuses.",
     playground: {
-      variant: Object.keys(alertVariantsObject),
+      variant: [
+        "default-oultine",
+        "default-fill",
+        "default-bootstrap",
+        "destructive-outline",
+        "destructive-fill",
+        "destructive-bootstrap",
+        "success-outline",
+        "success-fill",
+        "success-bootstrap",
+        "warning-outline",
+        "warning-fill",
+        "warning-bootstrap",
+        "info-outline",
+        "info-fill",
+        "info-bootstrap"
+      ] satisfies AlertVariant[],
       alertTitle: "Pay attention",
       alertDescription: "The world is around you!",
       withIcon: true,
@@ -92,7 +112,7 @@ export const componentsIndex: ComponentsIndex = {
       tab1Title: "Tab 1",
       tab2Title: "Tab 2",
       tab3Title: "Tab 3"
-    },
+    } satisfies Record<keyof TabsPlaygroundProps, any>,
     cliCommand: "add tabs",
     PlaygroundComponent: TabsPlayground,
     playgroundCode: tabsPlaygroundCode

@@ -6,55 +6,24 @@ import { cva } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
 
-export type TabsVariant =
-  | "default"
-  | "underlined"
-  | "brutalist"
-  | "pill-filled"
-  | "pill-outlined"
-  | "pill-boxed"
-  | "segmented"
-  | "bootstrap"
-  | "vercel"
-
-interface TabsContextValue {
-  variant: TabsVariant
-  positions: { value: string; left: number; width: number }[]
-  setPositions: React.Dispatch<
-    React.SetStateAction<{ value: string; left: number; width: number }[]>
-  >
-  activeTab: string
-  setActiveTab: React.Dispatch<React.SetStateAction<string>>
-  hoveredTab: number | null
-  setHoveredTab: React.Dispatch<React.SetStateAction<number | null>>
-}
-
-const TabsContext = React.createContext<TabsContextValue>({
-  variant: "default",
-  positions: [],
-  setPositions: () => {},
-  activeTab: "",
-  setActiveTab: () => {},
-  hoveredTab: null,
-  setHoveredTab: () => {}
-})
+const tabsListVariantsObject = {
+  default:
+    "inline-flex h-9 items-center justify-center rounded-lg bg-muted p-1 text-muted-foreground",
+  underlined: "text-muted-foreground border-b h-10",
+  brutalist: "border-b",
+  "pill-filled": "h-auto gap-1",
+  "pill-outlined": "h-auto gap-1",
+  "pill-boxed": "rounded-2xl p-1 h-auto gap-1 border",
+  segmented: "rounded-md border overflow-hidden divide-x",
+  bootstrap: "border-b",
+  vercel: "relative h-[30px]"
+} as const
 
 const tabsListVariants = cva(
   "inline-flex h-8 items-center w-full p-0 bg-background justify-start rounded-none",
   {
     variants: {
-      variant: {
-        default:
-          "inline-flex h-9 items-center justify-center rounded-lg bg-muted p-1 text-muted-foreground",
-        underlined: "text-muted-foreground border-b h-10",
-        brutalist: "border-b",
-        "pill-filled": "h-auto gap-1",
-        "pill-outlined": "h-auto gap-1",
-        "pill-boxed": "rounded-2xl p-1 h-auto gap-1 border",
-        segmented: "rounded-md border overflow-hidden divide-x",
-        bootstrap: "border-b",
-        vercel: "relative h-[30px]"
-      }
+      variant: tabsListVariantsObject
     },
     defaultVariants: { variant: "default" }
   }
@@ -88,6 +57,30 @@ const tabsTriggerVariants = cva(
     defaultVariants: { variant: "default" }
   }
 )
+
+export type TabsVariant = keyof typeof tabsListVariantsObject
+
+interface TabsContextValue {
+  variant: TabsVariant
+  positions: { value: string; left: number; width: number }[]
+  setPositions: React.Dispatch<
+    React.SetStateAction<{ value: string; left: number; width: number }[]>
+  >
+  activeTab: string
+  setActiveTab: React.Dispatch<React.SetStateAction<string>>
+  hoveredTab: number | null
+  setHoveredTab: React.Dispatch<React.SetStateAction<number | null>>
+}
+
+const TabsContext = React.createContext<TabsContextValue>({
+  variant: "default",
+  positions: [],
+  setPositions: () => {},
+  activeTab: "",
+  setActiveTab: () => {},
+  hoveredTab: null,
+  setHoveredTab: () => {}
+})
 
 export interface TabsProps
   extends React.ComponentPropsWithoutRef<typeof TabsPrimitive.Root> {

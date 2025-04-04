@@ -4,11 +4,7 @@ import * as React from "react"
 
 import { Separator } from "@/components/ui/separator"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import {
-  DescriptionTextSmall,
-  SubHeading,
-  SubHeadingSmall
-} from "@/components/typography"
+import { DescriptionTextSmall, SubHeading } from "@/components/typography"
 
 import { CodeBlock } from "./code-block"
 import { CopyToClipboardButton } from "./copy-to-clipboard-button"

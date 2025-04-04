@@ -4,7 +4,7 @@ import { CheckCircle2, CircleAlert, CircleX, InfoIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
-export const alertVariantsObject = {
+const alertVariantsObject = {
   "default-oultine": "bg-background text-foreground [&>svg]:text-foreground",
   "default-fill": "bg-foreground text-background [&>svg]:text-background",
   "default-bootstrap":
