@@ -32,6 +32,8 @@ const alertVariantsObject = {
     "bg-blue-500/10 dark:bg-blue-600/30 border-blue-300 dark:border-blue-600/70 text-blue-500 dark:text-white [&>svg]:text-blue-500"
 } as const
 
+export type AlertVariant = keyof typeof alertVariantsObject
+
 const alertVariants = cva(
   "relative w-full rounded-lg border p-4 [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground",
   {
@@ -44,20 +46,18 @@ const alertVariants = cva(
   }
 )
 
-export type AlertVariant = keyof typeof alertVariantsObject
-
-type AlertProps = React.HTMLAttributes<HTMLDivElement> & {
-  variant: AlertVariant
-  withIcon?: boolean
-  customIcon?: React.ReactElement
-}
-
 const variantIcons: Record<string, React.ReactElement> = {
   default: <InfoIcon className="size-4" />,
   destructive: <CircleX className="size-4" />,
   success: <CheckCircle2 className="size-4" />,
   warning: <CircleAlert className="size-4" />,
   info: <InfoIcon className="size-4" />
+}
+
+interface AlertProps extends React.HTMLAttributes<HTMLDivElement> {
+  variant: AlertVariant
+  withIcon?: boolean
+  customIcon?: React.ReactElement
 }
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(

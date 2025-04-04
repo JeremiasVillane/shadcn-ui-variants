@@ -1,5 +1,6 @@
 import { AccordionVariant } from "@/components/ui/accordion"
 import { AlertVariant } from "@/components/ui/alert"
+import { AlertDialogVariant } from "@/components/ui/alert-dialog"
 import { TabsVariant } from "@/components/ui/tabs"
 
 import {
@@ -12,6 +13,9 @@ import {
   alertPlaygroundCode,
   AlertPlaygroundProps
 } from "./alert"
+import AlertDialogPlayground, {
+  AlertDialogPlaygroundProps
+} from "./alert-dialog/alert-dialog-playground"
 import { TabsPlayground, tabsPlaygroundCode, TabsPlaygroundProps } from "./tabs"
 
 interface ComponentDetails {
@@ -76,8 +80,8 @@ export const componentsIndex: ComponentsIndex = {
         "info-fill",
         "info-bootstrap"
       ] satisfies AlertVariant[],
-      alertTitle: "Pay attention",
-      alertDescription: "The world is around you!",
+      alertTitle: "Pay attention!",
+      alertDescription: "The world is around you.",
       withIcon: true,
       customIcon: [
         "CircleUserRound",
@@ -89,6 +93,41 @@ export const componentsIndex: ComponentsIndex = {
     } satisfies Record<keyof AlertPlaygroundProps, any>,
     cliCommand: "add alert",
     PlaygroundComponent: AlertPlayground,
+    playgroundCode: alertPlaygroundCode
+  },
+  "alert-dialog": {
+    title: "Alert Dialog",
+    url: "/components/alert-dialog",
+    componentName: "alert-dialog",
+    description:
+      "Custom alert dialog variants and extra props to handle different scenarios",
+    playground: {
+      variant: [
+        "default",
+        "center",
+        "success-left",
+        "success-center",
+        "destructive-left",
+        "destructive-center",
+        "warning-left",
+        "warning-center",
+        "info-left",
+        "info-center"
+      ] satisfies AlertDialogVariant[],
+      title: "This is just an advice",
+      description:
+        "Everything is happening right now. All of this is going somewhere, wether you like it or not. So, sit down.",
+      withIcon: true,
+      customIcon: [
+        "CircleUserRound",
+        "CircleDollarSign",
+        "CircleHelp",
+        "CircleFadingArrowUp",
+        "none"
+      ]
+    } satisfies Record<keyof AlertDialogPlaygroundProps, any>,
+    cliCommand: "add alert-dialog",
+    PlaygroundComponent: AlertDialogPlayground,
     playgroundCode: alertPlaygroundCode
   },
   tabs: {

@@ -19,7 +19,7 @@ export interface AlertPlaygroundProps {
   alertTitle: string
   alertDescription: string
   withIcon: boolean
-  customIcon?: string
+  customIcon: string
 }
 
 export function AlertPlayground({
@@ -40,7 +40,7 @@ export function AlertPlayground({
     <Alert
       variant={variant}
       withIcon={withIcon}
-      {...(!!customIcon && customIcon !== "none"
+      {...(customIcon !== "none"
         ? { customIcon: customIcons[customIcon] }
         : {})}
     >

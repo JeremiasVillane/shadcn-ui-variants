@@ -66,7 +66,7 @@ export function ComponentPlayground({
 
         <TabsContent value="preview" className="p-4">
           <Card className="relative p-4 pt-9">
-            <CardContent>
+            <CardContent className="flex justify-center">
               <PlaygroundComponent {...playgroundState} />
               <div className="absolute right-2 top-2 flex">
                 <CopyToClipboardButton content={currentPlaygroundCode} />

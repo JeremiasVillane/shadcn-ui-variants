@@ -12,7 +12,8 @@ export const alertPlaygroundCode = ({
   const code = `"use client"
 ${
   !!withIcon && !!customIcon && customIcon !== "none"
-    ? `import { ${customIcon} } from "lucide-react"
+    ? `
+import { ${customIcon} } from "lucide-react"
 `
     : ""
 }
