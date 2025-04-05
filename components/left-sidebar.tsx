@@ -22,7 +22,7 @@ export default function LeftSidebar() {
         {contentIndex.map((section, index) => (
           <React.Fragment key={section.label}>
             <div className="flex flex-col space-y-2">
-              <h4 className="text-sm font-medium text-[#121212]">{section.label}</h4>
+              <h4 className="text-sm font-medium">{section.label}</h4>
               <nav className="flex flex-col space-y-2">
                 {section.items.map((item) => {
                   if (typeof item === "object") {
