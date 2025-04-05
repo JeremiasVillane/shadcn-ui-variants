@@ -35,7 +35,7 @@ export default function AlertDialogPlayground() {
   return (
     <AlertDialog${variant !== "default" ? ` variant="${variant}"` : ""}${styleVariant !== "left" ? ` styleVariant="${styleVariant}"` : ""}${withIcon ? " withIcon={true}" : ""}${withIcon && !!customIcon && customIcon !== "none" ? ` customIcon={<${customIcon} />}` : ""}${separatedHeader ? " separatedHeader={true}" : ""}${separatedFooter ? " separatedFooter={true}" : ""}>
       <AlertDialogTrigger asChild>
-        <Button variant="outline">Show Dialog</Button>
+        <Button>Show Dialog</Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>

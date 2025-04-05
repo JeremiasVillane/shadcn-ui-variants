@@ -58,7 +58,7 @@ export default function AlertDialogPlayground({
       separatedFooter={separatedFooter}
     >
       <AlertDialogTrigger asChild>
-        <Button variant="outline">Show Dialog</Button>
+        <Button>Show Dialog</Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
