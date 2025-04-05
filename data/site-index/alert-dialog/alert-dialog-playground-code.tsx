@@ -1,13 +1,18 @@
+"use client"
+
 import { AlertDialogPlaygroundProps } from "./alert-dialog-playground"
 
-export const AlertDialogPlaygroundCode = ({
+export const alertDialogPlaygroundCode = ({
   variant,
+  styleVariant,
   withIcon,
-  customIcon
+  customIcon,
+  separatedHeader,
+  separatedFooter
 }: AlertDialogPlaygroundProps) => {
   const code = `"use client"
 ${
-  !!withIcon && !!customIcon && customIcon !== "none"
+  withIcon && !!customIcon && customIcon !== "none"
     ? `import { ${customIcon} } from "lucide-react"
 `
     : ""
@@ -28,7 +33,7 @@ import { Button } from "@/components/ui/button"
 
 export default function AlertDialogPlayground() {
   return (
-    <AlertDialog variant="${variant}"${!withIcon ? ` withIcon={${withIcon}}` : ""}${!!withIcon && !!customIcon && customIcon !== "none" ? ` customIcon={<${customIcon} className="size-4" />}` : ""}>
+    <AlertDialog${variant !== "default" ? ` variant="${variant}"` : ""}${styleVariant !== "left" ? ` styleVariant="${styleVariant}"` : ""}${withIcon ? " withIcon={true}" : ""}${withIcon && !!customIcon && customIcon !== "none" ? ` customIcon={<${customIcon} />}` : ""}${separatedHeader ? " separatedHeader={true}" : ""}${separatedFooter ? " separatedFooter={true}" : ""}>
       <AlertDialogTrigger asChild>
         <Button variant="outline">Show Dialog</Button>
       </AlertDialogTrigger>

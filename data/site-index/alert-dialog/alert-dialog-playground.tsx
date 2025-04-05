@@ -15,6 +15,7 @@ import {
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
+  AlertDialogStyleVariant,
   AlertDialogTitle,
   AlertDialogTrigger,
   AlertDialogVariant
@@ -23,29 +24,38 @@ import { Button } from "@/components/ui/button"
 
 export interface AlertDialogPlaygroundProps {
   variant: AlertDialogVariant
+  styleVariant: AlertDialogStyleVariant
   withIcon: boolean
   customIcon: string
+  separatedHeader: boolean
+  separatedFooter: boolean
 }
 
 export default function AlertDialogPlayground({
   variant,
+  styleVariant,
   withIcon,
-  customIcon
+  customIcon,
+  separatedHeader,
+  separatedFooter
 }: AlertDialogPlaygroundProps) {
   const customIcons: Record<string, React.ReactElement> = {
-    CircleUserRound: <CircleUserRound className="size-4" />,
-    CircleDollarSign: <CircleDollarSign className="size-4" />,
-    CircleHelp: <CircleHelp className="size-4" />,
-    CircleFadingArrowUp: <CircleFadingArrowUp className="size-4" />
+    CircleUserRound: <CircleUserRound />,
+    CircleDollarSign: <CircleDollarSign />,
+    CircleHelp: <CircleHelp />,
+    CircleFadingArrowUp: <CircleFadingArrowUp />
   }
 
   return (
     <AlertDialog
       variant={variant}
+      styleVariant={styleVariant}
       withIcon={withIcon}
       {...(customIcon !== "none"
         ? { customIcon: customIcons[customIcon] }
         : {})}
+      separatedHeader={separatedHeader}
+      separatedFooter={separatedFooter}
     >
       <AlertDialogTrigger asChild>
         <Button variant="outline">Show Dialog</Button>

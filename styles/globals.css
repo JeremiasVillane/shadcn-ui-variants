@@ -62,7 +62,7 @@ h3 {
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
-    --code: 0 0% 100%;
+    --code: 0 0% 7%;
   }
   .dark {
     --background: 0 0% 3.9%;
@@ -139,8 +139,8 @@ h3 {
   @apply !bg-transparent;
 }
 
-html.dark .shiki,
-html.dark .shiki span {
+html .shiki,
+html .shiki span {
   color: var(--shiki-dark) !important;
   background-color: var(--shiki-dark-bg) !important;
   /* Optional, if you also want font styles */

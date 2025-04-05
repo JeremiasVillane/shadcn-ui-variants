@@ -10,18 +10,21 @@ import {
 import {
   Alert,
   AlertDescription,
+  AlertStyleVariant,
   AlertTitle,
   AlertVariant
 } from "@/components/ui/alert"
 
 export interface AlertPlaygroundProps {
   variant: AlertVariant
+  styleVariant: AlertStyleVariant
   withIcon: boolean
   customIcon: string
 }
 
 export function AlertPlayground({
   variant,
+  styleVariant,
   withIcon,
   customIcon
 }: AlertPlaygroundProps) {
@@ -35,6 +38,7 @@ export function AlertPlayground({
   return (
     <Alert
       variant={variant}
+      styleVariant={styleVariant}
       withIcon={withIcon}
       {...(customIcon !== "none"
         ? { customIcon: customIcons[customIcon] }

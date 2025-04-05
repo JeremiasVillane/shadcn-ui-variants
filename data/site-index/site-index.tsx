@@ -1,6 +1,10 @@
 import { AccordionVariant } from "@/components/ui/accordion"
-import { AlertVariant } from "@/components/ui/alert"
-import { AlertDialogVariant } from "@/components/ui/alert-dialog"
+import { AlertStyleVariant, AlertVariant } from "@/components/ui/alert"
+import {
+  AlertDialogStyleVariant,
+  AlertDialogVariant
+} from "@/components/ui/alert-dialog"
+import { BreadcrumbVariant } from "@/components/ui/breadcrumb"
 import { TabsVariant } from "@/components/ui/tabs"
 
 import {
@@ -13,10 +17,15 @@ import {
   alertPlaygroundCode,
   AlertPlaygroundProps
 } from "./alert"
+import { alertDialogPlaygroundCode } from "./alert-dialog"
 import AlertDialogPlayground, {
   AlertDialogPlaygroundProps
 } from "./alert-dialog/alert-dialog-playground"
-import { BreadcrumbPlayground, breadcrumbPlaygroundCode } from "./breadcrumb"
+import {
+  BreadcrumbPlayground,
+  breadcrumbPlaygroundCode,
+  BreadcrumbPlaygroundProps
+} from "./breadcrumb"
 import { TabsPlayground, tabsPlaygroundCode, TabsPlaygroundProps } from "./tabs"
 
 interface ComponentDetails {
@@ -65,22 +74,17 @@ export const componentsIndex: ComponentsIndex = {
       "Custom alert variants with different styles for different statuses.",
     playground: {
       variant: [
-        "default-oultine",
-        "default-fill",
-        "default-bootstrap",
-        "destructive-outline",
-        "destructive-fill",
-        "destructive-bootstrap",
-        "success-outline",
-        "success-fill",
-        "success-bootstrap",
-        "warning-outline",
-        "warning-fill",
-        "warning-bootstrap",
-        "info-outline",
-        "info-fill",
-        "info-bootstrap"
+        "default",
+        "destructive",
+        "success",
+        "warning",
+        "info"
       ] satisfies AlertVariant[],
+      styleVariant: [
+        "outline",
+        "fill",
+        "bootstrap"
+      ] satisfies AlertStyleVariant[],
       withIcon: true,
       customIcon: [
         "CircleUserRound",
@@ -103,16 +107,12 @@ export const componentsIndex: ComponentsIndex = {
     playground: {
       variant: [
         "default",
-        "center",
-        "success-left",
-        "success-center",
-        "destructive-left",
-        "destructive-center",
-        "warning-left",
-        "warning-center",
-        "info-left",
-        "info-center"
+        "success",
+        "destructive",
+        "warning",
+        "info"
       ] satisfies AlertDialogVariant[],
+      styleVariant: ["left", "center"] satisfies AlertDialogStyleVariant[],
       withIcon: true,
       customIcon: [
         "CircleUserRound",
@@ -120,11 +120,13 @@ export const componentsIndex: ComponentsIndex = {
         "CircleHelp",
         "CircleFadingArrowUp",
         "none"
-      ]
+      ],
+      separatedHeader: false,
+      separatedFooter: false
     } satisfies Record<keyof AlertDialogPlaygroundProps, any>,
     cliCommand: "add alert-dialog",
     PlaygroundComponent: AlertDialogPlayground,
-    playgroundCode: alertPlaygroundCode
+    playgroundCode: alertDialogPlaygroundCode
   },
   breadcrumb: {
     title: "Breadcrumb",
@@ -139,9 +141,9 @@ export const componentsIndex: ComponentsIndex = {
         "badge-active",
         "badge-outline",
         "badge-fill"
-      ],
+      ] satisfies BreadcrumbVariant[],
       separatorVariant: ["default", "chevrons", "dot", "step", "slash"]
-    },
+    } satisfies Record<keyof BreadcrumbPlaygroundProps, any>,
     cliCommand: "add breadcrumb",
     PlaygroundComponent: BreadcrumbPlayground,
     playgroundCode: breadcrumbPlaygroundCode

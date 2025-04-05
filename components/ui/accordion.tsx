@@ -7,19 +7,34 @@ import { ChevronDown } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
-export const accordionVariantsObject = {
-  default: "",
-  "separated-outline": "space-y-2",
-  "separated-fill": "space-y-2",
-  "contained-outline": "",
-  "contained-fill": "",
-  "tabs-fill": "space-y-2",
-  "tabs-outline": "space-y-2"
-} as const
+export type AccordionVariant =
+  | "default"
+  | "separated-outline"
+  | "separated-fill"
+  | "contained-outline"
+  | "contained-fill"
+  | "tabs-fill"
+  | "tabs-outline"
+
+interface AccordionContextValue {
+  variant: AccordionVariant
+}
+
+const AccordionContext = React.createContext<AccordionContextValue>({
+  variant: "default"
+})
 
 const accordionVariants = cva("max-w-lg my-4 w-full", {
   variants: {
-    variant: accordionVariantsObject
+    variant: {
+      default: "",
+      "separated-outline": "space-y-2",
+      "separated-fill": "space-y-2",
+      "contained-outline": "",
+      "contained-fill": "",
+      "tabs-fill": "space-y-2",
+      "tabs-outline": "space-y-2"
+    }
   },
   defaultVariants: { variant: "default" }
 })
@@ -41,8 +56,6 @@ const accordionItemVariants = cva("border-b px-4", {
   defaultVariants: { variant: "default" }
 })
 
-export type AccordionVariant = keyof typeof accordionVariantsObject
-
 type AccordionPrimitiveRootProps = React.ComponentPropsWithoutRef<
   typeof AccordionPrimitive.Root
 >
@@ -50,14 +63,6 @@ type AccordionPrimitiveRootProps = React.ComponentPropsWithoutRef<
 type AccordionProps = AccordionPrimitiveRootProps & {
   variant?: AccordionVariant
 }
-
-interface AccordionContextValue {
-  variant: AccordionVariant
-}
-
-const AccordionContext = React.createContext<AccordionContextValue>({
-  variant: "default"
-})
 
 const Accordion = ({
   variant = "default",

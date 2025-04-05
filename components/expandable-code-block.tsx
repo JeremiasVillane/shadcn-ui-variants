@@ -39,6 +39,7 @@ export function ExpandableCodeBlock({ children }: ExpandableCodeBlockProps) {
             variant="outline"
             size="sm"
             onClick={() => setIsExpanded(!isExpanded)}
+            className="border-neutral-800 bg-black text-white hover:bg-black/40 hover:text-[white]"
           >
             Show {isExpanded ? "less" : "more"}
           </Button>
