@@ -52,9 +52,9 @@ export function ComponentPlayground({
   return (
     <div>
       <header className="mb-6">
-        <SubHeading id="playground">{`${title} Playground`}</SubHeading>
+        <SubHeading id="playground">Playground</SubHeading>
         {name && (
-          <DescriptionTextSmall>{`Customize the ${name} properties to see different variations.`}</DescriptionTextSmall>
+          <DescriptionTextSmall>{`Customize the ${title} properties to see different variations.`}</DescriptionTextSmall>
         )}
       </header>
 

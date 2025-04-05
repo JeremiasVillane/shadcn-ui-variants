@@ -84,7 +84,12 @@ export function PlaygroundControls({
                       : {})}
                     value={playgroundState[control]}
                     onChange={(e) =>
-                      updatePlaygroundState({ [control]: e.target.value })
+                      updatePlaygroundState({
+                        [control]:
+                          typeof playgroundState[control] === "number"
+                            ? Number(e.target.value)
+                            : e.target.value
+                      })
                     }
                   />
                 </div>

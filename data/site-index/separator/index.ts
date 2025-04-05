@@ -9,7 +9,7 @@ import { separatorPlaygroundCode } from "./separator-playground-code"
 export const separator = {
   title: "Separator",
   url: "/components/separator",
-  componentName: "Separator",
+  componentName: "separator",
   description: "Custom Separator with variants and new props",
   playground: {
     variant: ["default", "dotted", "dashed"] satisfies SeparatorVariant[],
