@@ -14,8 +14,8 @@ export default function TOC(props: React.ComponentPropsWithRef<"div">) {
       depth: 1
     },
     {
-      title: "Customize",
-      url: "#customize",
+      title: "API",
+      url: "#api",
       depth: 3
     },
     {
