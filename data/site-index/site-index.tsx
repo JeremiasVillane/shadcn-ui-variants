@@ -1,4 +1,7 @@
-import { AccordionVariant } from "@/components/ui/accordion"
+import {
+  AccordionStyleVariant,
+  AccordionVariant
+} from "@/components/ui/accordion"
 import { AlertStyleVariant, AlertVariant } from "@/components/ui/alert"
 import {
   AlertDialogStyleVariant,
@@ -52,13 +55,11 @@ export const componentsIndex: ComponentsIndex = {
     playground: {
       variant: [
         "default",
-        "separated-outline",
-        "separated-fill",
-        "contained-outline",
-        "contained-fill",
-        "tabs-outline",
-        "tabs-fill"
+        "separated",
+        "contained",
+        "tabs"
       ] satisfies AccordionVariant[],
+      styleVariant: ["outline", "fill"] satisfies AccordionStyleVariant[],
       type: ["multiple", "single"],
       collapsible: true
     } satisfies Record<keyof AccordionPlaygroundProps, any>,

@@ -7,53 +7,94 @@ import { ChevronDown } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
-export type AccordionVariant =
-  | "default"
-  | "separated-outline"
-  | "separated-fill"
-  | "contained-outline"
-  | "contained-fill"
-  | "tabs-fill"
-  | "tabs-outline"
+export type AccordionVariant = "default" | "separated" | "contained" | "tabs"
+export type AccordionStyleVariant = "outline" | "fill"
 
 interface AccordionContextValue {
   variant: AccordionVariant
+  styleVariant: AccordionStyleVariant
 }
 
 const AccordionContext = React.createContext<AccordionContextValue>({
-  variant: "default"
+  variant: "default",
+  styleVariant: "outline"
 })
 
 const accordionVariants = cva("max-w-lg my-4 w-full", {
   variants: {
     variant: {
+      // Usa AccordionVariant
       default: "",
-      "separated-outline": "space-y-2",
-      "separated-fill": "space-y-2",
-      "contained-outline": "",
-      "contained-fill": "",
-      "tabs-fill": "space-y-2",
-      "tabs-outline": "space-y-2"
+      separated: "space-y-2",
+      contained: "",
+      tabs: "space-y-2"
     }
   },
-  defaultVariants: { variant: "default" }
+  defaultVariants: {
+    variant: "default"
+  }
 })
 
-const accordionItemVariants = cva("border-b px-4", {
+const accordionItemVariants = cva("", {
+  // Base class empty, to be managed in compound
   variants: {
     variant: {
       default: "",
-      "separated-outline": "border rounded-md",
-      "separated-fill": "border-none rounded-md bg-secondary",
-      "contained-outline":
-        "border border-b-0 last:border-b first:rounded-t-md last:rounded-b-md",
-      "contained-fill":
-        "last:border-none first:rounded-t-md last:rounded-b-md bg-muted",
-      "tabs-fill": "border-none rounded-md data-[state=open]:bg-secondary",
-      "tabs-outline": "border rounded-md data-[state=closed]:border-none"
+      separated: "",
+      contained: "",
+      tabs: ""
+    },
+    styleVariant: {
+      outline: "",
+      fill: ""
     }
   },
-  defaultVariants: { variant: "default" }
+  compoundVariants: [
+    // Default (ignore styleVariant)
+    { variant: "default", className: "border-b px-4" },
+
+    // Separated
+    {
+      variant: "separated",
+      styleVariant: "outline",
+      className: "px-4 border rounded-md"
+    },
+    {
+      variant: "separated",
+      styleVariant: "fill",
+      className: "px-4 border-none rounded-md bg-secondary"
+    },
+
+    // Contained
+    {
+      variant: "contained",
+      styleVariant: "outline",
+      className:
+        "px-4 border border-b-0 last:border-b first:rounded-t-md last:rounded-b-md"
+    },
+    {
+      variant: "contained",
+      styleVariant: "fill",
+      className:
+        "px-4 border-b last:border-none first:rounded-t-md last:rounded-b-md bg-muted"
+    },
+
+    // Tabs
+    {
+      variant: "tabs",
+      styleVariant: "fill",
+      className: "px-4 border-none rounded-md data-[state=open]:bg-secondary"
+    },
+    {
+      variant: "tabs",
+      styleVariant: "outline",
+      className: "px-4 border rounded-md data-[state=closed]:border-none"
+    }
+  ],
+  defaultVariants: {
+    variant: "default",
+    styleVariant: "outline"
+  }
 })
 
 type AccordionPrimitiveRootProps = React.ComponentPropsWithoutRef<
@@ -62,16 +103,18 @@ type AccordionPrimitiveRootProps = React.ComponentPropsWithoutRef<
 
 type AccordionProps = AccordionPrimitiveRootProps & {
   variant?: AccordionVariant
+  styleVariant?: AccordionStyleVariant
 }
 
 const Accordion = ({
   variant = "default",
+  styleVariant = "outline",
   className,
   children,
   ...props
 }: AccordionProps) => {
   return (
-    <AccordionContext.Provider value={{ variant }}>
+    <AccordionContext.Provider value={{ variant, styleVariant }}>
       <AccordionPrimitive.Root
         className={cn(accordionVariants({ variant }), className)}
         {...props}
@@ -83,22 +126,26 @@ const Accordion = ({
 }
 
 const AccordionItem = React.forwardRef<
-  React.ComponentRef<typeof AccordionPrimitive.Item>,
+  React.ElementRef<typeof AccordionPrimitive.Item>,
   React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Item>
 >(({ className, ...props }, ref) => {
-  const { variant } = React.useContext(AccordionContext)
+  const { variant, styleVariant } = React.useContext(AccordionContext)
   return (
     <AccordionPrimitive.Item
       ref={ref}
-      className={cn(accordionItemVariants({ variant }), className)}
+      className={cn(
+        accordionItemVariants({ variant, styleVariant }),
+        className
+      )}
       {...props}
     />
   )
 })
 AccordionItem.displayName = "AccordionItem"
 
+// Componente AccordionTrigger
 const AccordionTrigger = React.forwardRef<
-  React.ComponentRef<typeof AccordionPrimitive.Trigger>,
+  React.ElementRef<typeof AccordionPrimitive.Trigger>,
   React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger>
 >(({ className, children, ...props }, ref) => {
   const { variant } = React.useContext(AccordionContext)
@@ -108,7 +155,7 @@ const AccordionTrigger = React.forwardRef<
         ref={ref}
         className={cn(
           "flex flex-1 items-center justify-between py-4 font-medium transition-all hover:underline [&[data-state=open]>svg]:rotate-180",
-          variant.startsWith("tabs") ? "data-[state=closed]:py-2" : "",
+          variant === "tabs" ? "data-[state=closed]:py-2" : "",
           className
         )}
         {...props}
@@ -122,7 +169,7 @@ const AccordionTrigger = React.forwardRef<
 AccordionTrigger.displayName = AccordionPrimitive.Trigger.displayName
 
 const AccordionContent = React.forwardRef<
-  React.ComponentRef<typeof AccordionPrimitive.Content>,
+  React.ElementRef<typeof AccordionPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Content>
 >(({ className, children, ...props }, ref) => (
   <AccordionPrimitive.Content
@@ -138,4 +185,4 @@ const AccordionContent = React.forwardRef<
 ))
 AccordionContent.displayName = AccordionPrimitive.Content.displayName
 
-export { Accordion, AccordionItem, AccordionTrigger, AccordionContent }
+export { Accordion, AccordionContent, AccordionItem, AccordionTrigger }

@@ -4,6 +4,7 @@ import { AccordionPlaygroundProps } from "./accordion-playground"
 
 export const accordionPlaygroundCode = ({
   variant,
+  styleVariant,
   type,
   collapsible
 }: AccordionPlaygroundProps) => {
@@ -34,19 +35,10 @@ export const accordionPlaygroundCode = ({
 
 `
   if (type === "single") {
-    code += `<Accordion
-    type="single"
-    variant="${variant}"
-    collapsible=${collapsible}
-    defaultValue="item-0"
-  >
+    code += `<Accordion type="single" defaultValue="item-0"${!!variant && variant !== "default" ? ` variant="${variant}"` : ""}${!!styleVariant && !!variant && variant !== "default" ? ` styleVariant="${styleVariant}"` : ""}${collapsible ? " collapsible" : ""}>
   `
   } else {
-    code += `<Accordion
-    type="multiple"
-    variant="${variant}"
-    defaultValue={["item-0"]}
-  >
+    code += `<Accordion type="multiple" defaultValue={["item-0"]${!!variant && variant !== "default" ? ` variant="${variant}"` : ""}${!!styleVariant && !!variant && variant !== "default" ? ` styleVariant="${styleVariant}"` : ""}>
   `
   }
 

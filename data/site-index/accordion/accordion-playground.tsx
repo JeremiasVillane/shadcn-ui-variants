@@ -4,6 +4,7 @@ import {
   Accordion,
   AccordionContent,
   AccordionItem,
+  AccordionStyleVariant,
   AccordionTrigger,
   AccordionVariant
 } from "@/components/ui/accordion"
@@ -25,12 +26,14 @@ const items = [
 
 export interface AccordionPlaygroundProps {
   variant: AccordionVariant
+  styleVariant: AccordionStyleVariant
   type: "single" | "multiple"
   collapsible: boolean
 }
 
 export function AccordionPlayground({
   variant,
+  styleVariant,
   type,
   collapsible
 }: AccordionPlaygroundProps) {
@@ -38,6 +41,7 @@ export function AccordionPlayground({
     <Accordion
       type="single"
       variant={variant}
+      styleVariant={styleVariant}
       collapsible={collapsible}
       defaultValue="item-0"
     >
@@ -49,7 +53,12 @@ export function AccordionPlayground({
       ))}
     </Accordion>
   ) : (
-    <Accordion type="multiple" variant={variant} defaultValue={["item-0"]}>
+    <Accordion
+      type="multiple"
+      variant={variant}
+      styleVariant={styleVariant}
+      defaultValue={["item-0"]}
+    >
       {items.map(({ title, content }, index) => (
         <AccordionItem key={index} value={`item-${index}`}>
           <AccordionTrigger>{title}</AccordionTrigger>
