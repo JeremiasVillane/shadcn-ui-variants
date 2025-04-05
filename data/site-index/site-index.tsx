@@ -8,6 +8,7 @@ import {
   AlertDialogVariant
 } from "@/components/ui/alert-dialog"
 import { BreadcrumbVariant } from "@/components/ui/breadcrumb"
+import { SeparatorVariant } from "@/components/ui/separator"
 import { TabsVariant } from "@/components/ui/tabs"
 
 import {
@@ -29,6 +30,11 @@ import {
   breadcrumbPlaygroundCode,
   BreadcrumbPlaygroundProps
 } from "./breadcrumb"
+import {
+  SeparatorPlayground,
+  separatorPlaygroundCode,
+  SeparatorPlaygroundProps
+} from "./separator"
 import { TabsPlayground, tabsPlaygroundCode, TabsPlaygroundProps } from "./tabs"
 
 interface ComponentDetails {
@@ -148,6 +154,20 @@ export const componentsIndex: ComponentsIndex = {
     cliCommand: "add breadcrumb",
     PlaygroundComponent: BreadcrumbPlayground,
     playgroundCode: breadcrumbPlaygroundCode
+  },
+  separator: {
+    title: "Separator",
+    url: "/components/separator",
+    componentName: "Separator",
+    description: "Custom Separator with variants and new props",
+    playground: {
+      variant: ["default", "dotted", "dashed"] satisfies SeparatorVariant[],
+      label: "OR",
+      chip: false,
+      orientation: ["vertical", "horizontal"]
+    } satisfies Record<keyof SeparatorPlaygroundProps, any>,
+    PlaygroundComponent: SeparatorPlayground,
+    playgroundCode: separatorPlaygroundCode
   },
   tabs: {
     title: "Tabs",

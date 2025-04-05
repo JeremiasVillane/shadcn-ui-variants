@@ -23,7 +23,6 @@ const AccordionContext = React.createContext<AccordionContextValue>({
 const accordionVariants = cva("max-w-lg my-4 w-full", {
   variants: {
     variant: {
-      // Usa AccordionVariant
       default: "",
       separated: "space-y-2",
       contained: "",

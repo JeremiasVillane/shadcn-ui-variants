@@ -2,29 +2,96 @@
 
 import * as React from "react"
 import * as SeparatorPrimitive from "@radix-ui/react-separator"
+import { cva } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
 
+export type SeparatorVariant = "default" | "dotted" | "dashed"
+
+const separatorVariants = cva("shrink-0 bg-border", {
+  variants: {
+    variant: {
+      default: "",
+      dotted: "border border-dotted bg-transparent",
+      dashed: "border border-dashed bg-transparent"
+    },
+    defaultVariants: {
+      variant: "default"
+    }
+  }
+})
+
+interface SeparatorProps
+  extends React.ComponentPropsWithoutRef<typeof SeparatorPrimitive.Root> {
+  variant?: SeparatorVariant
+  label?: string
+  chip?: boolean
+}
+
 const Separator = React.forwardRef<
   React.ComponentRef<typeof SeparatorPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof SeparatorPrimitive.Root>
+  SeparatorProps
 >(
   (
-    { className, orientation = "horizontal", decorative = true, ...props },
+    {
+      className,
+      orientation = "horizontal",
+      decorative = true,
+      variant,
+      label,
+      chip = false,
+      ...props
+    },
     ref
-  ) => (
-    <SeparatorPrimitive.Root
-      ref={ref}
-      decorative={decorative}
-      orientation={orientation}
-      className={cn(
-        "shrink-0 bg-border",
-        orientation === "horizontal" ? "h-[1px] w-full" : "h-full w-[1px]",
-        className
-      )}
-      {...props}
-    />
-  )
+  ) => {
+    const isVertical = orientation === "vertical"
+
+    const primitiveClasses = cn(
+      separatorVariants({ variant }),
+      "relative",
+      isVertical
+        ? `h-full ${variant === "default" ? "w-[1px]" : "w-px border-l border-t-0 border-b-0 border-r-0"}`
+        : `w-full ${variant === "default" ? "h-[1px]" : "h-px border-t border-l-0 border-r-0 border-b-0"}`
+    )
+
+    const labelClasses = cn(
+      "absolute bg-background px-2 text-center text-sm z-10",
+      isVertical
+        ? "left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+        : "left-1/2 top-0 -translate-x-1/2 -translate-y-1/2",
+      chip
+        ? "flex h-8 min-w-8 items-center justify-center rounded-full border bg-muted p-1.5 text-center text-xs"
+        : ""
+    )
+
+    if (!isVertical) {
+      return (
+        <SeparatorPrimitive.Root
+          ref={ref}
+          decorative={decorative}
+          orientation={orientation}
+          className={cn(primitiveClasses, className)}
+          {...props}
+        >
+          {!!label && <div className={labelClasses}>{label}</div>}
+        </SeparatorPrimitive.Root>
+      )
+    }
+
+    return (
+      <div className={cn("flex justify-center self-stretch", className)}>
+        <SeparatorPrimitive.Root
+          ref={ref}
+          decorative={decorative}
+          orientation={orientation}
+          className={primitiveClasses}
+          {...props}
+        >
+          {!!label && <div className={labelClasses}>{label}</div>}
+        </SeparatorPrimitive.Root>
+      </div>
+    )
+  }
 )
 Separator.displayName = SeparatorPrimitive.Root.displayName
 
