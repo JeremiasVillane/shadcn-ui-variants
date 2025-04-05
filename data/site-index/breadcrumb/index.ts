@@ -22,7 +22,7 @@ export const breadcrumb = {
     ] satisfies BreadcrumbVariant[],
     separatorVariant: ["default", "chevrons", "dot", "step", "slash"]
   } satisfies Record<keyof BreadcrumbPlaygroundProps, any>,
-  cliCommand: "add breadcrumb",
+  cliCommand: "add badge",
   PlaygroundComponent: BreadcrumbPlayground,
   playgroundCode: breadcrumbPlaygroundCode
 }
