@@ -35,7 +35,7 @@ export function CodeBlock({
   }, [code])
 
   return (
-    <Card className={cn("relative", className)}>
+    <Card className={cn("bg-code relative overflow-hidden", className)}>
       <CardContent className="max-w-2xl p-0" {...props}>
         {registryUrl && (
           <div className="border-b px-8 pb-8 pt-6">

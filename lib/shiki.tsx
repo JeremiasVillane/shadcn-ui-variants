@@ -43,8 +43,8 @@ export async function getHighlightedCodeNodes(code: string) {
   return await highlight(code, {
     lang: "tsx",
     themes: {
-      light: "github-light",
-      dark: "dark-plus"
+      light: "vitesse-dark",
+      dark: "vitesse-dark"
     },
     transformers: [transformerNotationDiff(), transformerNotationHighlight()]
   })

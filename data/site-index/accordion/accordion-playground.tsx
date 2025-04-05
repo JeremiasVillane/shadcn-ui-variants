@@ -10,18 +10,16 @@ import {
 
 const items = [
   {
-    title: "Is it accessible?",
-    content: "Yes. It adheres to the WAI-ARIA design pattern."
+    title: "Who am I?",
+    content: "An organized collection of atoms... for now."
   },
   {
-    title: "Is it styled?",
-    content:
-      "Yes. It comes with default styles that matches the other components' aesthetic."
+    title: "What am I doing here?",
+    content: "Trying not to cause too much trouble."
   },
   {
-    title: "Is it animated?",
-    content:
-      "Yes. It's animated by default, but you can disable it if you prefer."
+    title: "Does it make sense?",
+    content: "Probably not, but let's roll with it."
   }
 ]
 

@@ -16,16 +16,12 @@ import {
 
 export interface AlertPlaygroundProps {
   variant: AlertVariant
-  title: string
-  description: string
   withIcon: boolean
   customIcon: string
 }
 
 export function AlertPlayground({
   variant,
-  title,
-  description,
   withIcon,
   customIcon
 }: AlertPlaygroundProps) {
@@ -44,8 +40,8 @@ export function AlertPlayground({
         ? { customIcon: customIcons[customIcon] }
         : {})}
     >
-      <AlertTitle>{title}</AlertTitle>
-      <AlertDescription>{description}</AlertDescription>
+      <AlertTitle>Pay attention!</AlertTitle>
+      <AlertDescription>The world is around you.</AlertDescription>
     </Alert>
   )
 }

@@ -2,8 +2,6 @@ import { AlertDialogPlaygroundProps } from "./alert-dialog-playground"
 
 export const AlertDialogPlaygroundCode = ({
   variant,
-  title,
-  description,
   withIcon,
   customIcon
 }: AlertDialogPlaygroundProps) => {
@@ -36,9 +34,9 @@ export default function AlertDialogPlayground() {
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>${title}</AlertDialogTitle>
+          <AlertDialogTitle>This is just an advice</AlertDialogTitle>
           <AlertDialogDescription>
-            ${description}
+            Everything is happening right now. All of this is going somewhere, wether you like it or not. So, sit down.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

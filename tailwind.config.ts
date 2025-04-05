@@ -63,6 +63,9 @@ const config = {
           "primary-foreground":
             "hsl(var(--sidebar-primary-foreground, var(--primary-foreground)))",
           ring: "hsl(var(--sidebar-ring, var(--ring)))"
+        },
+        code: {
+          DEFAULT: "hsl(var(--code))"
         }
       },
       fontFamily: {

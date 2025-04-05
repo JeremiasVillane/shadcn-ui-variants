@@ -88,9 +88,7 @@ export const componentsIndex: ComponentsIndex = {
         "CircleHelp",
         "CircleFadingArrowUp",
         "none"
-      ],
-      title: "Pay attention!",
-      description: "The world is around you."
+      ]
     } satisfies Record<keyof AlertPlaygroundProps, any>,
     cliCommand: "add alert",
     PlaygroundComponent: AlertPlayground,
@@ -122,10 +120,7 @@ export const componentsIndex: ComponentsIndex = {
         "CircleHelp",
         "CircleFadingArrowUp",
         "none"
-      ],
-      title: "This is just an advice",
-      description:
-        "Everything is happening right now. All of this is going somewhere, wether you like it or not. So, sit down."
+      ]
     } satisfies Record<keyof AlertDialogPlaygroundProps, any>,
     cliCommand: "add alert-dialog",
     PlaygroundComponent: AlertDialogPlayground,
@@ -167,11 +162,7 @@ export const componentsIndex: ComponentsIndex = {
         "segmented",
         "bootstrap",
         "vercel"
-      ] satisfies TabsVariant[],
-      numberOfTabs: ["1", "2", "3"],
-      tab1Title: "Tab 1",
-      tab2Title: "Tab 2",
-      tab3Title: "Tab 3"
+      ] satisfies TabsVariant[]
     } satisfies Record<keyof TabsPlaygroundProps, any>,
     cliCommand: "add tabs",
     PlaygroundComponent: TabsPlayground,

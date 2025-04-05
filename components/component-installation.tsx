@@ -49,7 +49,7 @@ export default function ComponentInstallation({
                 <TimelineContent>
                   <PackageManagerTabs
                     cliCommand={cliCommand}
-                    className="py-6"
+                    className="pt-2"
                   />
                 </TimelineContent>
               </TimelineItem>

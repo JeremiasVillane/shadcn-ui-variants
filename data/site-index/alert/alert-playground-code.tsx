@@ -4,8 +4,6 @@ import { AlertPlaygroundProps } from "./alert-playground"
 
 export const alertPlaygroundCode = ({
   variant,
-  title,
-  description,
   withIcon,
   customIcon
 }: AlertPlaygroundProps) => {
@@ -26,8 +24,8 @@ import {
 export function AlertPlayground() {
   return (
     <Alert variant="${variant}"${!withIcon ? ` withIcon={${withIcon}}` : ""}${!!withIcon && !!customIcon && customIcon !== "none" ? ` customIcon={<${customIcon} className="size-4" />}` : ""}>
-      <AlertTitle>${title}</AlertTitle>
-      <AlertDescription>${description}</AlertDescription>
+      <AlertTitle>Pay attention!</AlertTitle>
+      <AlertDescription>The world is around you.</AlertDescription>
     </Alert>
   )
 }
