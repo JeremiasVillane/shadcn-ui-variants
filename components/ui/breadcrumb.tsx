@@ -1,15 +1,77 @@
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
-import { ChevronRight, MoreHorizontal } from "lucide-react"
+import { ChevronRight, ChevronsRight, MoreHorizontal } from "lucide-react"
 
 import { cn } from "@/lib/utils"
+import { Badge } from "@/components/ui/badge"
 
-const Breadcrumb = React.forwardRef<
-  HTMLElement,
-  React.ComponentPropsWithoutRef<"nav"> & {
-    separator?: React.ReactNode
+export type BreadcrumbVariant =
+  | "default"
+  | "contained"
+  | "badge-active"
+  | "badge-outline"
+  | "badge-fill"
+export type BreadcrumbSeparatorVariant =
+  | "default"
+  | "slash"
+  | "dot"
+  | "chevrons"
+  | "step"
+
+interface BreadcrumbContextValue {
+  separatorVariant: BreadcrumbSeparatorVariant
+  contained: boolean
+  badgeActive: boolean
+  badgeFill: boolean
+  badgeOutline: boolean
+}
+
+const BreadcrumbContext = React.createContext<BreadcrumbContextValue>({
+  separatorVariant: "default",
+  contained: false,
+  badgeActive: false,
+  badgeFill: false,
+  badgeOutline: false
+})
+
+interface BreadcrumbProps extends React.ComponentPropsWithoutRef<"nav"> {
+  variant?: BreadcrumbVariant
+  separatorVariant?: BreadcrumbSeparatorVariant
+}
+
+const Breadcrumb = React.forwardRef<HTMLElement, BreadcrumbProps>(
+  (
+    { separatorVariant = "default", variant = "default", className, ...props },
+    ref
+  ) => {
+    const contained = variant === "contained"
+    const badgeActive = variant === "badge-active"
+    const badgeFill = variant === "badge-fill"
+    const badgeOutline = variant === "badge-outline"
+
+    const contextValue: BreadcrumbContextValue = {
+      separatorVariant,
+      contained,
+      badgeActive,
+      badgeFill,
+      badgeOutline
+    }
+
+    return (
+      <BreadcrumbContext.Provider value={contextValue}>
+        <nav
+          ref={ref}
+          aria-label="breadcrumb"
+          className={cn(
+            contained && "rounded-lg bg-secondary px-3 py-1.5",
+            className
+          )}
+          {...props}
+        />
+      </BreadcrumbContext.Provider>
+    )
   }
->(({ ...props }, ref) => <nav ref={ref} aria-label="breadcrumb" {...props} />)
+)
 Breadcrumb.displayName = "Breadcrumb"
 
 const BreadcrumbList = React.forwardRef<
@@ -41,10 +103,9 @@ BreadcrumbItem.displayName = "BreadcrumbItem"
 
 const BreadcrumbLink = React.forwardRef<
   HTMLAnchorElement,
-  React.ComponentPropsWithoutRef<"a"> & {
-    asChild?: boolean
-  }
->(({ asChild, className, ...props }, ref) => {
+  React.ComponentPropsWithoutRef<"a"> & { asChild?: boolean }
+>(({ asChild, className, children, ...props }, ref) => {
+  const { badgeFill, badgeOutline } = React.useContext(BreadcrumbContext)
   const Comp = asChild ? Slot : "a"
 
   return (
@@ -52,7 +113,25 @@ const BreadcrumbLink = React.forwardRef<
       ref={ref}
       className={cn("transition-colors hover:text-foreground", className)}
       {...props}
-    />
+    >
+      {badgeFill ? (
+        <Badge
+          variant="secondary"
+          className="rounded-full font-medium shadow-none"
+        >
+          {children}
+        </Badge>
+      ) : badgeOutline ? (
+        <Badge
+          variant="outline"
+          className="rounded-full font-medium shadow-none"
+        >
+          {children}
+        </Badge>
+      ) : (
+        children
+      )}
+    </Comp>
   )
 })
 BreadcrumbLink.displayName = "BreadcrumbLink"
@@ -60,32 +139,86 @@ BreadcrumbLink.displayName = "BreadcrumbLink"
 const BreadcrumbPage = React.forwardRef<
   HTMLSpanElement,
   React.ComponentPropsWithoutRef<"span">
->(({ className, ...props }, ref) => (
-  <span
-    ref={ref}
-    role="link"
-    aria-disabled="true"
-    aria-current="page"
-    className={cn("font-normal text-foreground", className)}
-    {...props}
-  />
-))
+>(({ className, children, ...props }, ref) => {
+  const { badgeActive, badgeOutline, badgeFill } =
+    React.useContext(BreadcrumbContext)
+  const content =
+    badgeActive || badgeOutline || badgeFill ? (
+      <Badge className="rounded-full shadow-none">{children}</Badge>
+    ) : (
+      children
+    )
+
+  return (
+    <span
+      ref={ref}
+      role="link"
+      aria-disabled="true"
+      aria-current="page"
+      className={cn("font-normal text-foreground", className)}
+      {...props}
+    >
+      {content}
+    </span>
+  )
+})
 BreadcrumbPage.displayName = "BreadcrumbPage"
 
 const BreadcrumbSeparator = ({
   children,
   className,
   ...props
-}: React.ComponentProps<"li">) => (
-  <li
-    role="presentation"
-    aria-hidden="true"
-    className={cn("[&>svg]:w-3.5 [&>svg]:h-3.5", className)}
-    {...props}
-  >
-    {children ?? <ChevronRight />}
-  </li>
-)
+}: React.ComponentProps<"li">) => {
+  const { separatorVariant } = React.useContext(BreadcrumbContext)
+  let separatorContent: React.ReactNode
+
+  if (children) {
+    separatorContent = children
+  } else {
+    switch (separatorVariant) {
+      case "slash":
+        separatorContent = " / "
+        break
+      case "dot":
+        separatorContent = " • "
+        break
+      case "chevrons":
+        separatorContent = <ChevronsRight />
+        break
+      case "step":
+        separatorContent = (
+          <svg
+            width="40"
+            height="2"
+            role="presentation"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect width="40" height="2" fill="currentColor" />
+          </svg>
+        )
+        break
+      default:
+        separatorContent = <ChevronRight />
+        break
+    }
+  }
+
+  return (
+    <li
+      role="presentation"
+      aria-hidden="true"
+      className={cn(
+        "[&>svg]:h-3.5 [&>svg]:w-3.5",
+        separatorVariant === "step" ? "[&>svg]:w-5.5 [&>svg]:h-full" : "",
+        className
+      )}
+      {...props}
+    >
+      {separatorContent}
+    </li>
+  )
+}
 BreadcrumbSeparator.displayName = "BreadcrumbSeparator"
 
 const BreadcrumbEllipsis = ({
@@ -102,7 +235,7 @@ const BreadcrumbEllipsis = ({
     <span className="sr-only">More</span>
   </span>
 )
-BreadcrumbEllipsis.displayName = "BreadcrumbElipssis"
+BreadcrumbEllipsis.displayName = "BreadcrumbEllipsis"
 
 export {
   Breadcrumb,
@@ -111,5 +244,5 @@ export {
   BreadcrumbLink,
   BreadcrumbPage,
   BreadcrumbSeparator,
-  BreadcrumbEllipsis,
+  BreadcrumbEllipsis
 }

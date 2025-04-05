@@ -16,6 +16,7 @@ import {
 import AlertDialogPlayground, {
   AlertDialogPlaygroundProps
 } from "./alert-dialog/alert-dialog-playground"
+import { BreadcrumbPlayground, breadcrumbPlaygroundCode } from "./breadcrumb"
 import { TabsPlayground, tabsPlaygroundCode, TabsPlaygroundProps } from "./tabs"
 
 interface ComponentDetails {
@@ -80,8 +81,6 @@ export const componentsIndex: ComponentsIndex = {
         "info-fill",
         "info-bootstrap"
       ] satisfies AlertVariant[],
-      alertTitle: "Pay attention!",
-      alertDescription: "The world is around you.",
       withIcon: true,
       customIcon: [
         "CircleUserRound",
@@ -89,7 +88,9 @@ export const componentsIndex: ComponentsIndex = {
         "CircleHelp",
         "CircleFadingArrowUp",
         "none"
-      ]
+      ],
+      title: "Pay attention!",
+      description: "The world is around you."
     } satisfies Record<keyof AlertPlaygroundProps, any>,
     cliCommand: "add alert",
     PlaygroundComponent: AlertPlayground,
@@ -114,9 +115,6 @@ export const componentsIndex: ComponentsIndex = {
         "info-left",
         "info-center"
       ] satisfies AlertDialogVariant[],
-      title: "This is just an advice",
-      description:
-        "Everything is happening right now. All of this is going somewhere, wether you like it or not. So, sit down.",
       withIcon: true,
       customIcon: [
         "CircleUserRound",
@@ -124,11 +122,34 @@ export const componentsIndex: ComponentsIndex = {
         "CircleHelp",
         "CircleFadingArrowUp",
         "none"
-      ]
+      ],
+      title: "This is just an advice",
+      description:
+        "Everything is happening right now. All of this is going somewhere, wether you like it or not. So, sit down."
     } satisfies Record<keyof AlertDialogPlaygroundProps, any>,
     cliCommand: "add alert-dialog",
     PlaygroundComponent: AlertDialogPlayground,
     playgroundCode: alertPlaygroundCode
+  },
+  breadcrumb: {
+    title: "Breadcrumb",
+    url: "/components/breadcrumb",
+    componentName: "breadcrumb",
+    description:
+      "Custom breadcrumb variants with different styles and separators",
+    playground: {
+      variant: [
+        "default",
+        "contained",
+        "badge-active",
+        "badge-outline",
+        "badge-fill"
+      ],
+      separatorVariant: ["default", "chevrons", "dot", "step", "slash"]
+    },
+    cliCommand: "add breadcrumb",
+    PlaygroundComponent: BreadcrumbPlayground,
+    playgroundCode: breadcrumbPlaygroundCode
   },
   tabs: {
     title: "Tabs",

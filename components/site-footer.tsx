@@ -22,6 +22,15 @@ export function SiteFooter() {
             className="font-medium underline underline-offset-4"
           >
             shadcn/ui
+          </Link>{" "}
+          by{" "}
+          <Link
+            href="https://github.com/JeremiasVillane"
+            target="_blank"
+            rel="noreferrer"
+            className="font-semibold underline underline-offset-4"
+          >
+            Jeremias Villane
           </Link>
           .
         </p>

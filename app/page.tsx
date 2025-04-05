@@ -40,7 +40,7 @@ export default function Home() {
             </div>
             <div className="space-x-4">
               <Button asChild>
-                <Link href="/components/button">Explore Components</Link>
+                <Link href="/components/accordion">Explore Components</Link>
               </Button>
               <Button variant="outline" asChild>
                 <Link href="/docs">Documentation</Link>
