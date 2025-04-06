@@ -2,6 +2,7 @@ import { accordion } from "./accordion"
 import { alert } from "./alert"
 import { alertDialog } from "./alert-dialog"
 import { breadcrumb } from "./breadcrumb"
+import { button } from "./button"
 import { input } from "./input"
 import { separator } from "./separator"
 import { slider } from "./slider"
@@ -26,6 +27,7 @@ export const componentsIndex: ComponentsIndex = {
   alert,
   "alert-dialog": alertDialog,
   breadcrumb,
+  button,
   input,
   separator,
   slider,

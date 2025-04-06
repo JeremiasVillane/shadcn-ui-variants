@@ -24,9 +24,9 @@ export const generateMetadata = async (props: {
     params.component as keyof typeof componentsIndex
   ].playground.variant as unknown as string[]
 
-  const title = `Shadcn UI Variants | Discover ${!!variants && variants.length > 0 ? `${variants.length} new custom ${details.title} variants` : "a custom ${details.title} with new functionalities"}`
+  const title = `Shadcn UI Variants | Discover ${!!variants && variants.length > 0 ? `${variants.length} new custom ${details.title} variants` : "a extended ${details.title} with added functionality"}`
 
-  const description = `${!!variants && variants.length > 0 ? `${variants.length} custom variants` : "New functionalities"} for Shadcn UI ${details.title} component. Preview, customize, and copy ready-to-use code snippets to streamline your web development workflow.`
+  const description = `${!!variants && variants.length > 0 ? `${variants.length} custom variants` : "Extended functionality"} for Shadcn UI ${details.title} component. Preview, customize, and copy ready-to-use code snippets to streamline your web development workflow.`
 
   return constructMetadata({
     title,

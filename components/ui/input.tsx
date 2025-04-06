@@ -16,7 +16,10 @@ export interface InputProps
   startAddon?: React.ReactNode
   /** Content (text/button) to display at the end, outside the border (attached). */
   endAddon?: React.ReactNode
-  /** Show character counter/maxLength. */
+  /** 
+   * Show character counter/maxLength. 
+   * @default "false"
+   * */
   showMaxLength?: "inside" | "outside" | "false"
 }
 
