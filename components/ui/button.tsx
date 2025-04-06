@@ -5,24 +5,6 @@ import { Loader2 } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
-const animationClassesMap = {
-  none: "",
-  translateXRight: "transition-transform group-hover:translate-x-0.5",
-  translateXLeft: "transition-transform group-hover:-translate-x-0.5",
-  translateYUp: "transition-transform group-hover:-translate-y-0.5",
-  translateYDown: "transition-transform group-hover:translate-y-0.5",
-  spinLeft: "transition-transform group-hover:-rotate-45",
-  spinRight: "transition-transform group-hover:rotate-45",
-  spinUp: "transition-transform group-hover:-rotate-90",
-  spinDown: "transition-transform group-hover:rotate-90",
-  zoomIn: "transition-transform group-hover:scale-105",
-  zoomOut: "transition-transform group-hover:scale-95",
-  bounce: "transition-transform group-hover:animate-bounce",
-  ping: "transition-transform group-hover:animate-ping",
-  pulse: "transition-transform group-hover:animate-pulse opacity-90",
-  spin: "transition-transform group-hover:animate-spin"
-} as const
-
 const buttonVariants = cva(
   "group inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 active:opacity-95",
   {
@@ -48,25 +30,41 @@ const buttonVariants = cva(
         xs: "h-6 px-1.5",
         lg: "h-11 rounded-md px-8",
         icon: "h-9 w-9"
-      },
-      animation: animationClassesMap
+      }
     },
     defaultVariants: {
       variant: "default",
-      size: "default",
-      animation: "none"
+      size: "default"
     }
   }
 )
 
+const animationClassesMap = {
+  none: "",
+  translateXRight: "transition-transform group-hover:translate-x-0.5",
+  translateXLeft: "transition-transform group-hover:-translate-x-0.5",
+  translateYUp: "transition-transform group-hover:-translate-y-0.5",
+  translateYDown: "transition-transform group-hover:translate-y-0.5",
+  spinLeft: "transition-transform group-hover:-rotate-45",
+  spinRight: "transition-transform group-hover:rotate-45",
+  spinUp: "transition-transform group-hover:-rotate-90",
+  spinDown: "transition-transform group-hover:rotate-90",
+  zoomIn: "transition-transform group-hover:scale-105",
+  zoomOut: "transition-transform group-hover:scale-95",
+  bounce: "transition-transform group-hover:animate-bounce",
+  ping: "transition-transform group-hover:animate-ping",
+  pulse: "transition-transform group-hover:animate-pulse opacity-90",
+  spin: "transition-transform group-hover:animate-spin"
+} as const
+
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    Omit<VariantProps<typeof buttonVariants>, "animation"> {
+    VariantProps<typeof buttonVariants> {
   asChild?: boolean
   isLoading?: boolean
   iconLeft?: React.ReactElement<any, string | React.JSXElementConstructor<any>>
   iconRight?: React.ReactElement<any, string | React.JSXElementConstructor<any>>
-  iconAnimation?: VariantProps<typeof buttonVariants>["animation"]
+  iconAnimation?: keyof typeof animationClassesMap
   iconAnimationTarget?: "left" | "right" | "both" | "none"
 }
 
