@@ -1,13 +1,15 @@
 import { ButtonProps } from "@/components/ui/button"
 
+import { ComponentDetails } from "../site-index"
 import { ButtonPlayground, ButtonPlaygroundProps } from "./button-playground"
 import { buttonPlaygroundCode } from "./button-playground-code"
 
-export const button = {
+export const button: ComponentDetails<ButtonPlaygroundProps> = {
   title: "Button",
   url: "/components/button",
   componentName: "button",
-  description: "A button component with additional variants and functionality.",
+  description:
+    "A supercharged button component with additional variants, animations, extensions and auxiliar subcomponents.",
   playground: {
     variant: [
       "destructive",
@@ -52,7 +54,7 @@ export const button = {
       "left",
       "right"
     ] satisfies ButtonProps["iconAnimationTarget"][]
-  } satisfies Record<keyof ButtonPlaygroundProps, any>,
+  },
   cliCommand: "add button",
   PlaygroundComponent: ButtonPlayground,
   playgroundCode: buttonPlaygroundCode

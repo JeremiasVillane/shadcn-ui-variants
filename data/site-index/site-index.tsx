@@ -8,15 +8,15 @@ import { separator } from "./separator"
 import { slider } from "./slider"
 import { tabs } from "./tabs"
 
-interface ComponentDetails {
+export interface ComponentDetails<T = any> {
   title: string
   url: string
   componentName: string
   description?: string
-  playground: Record<string, string[] | string | number | boolean>
+  playground: Record<keyof T, string[] | string | number | boolean>
   cliCommand?: string
-  PlaygroundComponent: (...args: any[]) => React.JSX.Element
-  playgroundCode: (...args: any[]) => string
+  PlaygroundComponent: (args: T) => React.JSX.Element
+  playgroundCode: (args: T) => string
   className?: string
 }
 

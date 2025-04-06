@@ -1,7 +1,8 @@
+import { ComponentDetails } from "../site-index"
 import { InputPlayground, InputPlaygroundProps } from "./input-playground"
 import { inputPlaygroundCode } from "./input-playground-code"
 
-export const input = {
+export const input: ComponentDetails<InputPlaygroundProps> = {
   title: "Input",
   url: "/components/input",
   componentName: "input",
@@ -15,7 +16,7 @@ export const input = {
     endAddon: ["none", "MailIcon", "gmail.com"],
     maxLength: 33,
     showMaxLength: ["false", "outside", "inside"]
-  } satisfies Record<keyof InputPlaygroundProps, any>,
+  },
   PlaygroundComponent: InputPlayground,
   playgroundCode: inputPlaygroundCode
 }

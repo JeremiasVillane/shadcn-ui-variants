@@ -1,14 +1,15 @@
 import { AlertStyleVariant, AlertVariant } from "@/components/ui/alert"
 
+import { ComponentDetails } from "../site-index"
 import { AlertPlayground, AlertPlaygroundProps } from "./alert-playground"
 import { alertPlaygroundCode } from "./alert-playground-code"
 
-export const alert = {
+export const alert: ComponentDetails<AlertPlaygroundProps> = {
   title: "Alert",
   url: "/components/alert",
   componentName: "alert",
   description:
-    "Custom alert variants with different styles for different statuses.",
+    "Versatile alert component with variants and many styles for different statuses.",
   playground: {
     variant: [
       "default",
@@ -30,7 +31,7 @@ export const alert = {
       "CircleFadingArrowUp",
       "none"
     ]
-  } satisfies Record<keyof AlertPlaygroundProps, any>,
+  },
   cliCommand: "add alert",
   PlaygroundComponent: AlertPlayground,
   playgroundCode: alertPlaygroundCode

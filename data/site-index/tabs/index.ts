@@ -1,13 +1,14 @@
 import { TabsVariant } from "@/components/ui/tabs"
 
+import { ComponentDetails } from "../site-index"
 import { TabsPlayground, TabsPlaygroundProps } from "./tabs-playground"
 import { tabsPlaygroundCode } from "./tabs-playground-code"
 
-export const tabs = {
+export const tabs: ComponentDetails<TabsPlaygroundProps> = {
   title: "Tabs",
   url: "/components/tabs",
   componentName: "tabs",
-  description: "Custom tabs variants with different styles and animations.",
+  description: "Tabs component with extensive style and animation variations.",
   playground: {
     variant: [
       "default",
@@ -20,7 +21,7 @@ export const tabs = {
       "bootstrap",
       "vercel"
     ] satisfies TabsVariant[]
-  } satisfies Record<keyof TabsPlaygroundProps, any>,
+  },
   cliCommand: "add tabs",
   PlaygroundComponent: TabsPlayground,
   playgroundCode: tabsPlaygroundCode

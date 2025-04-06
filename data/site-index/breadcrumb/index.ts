@@ -1,17 +1,18 @@
 import { BreadcrumbVariant } from "@/components/ui/breadcrumb"
 
+import { ComponentDetails } from "../site-index"
 import {
   BreadcrumbPlayground,
   BreadcrumbPlaygroundProps
 } from "./breadcrumb-playground"
 import { breadcrumbPlaygroundCode } from "./breadcrumb-playground-code"
 
-export const breadcrumb = {
+export const breadcrumb: ComponentDetails<BreadcrumbPlaygroundProps> = {
   title: "Breadcrumb",
   url: "/components/breadcrumb",
   componentName: "breadcrumb",
   description:
-    "Custom breadcrumb variants with different styles and separators",
+    "Breadcrumb component with variants, different styles and separators.",
   playground: {
     variant: [
       "default",
@@ -21,7 +22,7 @@ export const breadcrumb = {
       "badge-fill"
     ] satisfies BreadcrumbVariant[],
     separatorVariant: ["default", "chevrons", "dot", "step", "slash"]
-  } satisfies Record<keyof BreadcrumbPlaygroundProps, any>,
+  },
   cliCommand: "add badge",
   PlaygroundComponent: BreadcrumbPlayground,
   playgroundCode: breadcrumbPlaygroundCode

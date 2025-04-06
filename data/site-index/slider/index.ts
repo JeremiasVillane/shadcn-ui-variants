@@ -1,13 +1,15 @@
 import { SliderVariant } from "@/components/ui/slider"
 
+import { ComponentDetails } from "../site-index"
 import { SliderPlayground, SliderPlaygroundProps } from "./slider-playground"
 import { sliderPlaygroundCode } from "./slider-playground-code"
 
-export const slider = {
+export const slider: ComponentDetails<SliderPlaygroundProps> = {
   title: "Slider",
   url: "/components/slider",
   componentName: "slider",
-  description: "A custom Slider with added functionalities.",
+  description:
+    "A versatile slider component with a variety of styles and advanced behaviours.",
   playground: {
     variant: ["default", "solid", "square", "thin"] satisfies SliderVariant[],
     showTooltip: false,
@@ -17,7 +19,7 @@ export const slider = {
     endLabel: "",
     showTicks: true,
     numberOfTicks: 11
-  } satisfies Record<keyof SliderPlaygroundProps, any>,
+  },
   cliCommand: "add slider",
   PlaygroundComponent: SliderPlayground,
   playgroundCode: sliderPlaygroundCode

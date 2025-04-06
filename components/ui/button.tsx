@@ -1,5 +1,7 @@
+"use client"
+
 import * as React from "react"
-import { Slot } from "@radix-ui/react-slot"
+import { Slot, Slottable } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
 import { Loader2 } from "lucide-react"
 
@@ -22,24 +24,21 @@ const buttonVariants = cva(
         secondary:
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
-        link: "text-primary underline-offset-4 hover:underline"
+        link: "text-primary underline-offset-4 hover:underline h-auto px-0 py-0"
       },
       size: {
         default: "h-10 px-4 py-2",
         sm: "h-9 rounded-md px-3",
-        xs: "h-6 px-1.5",
+        xs: "h-6 rounded-md px-1.5 text-xs",
         lg: "h-11 rounded-md px-8",
         icon: "h-9 w-9"
       }
     },
-    defaultVariants: {
-      variant: "default",
-      size: "default"
-    }
+    defaultVariants: { variant: "default", size: "default" }
   }
 )
 
-const animationClassesMap = {
+const animationClasses = {
   none: "",
   translateXRight: "transition-transform group-hover:translate-x-0.5",
   translateXLeft: "transition-transform group-hover:-translate-x-0.5",
@@ -57,18 +56,39 @@ const animationClassesMap = {
   spin: "transition-transform group-hover:animate-spin"
 } as const
 
-export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
+interface BaseButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   asChild?: boolean
+}
+
+interface ButtonProps
+  extends BaseButtonProps,
+    VariantProps<typeof buttonVariants> {
   isLoading?: boolean
-  iconLeft?: React.ReactElement<any, string | React.JSXElementConstructor<any>>
-  iconRight?: React.ReactElement<any, string | React.JSXElementConstructor<any>>
-  iconAnimation?: keyof typeof animationClassesMap
+  iconLeft?: React.ReactElement
+  iconRight?: React.ReactElement
+  iconAnimation?: keyof typeof animationClasses
   iconAnimationTarget?: "left" | "right" | "both" | "none"
 }
 
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+const createInsetButton = (name: string) => {
+  const Component: React.FC<BaseButtonProps> = () => null
+  Component.displayName = name
+  return Component
+}
+
+const LeftInsetButton = createInsetButton("LeftInsetButton")
+const RightInsetButton = createInsetButton("RightInsetButton")
+
+const isInsetButton = (component: React.FC, node: React.ReactNode) =>
+  React.isValidElement(node) &&
+  typeof node.type !== "string" &&
+  (node.type as React.FC).displayName === component.displayName
+
+const Button = React.forwardRef<
+  HTMLButtonElement | HTMLDivElement,
+  ButtonProps
+>(
   (
     {
       className,
@@ -81,61 +101,140 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       iconAnimation = "none",
       iconAnimationTarget = "none",
       children,
+      disabled,
       ...props
     },
     ref
   ) => {
-    const Comp = asChild ? Slot : "button"
+    const [leftInset, rightInset, centerChildren] = React.useMemo(() => {
+      const left: React.ReactElement<BaseButtonProps>[] = []
+      const right: React.ReactElement<BaseButtonProps>[] = []
+      const center: React.ReactNode[] = []
 
-    const targetAnimationClass =
-      iconAnimation && iconAnimation !== "none"
-        ? animationClassesMap[iconAnimation]
-        : ""
+      React.Children.forEach(children, (child) => {
+        if (
+          React.isValidElement(child) &&
+          isInsetButton(LeftInsetButton, child)
+        )
+          left.push(child as React.ReactElement<BaseButtonProps>)
+        else if (
+          React.isValidElement(child) &&
+          isInsetButton(RightInsetButton, child)
+        )
+          right.push(child as React.ReactElement<BaseButtonProps>)
+        else center.push(child)
+      })
+
+      return [left[0], right[0], center]
+    }, [children])
+
+    const isGroup = !!leftInset || !!rightInset
+    const isDisabled = isLoading || disabled
+    const animationClass =
+      iconAnimation !== "none" ? animationClasses[iconAnimation] : ""
+    const shouldAnimate = (side: "left" | "right") =>
+      [side, "both"].includes(iconAnimationTarget) ||
+      !(!!iconLeft && !!iconRight)
 
     const renderIcon = (
-      iconElement: React.ReactElement | undefined,
-      targetSide: "left" | "right",
-      baseMarginClass: string
-    ) => {
-      if (!iconElement || variant === "link" || size === "icon") return null
-
-      const shouldAnimate =
-        targetAnimationClass &&
-        (iconAnimationTarget === targetSide ||
-          iconAnimationTarget === "both" ||
-          !(!!iconLeft && !!iconRight))
-
-      return React.cloneElement(iconElement as React.ReactElement<any>, {
-        "aria-hidden": "true",
+      icon: React.ReactElement<any, any> | undefined,
+      side: "left" | "right"
+    ) =>
+      icon &&
+      React.cloneElement(icon, {
         className: cn(
-          baseMarginClass,
-          "opacity-60",
-          (iconElement as React.ReactElement<any>).props.className,
-          shouldAnimate && targetAnimationClass
+          "shrink-0 opacity-60",
+          icon.props.className,
+          shouldAnimate(side) && animationClass
         )
       })
+
+    if (isGroup) {
+      const renderInset = (
+        inset: React.ReactElement<BaseButtonProps>,
+        position: "left" | "right"
+      ) => {
+        const {
+          asChild: insetAsChild,
+          className: insetClass,
+          ...insetProps
+        } = inset?.props || {}
+        const Comp: React.ElementType = insetAsChild ? Slot : "button"
+
+        return React.createElement(Comp, {
+          type: "button",
+          ...insetProps,
+          ...(!asChild && { disabled: isDisabled || insetProps.disabled }),
+          className: cn(
+            buttonVariants({ variant, size }),
+            "relative border-0 rounded-none focus-visible:z-10",
+            position === "left" ? "rounded-s-md" : "rounded-e-md",
+            insetClass
+          )
+        })
+      }
+
+      return (
+        <div
+          className={cn(
+            "inline-flex items-stretch divide-x divide-border overflow-hidden rounded-md shadow-sm",
+            className
+          )}
+          ref={ref as React.Ref<HTMLDivElement>}
+          role="group"
+        >
+          {leftInset && renderInset(leftInset, "left")}
+
+          {centerChildren.length > 0 &&
+            React.createElement(
+              asChild ? Slot : "button",
+              {
+                type: "button",
+                ...props,
+                ...(!asChild && { disabled: isDisabled }),
+                className: cn(
+                  buttonVariants({ variant, size }),
+                  "relative border-0 rounded-none focus-visible:z-10",
+                  !leftInset && "rounded-s-md",
+                  !rightInset && "rounded-e-md"
+                )
+              },
+              <>
+                {isLoading && (
+                  <Loader2 className="size-4 shrink-0 animate-spin" />
+                )}
+                {!isLoading && renderIcon(iconLeft, "left")}
+                <Slottable>{centerChildren}</Slottable>
+                {renderIcon(iconRight, "right")}
+              </>
+            )}
+
+          {rightInset && renderInset(rightInset, "right")}
+        </div>
+      )
     }
+
+    const Comp: React.ElementType = asChild ? Slot : "button"
+    const shouldShowIcons = variant !== "link" && size !== "icon"
+    const loader = isLoading && (
+      <Loader2 className="size-4 shrink-0 animate-spin" />
+    )
 
     return (
       <Comp
-        className={cn(buttonVariants({ variant, size, className }))}
-        ref={ref}
-        disabled={isLoading || props.disabled}
+        className={cn(buttonVariants({ variant, size }), className)}
+        ref={ref as React.Ref<HTMLButtonElement>}
+        disabled={isDisabled}
         {...props}
       >
-        <>
-          {isLoading && variant !== "link" && size !== "icon" ? (
-            <Loader2 className="-ms-1 size-4 animate-spin" />
-          ) : (
-            renderIcon(iconLeft, "left", "-ms-1")
-          )}
-          {children}
-          {renderIcon(iconRight, "right", "-me-1")}
-        </>
+        {shouldShowIcons && (isLoading ? loader : renderIcon(iconLeft, "left"))}
+        <Slottable>{children}</Slottable>
+        {shouldShowIcons && renderIcon(iconRight, "right")}
       </Comp>
     )
   }
 )
 Button.displayName = "Button"
 
-export { Button, buttonVariants }
+export { Button, buttonVariants, LeftInsetButton, RightInsetButton }
+export type { ButtonProps, BaseButtonProps as InsetButtonProps }
