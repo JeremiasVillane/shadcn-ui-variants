@@ -103,7 +103,9 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
       const shouldAnimate =
         targetAnimationClass &&
-        (iconAnimationTarget === targetSide || iconAnimationTarget === "both")
+        (iconAnimationTarget === targetSide ||
+          iconAnimationTarget === "both" ||
+          !(!!iconLeft && !!iconRight))
 
       return React.cloneElement(iconElement as React.ReactElement<any>, {
         "aria-hidden": "true",

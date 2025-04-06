@@ -1,6 +1,11 @@
 import { Metadata } from "next"
 import Link from "next/link"
-import { GalleryVerticalEnd, Layers, Paintbrush } from "lucide-react"
+import {
+  ArrowRight,
+  GalleryVerticalEnd,
+  Layers,
+  Paintbrush
+} from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -38,13 +43,19 @@ export default function Home() {
                 components with interactive playgrounds.
               </p>
             </div>
+
             <div className="space-x-4">
-              <Button asChild>
-                <Link href="/components/accordion">Explore Components</Link>
-              </Button>
-              <Button variant="outline" asChild>
-                <Link href="/docs">Documentation</Link>
-              </Button>
+              <Link href="/components/accordion">
+                <Button
+                  iconRight={<ArrowRight />}
+                  iconAnimation="translateXRight"
+                >
+                  Explore Components
+                </Button>
+              </Link>
+              <Link href="/docs">
+                <Button variant="outline">Documentation</Button>
+              </Link>
             </div>
           </div>
         </div>
