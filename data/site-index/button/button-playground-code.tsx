@@ -29,7 +29,7 @@ import { Button } from "@/components/ui/button"
 
 export function ButtonPlayground() {
   return (
-    <Button${variant !== "default" ? ` variant="${variant}"` : ""}${size !== "default" ? ` size="${size}"` : ""}${isIconLeft ? ` iconLeft={${iconLeft}}` : ""}${isIconRight ? ` iconRight={${iconRight}}` : ""}${isAnimated ? ` iconAnimation="${iconAnimation}"` : ""}${isAnimated && iconAnimationTarget !== "none" ? ` iconAnimationTarget="${iconAnimationTarget}"` : ""}${isLoading ? " isLoading" : ""}${disabled ? " disabled" : ""}>
+    <Button${variant !== "default" ? ` variant="${variant}"` : ""}${size !== "default" ? ` size="${size}"` : ""}${isIconLeft ? ` iconLeft={${iconLeft}}` : ""}${isIconRight ? ` iconRight={${iconRight}}` : ""}${isIconLeft || isIconRight ? `${isAnimated ? ` iconAnimation="${iconAnimation}"` : ""}${isAnimated && iconAnimationTarget !== "none" ? ` iconAnimationTarget="${iconAnimationTarget}"` : ""}` : ""}${isLoading ? " isLoading" : ""}${disabled ? " disabled" : ""}>
       Click me!
     </Button>
   )
