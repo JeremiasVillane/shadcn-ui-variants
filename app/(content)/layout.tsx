@@ -18,7 +18,7 @@ export default function ComponentsLayout({
             <div className="mx-auto w-full min-w-0">{children}</div>
           </main>
 
-          <TOC className="sticky top-14 hidden h-[calc(100vh-3.5rem)] bg-background px-6 py-6 lg:py-8 xl:block" />
+          <TOC className="sticky top-14 hidden h-[calc(100vh-3.5rem)] bg-background px-6 py-8 xl:block" />
         </div>
       </div>
     </div>

@@ -1,11 +1,12 @@
 import { Separator } from "@/components/ui/separator"
+import { MainHeading, SubHeading } from "@/components/typography"
 
 export default function DocsPage() {
   return (
-    <div className="container py-10">
+    <main className="container py-10">
       <div className="mx-auto max-w-3xl space-y-6">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Documentation</h1>
+          <MainHeading>Documentation</MainHeading>
           <p className="text-muted-foreground">
             Learn how to use and customize shadcn/ui variants.
           </p>
@@ -14,9 +15,7 @@ export default function DocsPage() {
         <Separator />
 
         <section className="space-y-4">
-          <h2 className="text-2xl font-semibold tracking-tight">
-            Introduction
-          </h2>
+          <SubHeading id="intro">Introduction</SubHeading>
           <p>
             Shadcn Variants is a collection of custom variations for shadcn/ui
             components. This site provides interactive playgrounds to test
@@ -26,9 +25,7 @@ export default function DocsPage() {
         </section>
 
         <section className="space-y-4">
-          <h2 className="text-2xl font-semibold tracking-tight">
-            Getting Started
-          </h2>
+          <SubHeading id="start">Getting Started</SubHeading>
           <p>
             To use the custom variants in your project, you'll need to have
             shadcn/ui installed. If you haven't already, follow the official
@@ -51,9 +48,7 @@ export default function DocsPage() {
         </section>
 
         <section className="space-y-4">
-          <h2 className="text-2xl font-semibold tracking-tight">
-            Using the Variants
-          </h2>
+          <SubHeading id="using">Using the Variants</SubHeading>
           <p>There are two ways to use the custom variants:</p>
           <ol className="list-decimal space-y-2 pl-6">
             <li>
@@ -71,7 +66,7 @@ export default function DocsPage() {
         </section>
 
         <section className="space-y-4">
-          <h2 className="text-2xl font-semibold tracking-tight">Playground</h2>
+          <SubHeading id="playground">Playground</SubHeading>
           <p>The playground section on each component page allows you to:</p>
           <ul className="list-disc space-y-2 pl-6">
             <li>Customize component properties in real-time</li>
@@ -85,9 +80,7 @@ export default function DocsPage() {
         </section>
 
         <section className="space-y-4">
-          <h2 className="text-2xl font-semibold tracking-tight">
-            Contributing
-          </h2>
+          <SubHeading id="contributing">Contributing</SubHeading>
           <p>
             We welcome contributions to Shadcn Variants! If you have created a
             custom variant that you'd like to share, please submit a pull
@@ -101,6 +94,6 @@ export default function DocsPage() {
           </ul>
         </section>
       </div>
-    </div>
+    </main>
   )
 }

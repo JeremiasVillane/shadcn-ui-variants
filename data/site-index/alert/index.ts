@@ -9,7 +9,7 @@ export const alert: ComponentDetails<AlertPlaygroundProps> = {
   url: "/components/alert",
   componentName: "alert",
   description:
-    "Versatile alert component with variants and many styles for different statuses.",
+    "Alert component with variants and styles for different statuses.",
   playground: {
     variant: [
       "default",

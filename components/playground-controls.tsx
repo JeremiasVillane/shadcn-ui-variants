@@ -32,7 +32,7 @@ export function PlaygroundControls({
 }: PlaygroundControlsProps) {
   return (
     <div className="space-y-4">
-      <SubHeadingSmall id="api">API</SubHeadingSmall>
+      <SubHeadingSmall id="customize">Customize</SubHeadingSmall>
 
       <div className="grid gap-6 sm:grid-cols-2">
         {Object.entries(playground).map(([control, value], index) => {

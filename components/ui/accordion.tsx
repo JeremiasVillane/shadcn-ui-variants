@@ -35,7 +35,7 @@ const accordionVariants = cva("max-w-lg my-4 w-full", {
 })
 
 const accordionItemVariants = cva("", {
-  // Base class empty, to be managed in compound
+  // Managed in compound
   variants: {
     variant: {
       default: "",
@@ -49,10 +49,7 @@ const accordionItemVariants = cva("", {
     }
   },
   compoundVariants: [
-    // Default (ignore styleVariant)
     { variant: "default", className: "border-b px-4" },
-
-    // Separated
     {
       variant: "separated",
       styleVariant: "outline",
@@ -63,8 +60,6 @@ const accordionItemVariants = cva("", {
       styleVariant: "fill",
       className: "px-4 border-none rounded-md bg-secondary"
     },
-
-    // Contained
     {
       variant: "contained",
       styleVariant: "outline",
@@ -77,8 +72,6 @@ const accordionItemVariants = cva("", {
       className:
         "px-4 border-b last:border-none first:rounded-t-md last:rounded-b-md bg-muted"
     },
-
-    // Tabs
     {
       variant: "tabs",
       styleVariant: "fill",
@@ -142,7 +135,6 @@ const AccordionItem = React.forwardRef<
 })
 AccordionItem.displayName = "AccordionItem"
 
-// Componente AccordionTrigger
 const AccordionTrigger = React.forwardRef<
   React.ElementRef<typeof AccordionPrimitive.Trigger>,
   React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger>

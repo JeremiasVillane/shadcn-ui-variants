@@ -50,7 +50,7 @@ export function ComponentPlayground({
   )
 
   return (
-    <div>
+    <main>
       <header className="mb-6">
         <SubHeading id="playground">Playground</SubHeading>
         {name && (
@@ -91,6 +91,6 @@ export function ComponentPlayground({
       </Tabs>
 
       <Separator className="my-6" />
-    </div>
+    </main>
   )
 }
