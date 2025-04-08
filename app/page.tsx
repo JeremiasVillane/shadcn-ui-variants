@@ -7,10 +7,13 @@ import {
   Paintbrush
 } from "lucide-react"
 
-import { cn } from "@/lib/utils"
+import { BlurFade } from "@/components/ui/blur-fade"
+import { BlurIn } from "@/components/ui/blur-in"
 import { Button } from "@/components/ui/button"
-import { DotPattern } from "@/components/ui/dot-pattern"
-import { MagicCard, MagicContainer } from "@/components/ui/magic-card"
+import { Card } from "@/components/ui/card"
+import { DotBackground } from "@/components/ui/dot-background"
+import { GridBackground } from "@/components/ui/grid-background"
+import { WordFadeIn } from "@/components/ui/word-fade-in"
 
 export const metadata: Metadata = {
   title: "Home",
@@ -19,32 +22,39 @@ export const metadata: Metadata = {
 }
 
 const cardStyle =
-  "flex w-full h-full cursor-default flex-col items-center justify-center overflow-hidden p-20 shadow-2xl"
+  "flex w-full h-full cursor-default flex-col items-center justify-center overflow-hidden p-20 shadow-lg hover:border-foreground/20 transition-colors ease-in-out"
 const titleStyle = "flex flex-col items-center justify-center whitespace-nowrap"
 const subtitleStyle = "text-balance pb-2 leading-tight"
 const descriptionStyle = "text-sm text-muted-foreground hidden md:flex"
 
-const GradientDiv = () => (
-  <div className="pointer-events-none absolute inset-0 h-full bg-[radial-gradient(circle_at_50%_120%,rgba(120,119,198,0.3),rgba(255,255,255,0))]" />
-)
-
 export default function Home() {
   return (
-    <main className="flex-1">
-      <section className="relative h-screen w-full py-12 md:py-24 lg:py-32 xl:py-48">
+    <DotBackground
+      className="flex h-full flex-1 flex-col"
+      bgStyle="opacity-50 bg-background/30"
+    >
+      <section className="relative flex h-[80vh] w-full items-center justify-center md:h-screen">
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center space-y-4 text-center">
-            <div className="space-y-2">
-              <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none">
-                Custom Variants for shadcn/ui
-              </h1>
-              <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
-                Explore and implement beautiful custom variations of shadcn/ui
-                components with interactive playgrounds.
-              </p>
+            <BlurFade>
+              <GalleryVerticalEnd className="size-24" />
+            </BlurFade>
+            <WordFadeIn words="Shadcn UI Variants" className="text-5xl" />
+            <div className="space-y-2 pt-3">
+              <BlurIn
+                duration={0.25}
+                className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none"
+                word="Custom Variants for shadcn/ui"
+              />
+              <BlurIn
+                duration={0.5}
+                word="Explore and implement beautiful custom variations of shadcn/ui
+                components with interactive playgrounds."
+                className="mx-auto max-w-[700px] text-base text-muted-foreground md:text-xl"
+              />
             </div>
 
-            <div className="space-x-4">
+            <BlurFade className="space-x-4 py-6">
               <Link href="/components/accordion">
                 <Button
                   iconRight={<ArrowRight />}
@@ -56,88 +66,82 @@ export default function Home() {
               <Link href="/docs">
                 <Button variant="outline">Documentation</Button>
               </Link>
-            </div>
+            </BlurFade>
           </div>
         </div>
-        <DotPattern
-          cx={1}
-          cy={1}
-          cr={1}
-          className={cn(
-            "h-full [mask-image:linear-gradient(to_bottom_right,white,transparent,white)]"
-          )}
-        />
       </section>
 
-      <section className="w-full bg-muted/50 py-12 md:py-24 lg:py-32">
-        <div className="container px-4 md:px-6">
-          <div className="flex flex-col items-center justify-center space-y-4 text-center">
-            <div className="space-y-2">
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+      <section className="relative flex h-[90vh] w-full items-center justify-center p-12">
+        <article className="container px-4 md:px-6">
+          <div className="flex flex-col items-center justify-center space-y-12 text-center md:gap-8">
+            <BlurFade inView delay={0.3} duration={0.7} className="space-y-4">
+              <h2 className="text-4xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
                 Key Features
               </h2>
               <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
                 Everything you need to customize and extend shadcn/ui components
               </p>
-            </div>
+            </BlurFade>
 
-            <MagicContainer className="flex h-[600px] w-full flex-col gap-4 lg:h-[250px] lg:flex-row">
-              <MagicCard className={cardStyle}>
-                <header className="pb-2">
-                  <div className={titleStyle}>
-                    <Paintbrush className="mb-2 size-6" />
-                    <h3>Custom Variants</h3>
-                  </div>
-                  <p className={subtitleStyle}>
-                    Explore beautiful custom variants
+            <div className="flex h-[600px] w-full flex-col gap-4 lg:h-[250px] lg:flex-row">
+              <BlurFade inView delay={0.3} duration={0.3}>
+                <Card className={cardStyle}>
+                  <header className="pb-2">
+                    <div className={titleStyle}>
+                      <Paintbrush className="mb-2 size-6" />
+                      <h3>Custom Variants</h3>
+                    </div>
+                    <p className={subtitleStyle}>
+                      Explore beautiful custom variants
+                    </p>
+                  </header>
+
+                  <p className={descriptionStyle}>
+                    Each component comes with multiple custom variants that you
+                    can easily copy and use in your projects.
                   </p>
-                </header>
+                </Card>
+              </BlurFade>
 
-                <p className={descriptionStyle}>
-                  Each component comes with multiple custom variants that you
-                  can easily copy and use in your projects.
-                </p>
+              <BlurFade inView delay={0.5} duration={0.5}>
+                <Card className={cardStyle}>
+                  <header className="pb-2">
+                    <div className={titleStyle}>
+                      <Layers className="mb-2 size-6" />
+                      <h3>Interactive Playground</h3>
+                    </div>
+                    <p className={subtitleStyle}>
+                      Test and customize components
+                    </p>
+                  </header>
 
-                <GradientDiv />
-              </MagicCard>
+                  <p className={descriptionStyle}>
+                    Modify component props and see the changes instantly with
+                    our interactive playground.
+                  </p>
+                </Card>
+              </BlurFade>
 
-              <MagicCard className={cardStyle}>
-                <header className="pb-2">
-                  <div className={titleStyle}>
-                    <Layers className="mb-2 size-6" />
-                    <h3>Interactive Playground</h3>
-                  </div>
-                  <p className={subtitleStyle}>Test and customize components</p>
-                </header>
+              <BlurFade inView delay={0.6} duration={0.8}>
+                <Card className={cardStyle}>
+                  <header className="pb-2">
+                    <div className={titleStyle}>
+                      <GalleryVerticalEnd className="mb-2 size-6" />
+                      <h3>Code Snippets</h3>
+                    </div>
+                    <p className={subtitleStyle}>View and copy complete code</p>
+                  </header>
 
-                <p className={descriptionStyle}>
-                  Modify component props and see the changes instantly with our
-                  interactive playground.
-                </p>
-
-                <GradientDiv />
-              </MagicCard>
-
-              <MagicCard className={cardStyle}>
-                <header className="pb-2">
-                  <div className={titleStyle}>
-                    <GalleryVerticalEnd className="mb-2 size-6" />
-                    <h3>Code Snippets</h3>
-                  </div>
-                  <p className={subtitleStyle}>View and copy complete code</p>
-                </header>
-
-                <p className={descriptionStyle}>
-                  Get the exact code you need for each custom component,
-                  including installation instructions.
-                </p>
-
-                <GradientDiv />
-              </MagicCard>
-            </MagicContainer>
+                  <p className={descriptionStyle}>
+                    Get the exact code you need for each custom component,
+                    including installation instructions.
+                  </p>
+                </Card>
+              </BlurFade>
+            </div>
           </div>
-        </div>
+        </article>
       </section>
-    </main>
+    </DotBackground>
   )
 }

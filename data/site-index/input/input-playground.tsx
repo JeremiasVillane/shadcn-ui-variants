@@ -33,7 +33,6 @@ export function InputPlayground({
 
   const endIcons: Record<string, React.ReactElement> = {
     "<ArrowRightIcon />": <ArrowRightIcon />,
-    "<MailIcon />": <MailIcon />
   }
 
   return (
@@ -47,7 +46,7 @@ export function InputPlayground({
         startInline={startInline}
         endInline={endInline}
         {...(startAddon !== "none" ? { startAddon } : {})}
-        {...(endAddon === "MailIcon"
+        {...(endAddon === "<MailIcon />"
           ? { endAddon: <MailIcon size={18} /> }
           : endAddon === "none"
             ? {}
