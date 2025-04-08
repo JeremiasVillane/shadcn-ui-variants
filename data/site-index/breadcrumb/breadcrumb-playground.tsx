@@ -7,13 +7,12 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-  BreadcrumbSeparatorVariant,
-  BreadcrumbVariant
+  type BreadcrumbProps
 } from "@/components/ui/breadcrumb"
 
 export interface BreadcrumbPlaygroundProps {
-  variant: BreadcrumbVariant
-  separatorVariant: BreadcrumbSeparatorVariant
+  variant: BreadcrumbProps["variant"]
+  separatorVariant: BreadcrumbProps["separatorVariant"]
 }
 
 export function BreadcrumbPlayground({

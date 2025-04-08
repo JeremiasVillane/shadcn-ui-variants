@@ -4,9 +4,8 @@ import {
   Accordion,
   AccordionContent,
   AccordionItem,
-  AccordionStyleVariant,
   AccordionTrigger,
-  AccordionVariant
+  type AccordionProps
 } from "@/components/ui/accordion"
 
 const items = [
@@ -25,8 +24,8 @@ const items = [
 ]
 
 export interface AccordionPlaygroundProps {
-  variant: AccordionVariant
-  styleVariant: AccordionStyleVariant
+  variant: AccordionProps["variant"]
+  styleVariant: AccordionProps["styleVariant"]
   type: "single" | "multiple"
   collapsible: boolean
 }

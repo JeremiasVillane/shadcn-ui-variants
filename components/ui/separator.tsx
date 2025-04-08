@@ -6,7 +6,16 @@ import { cva } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
 
-export type SeparatorVariant = "default" | "dotted" | "dashed"
+interface SeparatorProps
+  extends React.ComponentPropsWithoutRef<typeof SeparatorPrimitive.Root> {
+  /** @default "default" */
+  variant?: "default" | "dotted" | "dashed"
+  label?: string
+  /** @default false */
+  chip?: boolean
+  /** @default "horizontal" */
+  orientation?: "horizontal" | "vertical"
+}
 
 const separatorVariants = cva("shrink-0 bg-border", {
   variants: {
@@ -21,14 +30,8 @@ const separatorVariants = cva("shrink-0 bg-border", {
   }
 })
 
-interface SeparatorProps
-  extends React.ComponentPropsWithoutRef<typeof SeparatorPrimitive.Root> {
-  variant?: SeparatorVariant
-  label?: string
-  chip?: boolean
-}
-
-const Separator = React.forwardRef<
+/** Separator component with new variants and styles. */
+export const Separator = React.forwardRef<
   React.ComponentRef<typeof SeparatorPrimitive.Root>,
   SeparatorProps
 >(
@@ -55,7 +58,7 @@ const Separator = React.forwardRef<
     )
 
     const labelClasses = cn(
-      "absolute bg-background px-2 text-center text-sm z-10",
+      "absolute bg-background px-2 text-center text-sm text-foreground/80 z-10",
       isVertical
         ? "left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
         : "left-1/2 top-0 -translate-x-1/2 -translate-y-1/2",
@@ -79,12 +82,12 @@ const Separator = React.forwardRef<
     }
 
     return (
-      <div className={cn("flex justify-center self-stretch", className)}>
+      <div className="flex justify-center self-stretch">
         <SeparatorPrimitive.Root
           ref={ref}
           decorative={decorative}
           orientation={orientation}
-          className={primitiveClasses}
+          className={cn(primitiveClasses, className)}
           {...props}
         >
           {!!label && <div className={labelClasses}>{label}</div>}
@@ -95,4 +98,4 @@ const Separator = React.forwardRef<
 )
 Separator.displayName = SeparatorPrimitive.Root.displayName
 
-export { Separator }
+export type { SeparatorProps }

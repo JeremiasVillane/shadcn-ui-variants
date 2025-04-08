@@ -1,5 +1,7 @@
 "use client"
 
+import { jsxStringToName } from "@/lib/utils"
+
 import { AlertPlaygroundProps } from "./alert-playground"
 
 export const alertPlaygroundCode = ({
@@ -12,7 +14,7 @@ export const alertPlaygroundCode = ({
 ${
   !!withIcon && !!customIcon && customIcon !== "none"
     ? `
-import { ${customIcon} } from "lucide-react"
+import { ${jsxStringToName(customIcon)} } from "lucide-react"
 `
     : ""
 }
@@ -24,7 +26,7 @@ import {
 
 export function AlertPlayground() {
   return (
-    <Alert${variant !== "default" ? ` variant="${variant}"` : ""}${styleVariant !== "outline" ? ` styleVariant="${styleVariant}"` : ""}${withIcon ? ` withIcon={true}` : ""}${withIcon && !!customIcon && customIcon !== "none" ? ` customIcon={<${customIcon} className="size-4" />}` : ""}>
+    <Alert${variant !== "default" ? ` variant="${variant}"` : ""}${styleVariant !== "outline" ? ` styleVariant="${styleVariant}"` : ""}${withIcon ? ` withIcon={true}` : ""}${withIcon && !!customIcon && customIcon !== "none" ? ` customIcon={<${jsxStringToName(customIcon)} className="size-4" />}` : ""}>
       <AlertTitle>Pay attention!</AlertTitle>
       <AlertDescription>The world is around you.</AlertDescription>
     </Alert>

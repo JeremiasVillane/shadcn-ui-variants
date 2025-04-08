@@ -1,37 +1,34 @@
-import { getFileContent } from "@/lib/file"
-import { cn } from "@/lib/utils"
+import { ComponentDoc } from "@/types"
 
+import { getFileContent } from "@/lib/file"
+import { Separator } from "@/components//ui/separator"
+
+import ComponentAPI from "./component-api"
 import ComponentInstallation from "./component-installation"
 import { ComponentPlayground } from "./component-playground"
 
 interface ComponentBlockProps {
-  title: string
-  name: string
-  credit?: {
-    label: string
-    link: string
+  docs: {
+    data: ComponentDoc
+    error?: undefined
   }
-  playground: Record<string, string[] | string | number | boolean>
   cliCommand?: string
+  playground: { [x: string]: string | number | boolean | string[] }
   PlaygroundComponent: (...args: any[]) => React.JSX.Element
   playgroundCode: (...args: any[]) => string
-  className?: string
   children?: React.ReactNode
 }
 
 export default async function ComponentBlock({
-  title,
-  name,
-  credit,
-  playground,
+  docs,
   cliCommand,
+  playground,
   PlaygroundComponent,
-  playgroundCode,
-  className
+  playgroundCode
 }: ComponentBlockProps) {
-  const src = `components/ui/${name}.tsx`
+  const src = `components/ui/${docs.data?.name}.tsx`
   const code = await getFileContent(src)
-  const protocol = process.env.NODE_ENV === "development" ? "http" : "https"
+  // const protocol = process.env.NODE_ENV === "development" ? "http" : "https"
   // const registryUrl = `${protocol}://${config.appUrl}/r/${name}.json`
 
   // Dynamically import the component from its path
@@ -42,20 +39,22 @@ export default async function ComponentBlock({
   // )
 
   return (
-    <main className={cn("flex flex-col rounded-md bg-background", className)}>
+    <main className="flex flex-col rounded-md bg-background pb-96">
       <ComponentPlayground
-        {...{
-          title,
-          name,
-          playground,
-          PlaygroundComponent,
-          playgroundCode
-        }}
+        name={docs.data.name}
+        title={docs.data.title}
+        playground={playground}
+        PlaygroundComponent={PlaygroundComponent}
+        playgroundCode={playgroundCode}
       />
 
-      <ComponentInstallation {...{ name, code, cliCommand }} />
+      <Separator className="my-9" />
+
+      <ComponentInstallation {...{ name: docs.data.name, code, cliCommand }} />
+
+      <Separator className="my-9" />
+
+      <ComponentAPI {...{ docs }} />
     </main>
   )
 }
-
-// const BlockNotFound = () => <p>Block not found</p>

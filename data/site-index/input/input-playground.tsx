@@ -27,17 +27,18 @@ export function InputPlayground({
   showMaxLength
 }: InputPlaygroundProps) {
   const startIcons: Record<string, React.ReactElement> = {
-    SearchIcon: <SearchIcon />,
-    AtSignIcon: <AtSignIcon />
+    "<SearchIcon />": <SearchIcon />,
+    "<AtSignIcon />": <AtSignIcon />
   }
 
   const endIcons: Record<string, React.ReactElement> = {
-    ArrowRightIcon: <ArrowRightIcon />
+    "<ArrowRightIcon />": <ArrowRightIcon />,
+    "<MailIcon />": <MailIcon />
   }
 
   return (
-    <div className="*:not-first:mt-2">
-      <Label htmlFor="inputId">Advanced input</Label>
+    <div className="*:not-first:mt-2 space-y-1.5">
+      <Label htmlFor="inputId">Advanced input:</Label>
       <Input
         id="inputId"
         placeholder="Enter your information..."
@@ -53,6 +54,7 @@ export function InputPlayground({
             : { endAddon })}
         showMaxLength={showMaxLength}
         maxLength={maxLength}
+        autoComplete="off"
       />
     </div>
   )

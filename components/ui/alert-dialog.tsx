@@ -15,17 +15,24 @@ import {
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
 
-export type AlertDialogVariant =
-  | "default"
-  | "success"
-  | "destructive"
-  | "warning"
-  | "info"
-export type AlertDialogStyleVariant = "left" | "center"
+interface AlertDialogProps
+  extends React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Root> {
+  /** @default "default" */
+  variant?: "default" | "success" | "destructive" | "warning" | "info"
+  /** @default "left" */
+  styleVariant?: "left" | "center"
+  /** @default false */
+  withIcon?: boolean
+  customIcon?: React.ReactNode
+  /** @default false */
+  separatedHeader?: boolean
+  /** @default false */
+  separatedFooter?: boolean
+}
 
 interface AlertDialogContextValue {
-  variant: AlertDialogVariant
-  styleVariant: AlertDialogStyleVariant
+  variant: AlertDialogProps["variant"]
+  styleVariant: AlertDialogProps["styleVariant"]
   withIcon: boolean
   customIcon?: React.ReactNode
   separatedHeader: boolean
@@ -44,7 +51,7 @@ const alertDialogContentVariants = cva(
   "fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background shadow-lg duration-200 sm:rounded-lg data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%]"
 )
 
-const headerVariantColors: Record<AlertDialogVariant, string> = {
+const headerVariantColors: Record<string, string> = {
   default: "",
   success: "text-green-600",
   destructive: "text-red-600",
@@ -95,7 +102,7 @@ const alertDialogFooterVariants = cva(
   }
 )
 
-const variantIcons: Record<AlertDialogVariant, React.ReactElement> = {
+const variantIcons = {
   default: <InfoIcon />,
   success: <CheckCircle className="text-green-600" />,
   destructive: <XCircle className="text-red-600" />,
@@ -103,17 +110,12 @@ const variantIcons: Record<AlertDialogVariant, React.ReactElement> = {
   info: <Info className="text-blue-600" />
 }
 
-interface AlertDialogProps
-  extends React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Root> {
-  variant?: AlertDialogVariant
-  styleVariant?: AlertDialogStyleVariant
-  withIcon?: boolean
-  customIcon?: React.ReactNode
-  separatedHeader?: boolean
-  separatedFooter?: boolean
-}
+type AlertDialogPrimitiveRootProps = React.ComponentPropsWithoutRef<
+  typeof AlertDialogPrimitive.Root
+>
 
-const AlertDialog = ({
+/** Extended alert dialog with variants and extra props to handle different scenarios. */
+export const AlertDialog = ({
   variant = "default",
   styleVariant = "left",
   withIcon = false,
@@ -122,7 +124,7 @@ const AlertDialog = ({
   separatedFooter = false,
   children,
   ...props
-}: AlertDialogProps) => (
+}: AlertDialogPrimitiveRootProps & AlertDialogProps) => (
   <AlertDialogContext.Provider
     value={{
       variant,
@@ -225,7 +227,7 @@ const AlertDialogHeader = React.forwardRef<
         <div
           className={cn(
             "-mx-6 mb-0 flex items-center justify-between border-b px-6 pb-3",
-            headerVariantColors[variant] || "text-foreground"
+            headerVariantColors[variant ?? "default"] || "text-foreground"
           )}
         >
           {/* Render Title(s) inside the bar */}
@@ -405,7 +407,6 @@ const AlertDialogCancel = React.forwardRef<
 AlertDialogCancel.displayName = AlertDialogPrimitive.Cancel.displayName
 
 export {
-  AlertDialog,
   AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
@@ -417,3 +418,4 @@ export {
   AlertDialogTitle,
   AlertDialogTrigger
 }
+export type { AlertDialogProps }

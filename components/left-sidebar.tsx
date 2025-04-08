@@ -5,6 +5,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { contentIndex } from "@/data/site-index"
 
+import { toPascalCase } from "@/lib/utils"
 import { Separator } from "@/components/ui/separator"
 
 export default function LeftSidebar() {
@@ -25,25 +26,11 @@ export default function LeftSidebar() {
               <h4 className="text-sm font-medium">{section.label}</h4>
               <nav className="flex flex-col space-y-2">
                 {section.items.map((item) => {
-                  if (typeof item === "object") {
-                    return (
-                      <Link
-                        key={item.url}
-                        href={item.url}
-                        className={getLinkStyle(item.url)}
-                      >
-                        {item.title}
-                      </Link>
-                    )
-                  }
+                  const url =
+                    "url" in item ? item.url : `/components/${item.name}`
                   return (
-                    <Link
-                      key={item}
-                      href={`/components/${item}`}
-                      className={getLinkStyle(`/components/${item}`)}
-                    >
-                      {(item as string).charAt(0).toUpperCase() +
-                        (item as string).slice(1)}
+                    <Link key={url} href={url} className={getLinkStyle(url)}>
+                      {toPascalCase(item.name)}
                     </Link>
                   )
                 })}

@@ -10,14 +10,13 @@ import {
 import {
   Alert,
   AlertDescription,
-  AlertStyleVariant,
   AlertTitle,
-  AlertVariant
+  type AlertProps
 } from "@/components/ui/alert"
 
 export interface AlertPlaygroundProps {
-  variant: AlertVariant
-  styleVariant: AlertStyleVariant
+  variant: AlertProps["variant"]
+  styleVariant: AlertProps["styleVariant"]
   withIcon: boolean
   customIcon: string
 }
@@ -29,10 +28,10 @@ export function AlertPlayground({
   customIcon
 }: AlertPlaygroundProps) {
   const customIcons: Record<string, React.ReactElement> = {
-    CircleUserRound: <CircleUserRound className="size-4" />,
-    CircleDollarSign: <CircleDollarSign className="size-4" />,
-    CircleHelp: <CircleHelp className="size-4" />,
-    CircleFadingArrowUp: <CircleFadingArrowUp className="size-4" />
+    "<CircleUserRound />": <CircleUserRound className="size-4" />,
+    "<CircleDollarSign />": <CircleDollarSign className="size-4" />,
+    "<CircleHelp />": <CircleHelp className="size-4" />,
+    "<CircleFadingArrowUp />": <CircleFadingArrowUp className="size-4" />
   }
 
   return (

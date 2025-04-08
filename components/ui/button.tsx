@@ -1,11 +1,36 @@
-"use client"
-
 import * as React from "react"
 import { Slot, Slottable } from "@radix-ui/react-slot"
-import { cva, type VariantProps } from "class-variance-authority"
+import { cva } from "class-variance-authority"
 import { Loader2 } from "lucide-react"
 
 import { cn } from "@/lib/utils"
+
+interface ButtonProps extends BaseButtonProps {
+  /** @default "default" */
+  // prettier-ignore
+  variant?: "default" | "destructive" | "success" | "warning" | "outline" | "secondary" | "ghost" | "link"
+  /** @default "default" */
+  size?: "default" | "sm" | "xs" | "lg" | "icon"
+  /**
+   * Indicates if the button is in a loading state. When true, it disables the button and shows a loading spinner, replacing the left icon if present, or prepending it otherwise.
+   * @default false */
+  isLoading?: boolean
+  /** @default false */
+  disabled?: boolean
+  /** Element to display as an icon to the left of the button's content. Will be replaced by a loading spinner if `isLoading` is true. */
+  iconLeft?: React.ReactElement
+  /** Element to display as an icon to the right of the button's content. */
+  iconRight?: React.ReactElement
+  /**
+   * Specifies the type of animation to apply to the icon(s) on hover, based on `iconAnimationTarget`.
+   * @default "none" */
+  // prettier-ignore
+  iconAnimation?: "none" | "translateXRight" | "translateXLeft" | "translateYUp" | "translateYDown" | "spinLeft" | "spinRight" | "spinUp" | "spinDown" | "zoomIn" | "zoomOut" | "bounce" | "ping" | "pulse" | "spin"
+  /**
+   * Determines which icon(s) the `iconAnimation` should target. 'left' targets `iconLeft`, 'right' targets `iconRight`, 'both' targets both, and 'none' applies no animation.
+   * @default "none" */
+  iconAnimationTarget?: "right" | "left" | "both" | "none"
+}
 
 const buttonVariants = cva(
   "group inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 active:opacity-95",
@@ -54,21 +79,10 @@ const animationClasses = {
   ping: "transition-transform group-hover:animate-ping",
   pulse: "transition-transform group-hover:animate-pulse opacity-90",
   spin: "transition-transform group-hover:animate-spin"
-} as const
-
-interface BaseButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  asChild?: boolean
 }
 
-interface ButtonProps
-  extends BaseButtonProps,
-    VariantProps<typeof buttonVariants> {
-  isLoading?: boolean
-  iconLeft?: React.ReactElement
-  iconRight?: React.ReactElement
-  iconAnimation?: keyof typeof animationClasses
-  iconAnimationTarget?: "left" | "right" | "both" | "none"
+type BaseButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+  asChild?: boolean
 }
 
 const createInsetButton = (name: string) => {
@@ -85,7 +99,8 @@ const isInsetButton = (component: React.FC, node: React.ReactNode) =>
   typeof node.type !== "string" &&
   (node.type as React.FC).displayName === component.displayName
 
-const Button = React.forwardRef<
+/** A supercharged button component with additional variants, animations, extensions and auxiliar subcomponents. */
+export const Button = React.forwardRef<
   HTMLButtonElement | HTMLDivElement,
   ButtonProps
 >(
@@ -106,7 +121,7 @@ const Button = React.forwardRef<
     },
     ref
   ) => {
-    const [leftInset, rightInset, centerChildren] = React.useMemo(() => {
+    const [leftInset, rightInset, centerChildren] = (() => {
       const left: React.ReactElement<BaseButtonProps>[] = []
       const right: React.ReactElement<BaseButtonProps>[] = []
       const center: React.ReactNode[] = []
@@ -126,7 +141,7 @@ const Button = React.forwardRef<
       })
 
       return [left[0], right[0], center]
-    }, [children])
+    })()
 
     const isGroup = !!leftInset || !!rightInset
     const isDisabled = isLoading || disabled
@@ -236,5 +251,5 @@ const Button = React.forwardRef<
 )
 Button.displayName = "Button"
 
-export { Button, buttonVariants, LeftInsetButton, RightInsetButton }
+export { buttonVariants, LeftInsetButton, RightInsetButton }
 export type { ButtonProps, BaseButtonProps as InsetButtonProps }

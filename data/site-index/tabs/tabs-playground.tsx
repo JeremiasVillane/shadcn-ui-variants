@@ -7,11 +7,11 @@ import {
   TabsContent,
   TabsList,
   TabsTrigger,
-  TabsVariant
+  type TabsProps
 } from "@/components/ui/tabs"
 
 export interface TabsPlaygroundProps {
-  variant: TabsVariant
+  variant: TabsProps["variant"]
 }
 
 export const TabsPlayground = ({ variant }: TabsPlaygroundProps) => {

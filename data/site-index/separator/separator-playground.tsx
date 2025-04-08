@@ -1,7 +1,5 @@
 "use client"
 
-import { SeparatorProps } from "@radix-ui/react-separator"
-
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
@@ -13,10 +11,10 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Separator, SeparatorVariant } from "@/components/ui/separator"
+import { Separator, type SeparatorProps } from "@/components/ui/separator"
 
 export interface SeparatorPlaygroundProps {
-  variant: SeparatorVariant
+  variant: SeparatorProps["variant"]
   label: string
   chip: boolean
   orientation: SeparatorProps["orientation"]
@@ -75,7 +73,10 @@ export function SeparatorPlayground({
                 : "items-center justify-center"
             )}
           >
-            <Button variant="outline" className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              className="flex w-full items-center gap-2"
+            >
               <svg
                 stroke="currentColor"
                 fill="currentColor"

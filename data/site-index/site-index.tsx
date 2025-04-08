@@ -1,3 +1,5 @@
+import { toPascalCase } from "@/lib/utils"
+
 import { accordion } from "./accordion"
 import { alert } from "./alert"
 import { alertDialog } from "./alert-dialog"
@@ -9,15 +11,16 @@ import { slider } from "./slider"
 import { tabs } from "./tabs"
 
 export interface ComponentDetails<T = any> {
-  title: string
-  url: string
-  componentName: string
-  description?: string
-  playground: Record<keyof T, string[] | string | number | boolean>
+  playground?: Record<string, string[] | string | number | boolean>
   cliCommand?: string
   PlaygroundComponent: (args: T) => React.JSX.Element
   playgroundCode: (args: T) => string
-  className?: string
+}
+
+export interface FullComponentDetails extends ComponentDetails {
+  name: string
+  title: string
+  url: string
 }
 
 type ComponentsIndex = Record<string, ComponentDetails>
@@ -34,14 +37,23 @@ export const componentsIndex: ComponentsIndex = {
   tabs
 }
 
-export const components = Object.values(componentsIndex)
+export const components: FullComponentDetails[] = Object.entries(
+  componentsIndex
+).map(([key, value]) => {
+  return {
+    ...value,
+    name: key,
+    title: toPascalCase(key),
+    url: `/components/${key}`
+  }
+})
 
 export const contentIndex = [
   {
     label: "Get Started",
     items: [
       {
-        title: "Introduction",
+        name: "Introduction",
         url: "/docs"
       }
     ]

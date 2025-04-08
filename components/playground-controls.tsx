@@ -2,26 +2,25 @@
 
 import * as React from "react"
 
-import { SubHeadingSmall } from "@/components/typography"
-
-import { Input } from "./ui/input"
-import { Label } from "./ui/label"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue
-} from "./ui/select"
-import { Switch } from "./ui/switch"
+} from "@/components/ui/select"
+import { Switch } from "@/components/ui/switch"
+import { SubHeadingSmall } from "@/components/typography"
 
 interface PlaygroundControlsProps {
-  playground: Record<string, string | number | boolean | string[]>
+  playground: { [x: string]: string | number | boolean | string[] }
   playgroundState: {
     [x: string]: string | number | boolean | string[]
   }
   updatePlaygroundState: React.ActionDispatch<
-    [next: Record<string, string | number | boolean | string[]>]
+    [next: { [key: string]: string | number | boolean }]
   >
 }
 
@@ -31,7 +30,7 @@ export function PlaygroundControls({
   updatePlaygroundState
 }: PlaygroundControlsProps) {
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       <SubHeadingSmall id="customize">Customize</SubHeadingSmall>
 
       <div className="grid gap-6 sm:grid-cols-2">
@@ -91,6 +90,7 @@ export function PlaygroundControls({
                             : e.target.value
                       })
                     }
+                    autoComplete="off"
                   />
                 </div>
               )}

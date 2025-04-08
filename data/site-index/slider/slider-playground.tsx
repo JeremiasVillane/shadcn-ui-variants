@@ -1,9 +1,9 @@
 "use client"
 
-import { Slider, SliderVariant } from "@/components/ui/slider"
+import { Slider, type SliderProps } from "@/components/ui/slider"
 
 export interface SliderPlaygroundProps {
-  variant: SliderVariant
+  variant: SliderProps["variant"]
   withOutput: boolean
   withInput: boolean
   startLabel: string

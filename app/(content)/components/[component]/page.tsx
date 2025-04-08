@@ -1,10 +1,11 @@
 import { notFound } from "next/navigation"
+import { getComponentDocumentation } from "@/actions"
 import { componentsIndex } from "@/data/site-index"
 
 import { constructMetadata } from "@/lib/metadata"
 import { generateOgImageUrl } from "@/lib/og"
-import { absoluteUrl, cn } from "@/lib/utils"
-import { SelectSeparator } from "@/components/ui/select"
+import { absoluteUrl, createPlayground } from "@/lib/utils"
+import { Separator } from "@/components/ui/separator"
 import ComponentBlock from "@/components/component-block"
 import { DescriptionText, MainHeading } from "@/components/typography"
 
@@ -17,16 +18,14 @@ export const generateStaticParams = async () => {
 export const generateMetadata = async (props: {
   params: Promise<{ component: string }>
 }) => {
-  const params = await props.params
-  const details =
-    componentsIndex[params.component as keyof typeof componentsIndex]
-  const variants = componentsIndex[
-    params.component as keyof typeof componentsIndex
-  ].playground.variant as unknown as string[]
+  const name = (await props.params).component
+  const docs = await getComponentDocumentation(`components/ui/${name}.tsx`)
 
-  const title = `Shadcn UI Variants | Discover ${!!variants && variants.length > 0 ? `${variants.length} new custom ${details.title} variants` : "a extended ${details.title} with added functionality"}`
+  if (!docs.data) return
 
-  const description = `${!!variants && variants.length > 0 ? `${variants.length} custom variants` : "Extended functionality"} for Shadcn UI ${details.title} component. Preview, customize, and copy ready-to-use code snippets to streamline your web development workflow.`
+  const title = `Shadcn UI Variants | ${docs.data.title}`
+
+  const description = `${docs.data.description} Preview, customize, copy and install ${docs.data.title} component variants to streamline your web development workflow.`
 
   return constructMetadata({
     title,
@@ -45,7 +44,7 @@ export const generateMetadata = async (props: {
       ]
     },
     alternates: {
-      canonical: absoluteUrl(`/components/${params.component}`)
+      canonical: absoluteUrl(`/components/${name}`)
     }
   })
 }
@@ -55,35 +54,32 @@ interface ComponentPageProps {
 }
 
 export default async function ComponentPage({ params }: ComponentPageProps) {
-  const component = (await params).component
-  const details = componentsIndex[component as keyof typeof componentsIndex]
-  // const components =
-  //   customVariants[component as keyof typeof customVariants] || []
+  const name = (await params).component
+  const details = componentsIndex[name]
 
   if (!details) return notFound()
 
+  const docs = await getComponentDocumentation(`components/ui/${name}.tsx`)
+  const playground = { ...createPlayground(docs), ...details.playground }
+
+  if (!docs.data) {
+    return <div>{docs.error}</div>
+  }
+
   return (
     <div>
-      <MainHeading>{details.title}</MainHeading>
-      <DescriptionText>{details.description}</DescriptionText>
+      <MainHeading>{docs.data.title}</MainHeading>
+      <DescriptionText>{docs.data.description}</DescriptionText>
 
-      <SelectSeparator className="mb-8 mt-6" />
+      <Separator className="mb-8 mt-6" />
 
-      <div className={cn("grid gap-2", details.className)}>
-        <ComponentBlock
-          key={component}
-          title={details.title}
-          name={details.componentName}
-          playground={details.playground}
-          cliCommand={details.cliCommand}
-          PlaygroundComponent={details.PlaygroundComponent}
-          playgroundCode={details.playgroundCode}
-        />
-
-        {/* {components.map((component, index) => (
-          <ComponentBlock key={`${component.title}-${index}`} {...component} />
-        ))} */}
-      </div>
+      <ComponentBlock
+        docs={docs}
+        cliCommand={details.cliCommand}
+        playground={playground}
+        PlaygroundComponent={details.PlaygroundComponent}
+        playgroundCode={details.playgroundCode}
+      />
     </div>
   )
 }

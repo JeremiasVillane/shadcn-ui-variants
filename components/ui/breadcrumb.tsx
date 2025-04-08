@@ -5,21 +5,16 @@ import { ChevronRight, ChevronsRight, MoreHorizontal } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
 
-export type BreadcrumbVariant =
-  | "default"
-  | "contained"
-  | "badge-active"
-  | "badge-outline"
-  | "badge-fill"
-export type BreadcrumbSeparatorVariant =
-  | "default"
-  | "slash"
-  | "dot"
-  | "chevrons"
-  | "step"
+interface BreadcrumbProps extends React.ComponentPropsWithoutRef<"nav"> {
+  /** @default "default" */
+  // prettier-ignore
+  variant?: "default" | "contained" | "badge-active" | "badge-outline" | "badge-fill"
+  /** @default "default" */
+  separatorVariant?: "default" | "slash" | "dot" | "chevrons" | "step"
+}
 
 interface BreadcrumbContextValue {
-  separatorVariant: BreadcrumbSeparatorVariant
+  separatorVariant: BreadcrumbProps["separatorVariant"]
   contained: boolean
   badgeActive: boolean
   badgeFill: boolean
@@ -34,12 +29,8 @@ const BreadcrumbContext = React.createContext<BreadcrumbContextValue>({
   badgeOutline: false
 })
 
-interface BreadcrumbProps extends React.ComponentPropsWithoutRef<"nav"> {
-  variant?: BreadcrumbVariant
-  separatorVariant?: BreadcrumbSeparatorVariant
-}
-
-const Breadcrumb = React.forwardRef<HTMLElement, BreadcrumbProps>(
+/** Breadcrumb component with variants, different styles and separators. */
+export const Breadcrumb = React.forwardRef<HTMLElement, BreadcrumbProps>(
   (
     { separatorVariant = "default", variant = "default", className, ...props },
     ref
@@ -238,7 +229,6 @@ const BreadcrumbEllipsis = ({
 BreadcrumbEllipsis.displayName = "BreadcrumbEllipsis"
 
 export {
-  Breadcrumb,
   BreadcrumbList,
   BreadcrumbItem,
   BreadcrumbLink,
@@ -246,3 +236,4 @@ export {
   BreadcrumbSeparator,
   BreadcrumbEllipsis
 }
+export type { BreadcrumbProps }

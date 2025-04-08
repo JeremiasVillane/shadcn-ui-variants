@@ -1,5 +1,7 @@
 "use client"
 
+import { jsxStringToName } from "@/lib/utils"
+
 import { InputPlaygroundProps } from "./input-playground"
 
 export const inputPlaygroundCode = ({
@@ -12,27 +14,14 @@ export const inputPlaygroundCode = ({
   maxLength,
   showMaxLength
 }: InputPlaygroundProps): string => {
-  const startIconsMap: Record<string, { componentName: string; jsx: string }> =
-    {
-      SearchIcon: { componentName: "SearchIcon", jsx: "<SearchIcon />" },
-      AtSignIcon: { componentName: "AtSignIcon", jsx: "<AtSignIcon />" }
-    }
-
-  const endIconsMap: Record<string, { componentName: string; jsx: string }> = {
-    ArrowRightIcon: {
-      componentName: "ArrowRightIcon",
-      jsx: "<ArrowRightIcon />"
-    }
-  }
-
   const requiredIconNames = new Set<string>()
 
-  if (startIcon !== "none" && startIconsMap[startIcon]) {
-    requiredIconNames.add(startIconsMap[startIcon].componentName)
+  if (startIcon !== "none") {
+    requiredIconNames.add(jsxStringToName(startIcon))
   }
 
-  if (endIcon !== "none" && endIconsMap[endIcon]) {
-    requiredIconNames.add(endIconsMap[endIcon].componentName)
+  if (endIcon !== "none") {
+    requiredIconNames.add(jsxStringToName(endIcon))
   }
 
   if (endAddon === "MailIcon") {
@@ -49,11 +38,11 @@ export const inputPlaygroundCode = ({
   inputProps.push(`id="inputId"`)
   inputProps.push(`placeholder="Enter your information..."`)
 
-  if (startIcon !== "none" && startIconsMap[startIcon]) {
-    inputProps.push(`startIcon={${startIconsMap[startIcon].jsx}}`)
+  if (startIcon !== "none") {
+    inputProps.push(`startIcon={${jsxStringToName(startIcon)}}`)
   }
-  if (endIcon !== "none" && endIconsMap[endIcon]) {
-    inputProps.push(`endIcon={${endIconsMap[endIcon].jsx}}`)
+  if (endIcon !== "none") {
+    inputProps.push(`endIcon={${endIcon}}`)
   }
   if (startInline.length > 0) {
     inputProps.push(`startInline="${startInline}"`)

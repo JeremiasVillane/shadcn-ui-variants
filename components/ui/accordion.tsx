@@ -7,12 +7,19 @@ import { ChevronDown } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
-export type AccordionVariant = "default" | "separated" | "contained" | "tabs"
-export type AccordionStyleVariant = "outline" | "fill"
+interface AccordionProps {
+  /** @default "default" */
+  variant?: "default" | "separated" | "contained" | "tabs"
+  /** @default "outline" */
+  styleVariant?: "outline" | "fill"
+  type: "single" | "multiple"
+  /** @default false */
+  collapsible?: boolean
+}
 
 interface AccordionContextValue {
-  variant: AccordionVariant
-  styleVariant: AccordionStyleVariant
+  variant: AccordionProps["variant"]
+  styleVariant: AccordionProps["styleVariant"]
 }
 
 const AccordionContext = React.createContext<AccordionContextValue>({
@@ -93,18 +100,14 @@ type AccordionPrimitiveRootProps = React.ComponentPropsWithoutRef<
   typeof AccordionPrimitive.Root
 >
 
-type AccordionProps = AccordionPrimitiveRootProps & {
-  variant?: AccordionVariant
-  styleVariant?: AccordionStyleVariant
-}
-
-const Accordion = ({
+/** An accordion component with many variations, styles and animations. */
+export const Accordion = ({
   variant = "default",
   styleVariant = "outline",
   className,
   children,
   ...props
-}: AccordionProps) => {
+}: AccordionPrimitiveRootProps & AccordionProps) => {
   return (
     <AccordionContext.Provider value={{ variant, styleVariant }}>
       <AccordionPrimitive.Root
@@ -118,7 +121,7 @@ const Accordion = ({
 }
 
 const AccordionItem = React.forwardRef<
-  React.ElementRef<typeof AccordionPrimitive.Item>,
+  React.ComponentRef<typeof AccordionPrimitive.Item>,
   React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Item>
 >(({ className, ...props }, ref) => {
   const { variant, styleVariant } = React.useContext(AccordionContext)
@@ -136,7 +139,7 @@ const AccordionItem = React.forwardRef<
 AccordionItem.displayName = "AccordionItem"
 
 const AccordionTrigger = React.forwardRef<
-  React.ElementRef<typeof AccordionPrimitive.Trigger>,
+  React.ComponentRef<typeof AccordionPrimitive.Trigger>,
   React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger>
 >(({ className, children, ...props }, ref) => {
   const { variant } = React.useContext(AccordionContext)
@@ -160,7 +163,7 @@ const AccordionTrigger = React.forwardRef<
 AccordionTrigger.displayName = AccordionPrimitive.Trigger.displayName
 
 const AccordionContent = React.forwardRef<
-  React.ElementRef<typeof AccordionPrimitive.Content>,
+  React.ComponentRef<typeof AccordionPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Content>
 >(({ className, children, ...props }, ref) => (
   <AccordionPrimitive.Content
@@ -176,4 +179,5 @@ const AccordionContent = React.forwardRef<
 ))
 AccordionContent.displayName = AccordionPrimitive.Content.displayName
 
-export { Accordion, AccordionContent, AccordionItem, AccordionTrigger }
+export { AccordionContent, AccordionItem, AccordionTrigger }
+export type { AccordionProps }

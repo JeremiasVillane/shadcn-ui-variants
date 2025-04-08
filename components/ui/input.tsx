@@ -4,10 +4,9 @@ import * as React from "react"
 
 import { cn } from "@/lib/utils"
 
-export interface InputProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {
-  startIcon?: React.ReactElement<HTMLElement | SVGElement>
-  endIcon?: React.ReactElement<HTMLElement | SVGElement>
+interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  startIcon?: React.ReactElement<HTMLElement | SVGElement | unknown>
+  endIcon?: React.ReactElement<HTMLElement | SVGElement | unknown>
   startInline?: string
   endInline?: string
   startAddon?: React.ReactNode
@@ -15,7 +14,8 @@ export interface InputProps
   showMaxLength?: "inside" | "outside" | "false"
 }
 
-const Input = React.forwardRef<HTMLInputElement, InputProps>(
+/** An advanced input component with toggable extensions. */
+export const Input = React.forwardRef<HTMLInputElement, InputProps>(
   (
     {
       className,
@@ -72,7 +72,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           )}
         >
           {startAddon && (
-            <div className="flex items-center border-r border-input bg-accent px-3">
+            <div className="flex items-center border-r border-input bg-accent px-3 text-foreground/80">
               {startAddon}
             </div>
           )}
@@ -149,4 +149,4 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 )
 Input.displayName = "Input"
 
-export { Input }
+export type { InputProps }

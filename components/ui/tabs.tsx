@@ -6,19 +6,14 @@ import { cva } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
 
-export type TabsVariant =
-  | "default"
-  | "underlined"
-  | "brutalist"
-  | "pill-filled"
-  | "pill-outlined"
-  | "pill-boxed"
-  | "segmented"
-  | "bootstrap"
-  | "vercel"
+interface TabsProps
+  extends React.ComponentPropsWithoutRef<typeof TabsPrimitive.Root> {
+  // prettier-ignore
+  variant?: "default" | "underlined" | "brutalist" | "pill-filled" | "pill-outlined" | "pill-boxed" | "segmented" | "bootstrap" | "vercel"
+}
 
 interface TabsContextValue {
-  variant: TabsVariant
+  variant: TabsProps["variant"]
   positions: { value: string; left: number; width: number }[]
   setPositions: React.Dispatch<
     React.SetStateAction<{ value: string; left: number; width: number }[]>
@@ -89,12 +84,8 @@ const tabsTriggerVariants = cva(
   }
 )
 
-export interface TabsProps
-  extends React.ComponentPropsWithoutRef<typeof TabsPrimitive.Root> {
-  variant?: TabsVariant
-}
-
-const Tabs = ({ variant = "default", ...props }: TabsProps) => {
+/** Tabs component with extensive style and animation variations. */
+export const Tabs = ({ variant = "default", ...props }: TabsProps) => {
   const [positions, setPositions] = React.useState<
     { value: string; left: number; width: number }[]
   >([])
@@ -245,4 +236,5 @@ const TabsContent = React.forwardRef<
 ))
 TabsContent.displayName = TabsPrimitive.Content.displayName
 
-export { Tabs, TabsContent, TabsList, TabsTrigger }
+export { TabsContent, TabsList, TabsTrigger }
+export type { TabsProps }

@@ -6,15 +6,15 @@ import { cva } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
 
-export type SliderVariant = "default" | "solid" | "square" | "thin"
-
 interface SliderProps
   extends React.ComponentPropsWithoutRef<typeof SliderPrimitive.Root> {
+  /** @default "default" */
+  variant?: "default" | "solid" | "square" | "thin"
   /**
-   * The visual variant of the slider.
-   * @default "default"
+   * If true, shows a tooltip with the value on the thumb while dragging.
+   * @default false
    */
-  variant?: SliderVariant
+  showTooltip?: boolean
   /**
    * If true, renders an <output> element showing the current value above the slider.
    * @default false
@@ -33,11 +33,6 @@ interface SliderProps
    * Content to display as label at the end of the slider track.
    */
   endLabel?: React.ReactNode
-  /**
-   * If true, shows a tooltip with the value on the thumb while dragging.
-   * @default false
-   */
-  showTooltip?: boolean
   /**
    * If true, shows tooltip ticks below the slider.
    * @default false
@@ -70,7 +65,8 @@ const sliderRootVariants = cva(
   }
 )
 
-const Slider = React.forwardRef<
+/** A versatile slider component with a variety of styles and advanced behaviours. */
+export const Slider = React.forwardRef<
   React.ComponentRef<typeof SliderPrimitive.Root>,
   SliderProps
 >(
@@ -508,4 +504,4 @@ const Slider = React.forwardRef<
 )
 Slider.displayName = SliderPrimitive.Root.displayName
 
-export { Slider }
+export type { SliderProps }

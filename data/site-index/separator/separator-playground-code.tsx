@@ -60,7 +60,10 @@ export function SeparatorPlayground() {
 
           <div
             className="flex ${isVertical ? "flex-1 items-center justify-center" : "items-center justify-center"}">
-            <Button variant="outline" className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              className="flex w-full items-center gap-2"
+            >
               <svg
                 stroke="currentColor"
                 fill="currentColor"

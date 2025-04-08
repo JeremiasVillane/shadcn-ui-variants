@@ -1,16 +1,18 @@
 import * as React from "react"
-import { cva, type VariantProps } from "class-variance-authority"
+import { cva } from "class-variance-authority"
 import { CheckCircle2, CircleAlert, CircleX, InfoIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
-export type AlertVariant =
-  | "default"
-  | "destructive"
-  | "success"
-  | "warning"
-  | "info"
-export type AlertStyleVariant = "outline" | "fill" | "bootstrap"
+interface AlertProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** @default "default" */
+  variant?: "default" | "destructive" | "success" | "warning" | "info"
+  /** @default "outline" */
+  styleVariant?: "outline" | "fill" | "bootstrap"
+  /** @default false */
+  withIcon?: boolean
+  customIcon?: React.ReactElement
+}
 
 const alertVariants = cva(
   "relative w-full rounded-lg border p-4 [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4",
@@ -121,7 +123,7 @@ const alertVariants = cva(
   }
 )
 
-const variantIcons: Record<AlertVariant, React.ReactElement> = {
+const variantIcons = {
   default: <InfoIcon className="size-4" />,
   destructive: <CircleX className="size-4" />,
   success: <CheckCircle2 className="size-4" />,
@@ -129,14 +131,8 @@ const variantIcons: Record<AlertVariant, React.ReactElement> = {
   info: <InfoIcon className="size-4" />
 }
 
-interface AlertProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof alertVariants> {
-  withIcon?: boolean
-  customIcon?: React.ReactElement
-}
-
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
+/** Alert component with variants and styles for different statuses. */
+export const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
   (
     {
       className,
@@ -196,4 +192,5 @@ const AlertDescription = React.forwardRef<
 ))
 AlertDescription.displayName = "AlertDescription"
 
-export { Alert, AlertDescription, AlertTitle }
+export { AlertDescription, AlertTitle }
+export type { AlertProps }

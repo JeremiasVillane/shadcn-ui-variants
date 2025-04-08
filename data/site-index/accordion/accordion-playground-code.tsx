@@ -15,7 +15,6 @@ export const accordionPlaygroundCode = ({
     AccordionContent,
     AccordionItem,
     AccordionTrigger,
-    AccordionVariant
   } from "@/components/ui/accordion"
 
   const items = [

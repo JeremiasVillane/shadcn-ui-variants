@@ -26,7 +26,7 @@ export default function ComponentInstallation({
   cliCommand
 }: ComponentInstallationProps) {
   return (
-    <div>
+    <section>
       <SubHeading id="installation" className="mb-6">
         Installation
       </SubHeading>
@@ -86,6 +86,6 @@ export default function ComponentInstallation({
           </div>
         </TabsContent>
       </Tabs>
-    </div>
+    </section>
   )
 }

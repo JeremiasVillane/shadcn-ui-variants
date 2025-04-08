@@ -1,5 +1,3 @@
-import { SeparatorVariant } from "@/components/ui/separator"
-
 import { ComponentDetails } from "../site-index"
 import {
   SeparatorPlayground,
@@ -8,15 +6,8 @@ import {
 import { separatorPlaygroundCode } from "./separator-playground-code"
 
 export const separator: ComponentDetails<SeparatorPlaygroundProps> = {
-  title: "Separator",
-  url: "/components/separator",
-  componentName: "separator",
-  description: "Separator component with new variants and styles.",
   playground: {
-    variant: ["default", "dotted", "dashed"] satisfies SeparatorVariant[],
-    label: "OR",
-    chip: false,
-    orientation: ["vertical", "horizontal"]
+    label: "OR"
   },
   PlaygroundComponent: SeparatorPlayground,
   playgroundCode: separatorPlaygroundCode

@@ -1,5 +1,7 @@
 "use client"
 
+import { jsxStringToName } from "@/lib/utils"
+
 import { ButtonPlaygroundProps } from "./button-playground"
 
 export const buttonPlaygroundCode = ({
@@ -21,7 +23,7 @@ export const buttonPlaygroundCode = ({
 ${
   showIcon
     ? `
-import { ${isIconLeft ? iconLeft.match(/<([^>]+) \/>/)![1] : ""}${isIconRight ? `${isIconLeft ? ", " : ""}${iconRight.match(/<([^>]+) \/>/)![1]}` : ""} } from "lucide-react`
+import { ${isIconLeft ? jsxStringToName(iconLeft) : ""}${isIconRight ? `${isIconLeft ? ", " : ""}${jsxStringToName(iconRight)}` : ""} } from "lucide-react`
     : ""
 }
 
