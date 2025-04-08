@@ -7,10 +7,11 @@ import { Separator } from "@/components/ui/separator"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { DescriptionTextSmall, SubHeading } from "@/components/typography"
 
-import { CodeBlock } from "./code-block"
+import { CodeBlockWrapper } from "./code-block-wrapper"
 import { CopyToClipboardButton } from "./copy-to-clipboard-button"
 import { DownloadFileButton } from "./download-file-button"
 import { PlaygroundControls } from "./playground-controls"
+import { CodeBlock } from "./ui/code-block"
 
 interface PlaygroundProps {
   name: string
@@ -84,7 +85,14 @@ export function ComponentPlayground({
         </TabsContent>
 
         <TabsContent value="code" className="p-4">
-          <CodeBlock {...{ name, code }} />
+          <CodeBlockWrapper>
+            <CodeBlock
+              language="tsx"
+              filename={`${name}-playground.tsx`}
+              code={code}
+              className="border"
+            />
+          </CodeBlockWrapper>
         </TabsContent>
       </Tabs>
     </section>

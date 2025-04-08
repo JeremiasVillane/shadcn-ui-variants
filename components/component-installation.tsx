@@ -2,8 +2,10 @@ import { TabsContent } from "@radix-ui/react-tabs"
 
 import { SubHeading } from "@/components/typography"
 
-import { CodeBlock } from "./code-block"
+import { CodeBlockWrapper } from "./code-block-wrapper"
+// import { CodeBlock } from "./code-block"
 import PackageManagerTabs from "./package-manager-tabs"
+import { CodeBlock } from "./ui/code-block"
 import { Tabs, TabsList, TabsTrigger } from "./ui/tabs"
 import {
   Timeline,
@@ -74,11 +76,14 @@ export default function ComponentInstallation({
                   your project.
                 </TimelineTitle>
                 <TimelineDescription>
-                  <CodeBlock
-                    {...{ name, code }}
-                    // registryUrl={registryUrl}
-                    className="my-6"
-                  />
+                  <CodeBlockWrapper>
+                    <CodeBlock
+                      language="tsx"
+                      filename={`${name}.tsx`}
+                      code={code}
+                      className="my-6 border"
+                    />
+                  </CodeBlockWrapper>
                 </TimelineDescription>
               </TimelineContent>
             </TimelineItem>

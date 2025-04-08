@@ -21,7 +21,7 @@ export const DownloadFileButton = ({
     const url = URL.createObjectURL(blob)
     const a = document.createElement("a")
     a.href = url
-    a.download = `${name}.tsx`
+    a.download = name
     document.body.appendChild(a)
     a.click()
     document.body.removeChild(a)
@@ -36,6 +36,7 @@ export const DownloadFileButton = ({
       className={cn(
         "text-muted-foreground [&_svg]:size-3.5",
         "transition-transform duration-200 ease-in-out active:scale-90",
+        "hover:bg-background/50",
         className
       )}
       onClick={downloadFile}

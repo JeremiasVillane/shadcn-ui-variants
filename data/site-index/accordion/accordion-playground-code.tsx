@@ -33,21 +33,28 @@ export const accordionPlaygroundCode = ({
   ]
 
 `
+  code += `
+export function AccordionPlayground() {
+  return (
+  `
+
   if (type === "single") {
-    code += `<Accordion type="single" defaultValue="item-0"${!!variant && variant !== "default" ? ` variant="${variant}"` : ""}${!!styleVariant && !!variant && variant !== "default" ? ` styleVariant="${styleVariant}"` : ""}${collapsible ? " collapsible" : ""}>
+    code += `  <Accordion type="single" defaultValue="item-0"${!!variant && variant !== "default" ? ` variant="${variant}"` : ""}${!!styleVariant && !!variant && variant !== "default" ? ` styleVariant="${styleVariant}"` : ""}${collapsible ? " collapsible" : ""}>
   `
   } else {
-    code += `<Accordion type="multiple" defaultValue={["item-0"]${!!variant && variant !== "default" ? ` variant="${variant}"` : ""}${!!styleVariant && !!variant && variant !== "default" ? ` styleVariant="${styleVariant}"` : ""}>
+    code += `  <Accordion type="multiple" defaultValue={["item-0"]${!!variant && variant !== "default" ? ` variant="${variant}"` : ""}${!!styleVariant && !!variant && variant !== "default" ? ` styleVariant="${styleVariant}"` : ""}>
   `
   }
 
-  code += `{items.map(({ title, content }, index) => (
-      <AccordionItem key={index} value={\`item-\${index}\`}>
-        <AccordionTrigger>{title}</AccordionTrigger>
-        <AccordionContent>{content}</AccordionContent>
-      </AccordionItem>
-    ))}
-  </Accordion>`
+  code += `    {items.map(({ title, content }, index) => (
+        <AccordionItem key={index} value={\`item-\${index}\`}>
+          <AccordionTrigger>{title}</AccordionTrigger>
+          <AccordionContent>{content}</AccordionContent>
+        </AccordionItem>
+      ))}
+    </Accordion>
+  )
+}`
 
   return code
 }

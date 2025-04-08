@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/tabs"
 
 import { CopyToClipboardButton } from "./copy-to-clipboard-button"
+import { CodeBlock } from "./ui/code-block"
 
 interface PackageManagersTabsProps {
   cliCommand: string
@@ -63,8 +64,12 @@ export default function PackageManagersTabs({
       </TabsList>
       {tabs.map((tab) => (
         <TabsContent key={tab.value} value={tab.value}>
-          <div className="flex h-10 items-center justify-between gap-2 rounded-md border pl-3 pr-1.5">
-            <code className="text-[13px] truncate">{`${tab.content} ${cliCommand}`}</code>
+          <div className="flex h-10 items-center justify-between gap-2 overflow-hidden rounded-md border bg-neutral-900 px-2">
+            <CodeBlock
+              language="llvm"
+              code={`${tab.content} ${cliCommand}`}
+              className="truncate bg-transparent px-2 py-1 text-[13px]"
+            />
             <CopyToClipboardButton content={`${tab.content} ${cliCommand}`} />
           </div>
         </TabsContent>

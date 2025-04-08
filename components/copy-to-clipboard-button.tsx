@@ -21,6 +21,7 @@ export const CopyToClipboardButton = ({
       {...props}
       className={cn(
         "shrink-0 text-muted-foreground [&_svg]:size-3.5",
+        "hover:bg-background/50",
         className
       )}
       onClick={() => copyToClipboard(content)}
