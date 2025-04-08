@@ -45,7 +45,7 @@ export default function PackageManagersTabs({
     <Tabs
       variant="underlined"
       defaultValue={tabs[0].value}
-      className={cn("min-w-96", className)}
+      className={cn("min-w-0", className)}
       {...props}
     >
       <TabsList className="p-1">
@@ -64,7 +64,7 @@ export default function PackageManagersTabs({
       {tabs.map((tab) => (
         <TabsContent key={tab.value} value={tab.value}>
           <div className="flex h-10 items-center justify-between gap-2 rounded-md border pl-3 pr-1.5">
-            <code className="text-[13px]">{`${tab.content} ${cliCommand}`}</code>
+            <code className="text-[13px] truncate">{`${tab.content} ${cliCommand}`}</code>
             <CopyToClipboardButton content={`${tab.content} ${cliCommand}`} />
           </div>
         </TabsContent>

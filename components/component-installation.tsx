@@ -1,18 +1,20 @@
 import { TabsContent } from "@radix-ui/react-tabs"
 
-import {
-  Timeline,
-  TimelineContent,
-  TimelineDot,
-  TimelineHeading,
-  TimelineItem,
-  TimelineLine
-} from "@/components/ui/timeline"
 import { SubHeading } from "@/components/typography"
 
 import { CodeBlock } from "./code-block"
 import PackageManagerTabs from "./package-manager-tabs"
 import { Tabs, TabsList, TabsTrigger } from "./ui/tabs"
+import {
+  Timeline,
+  TimelineConnector,
+  TimelineContent,
+  TimelineDescription,
+  TimelineItem,
+  TimelineLine,
+  TimelineNode,
+  TimelineTitle
+} from "./ui/timeline"
 
 interface ComponentInstallationProps {
   name: string
@@ -26,7 +28,7 @@ export default function ComponentInstallation({
   cliCommand
 }: ComponentInstallationProps) {
   return (
-    <section>
+    <section className="flex flex-col">
       <SubHeading id="installation" className="mb-6">
         Installation
       </SubHeading>
@@ -41,41 +43,56 @@ export default function ComponentInstallation({
           <Timeline className="py-6">
             {!!cliCommand && (
               <TimelineItem>
-                <TimelineHeading>
-                  Install the following dependencies:
-                </TimelineHeading>
-                <TimelineDot value={1} />
-                <TimelineLine />
+                <TimelineConnector>
+                  <TimelineNode>1</TimelineNode>
+                  <TimelineLine />
+                </TimelineConnector>
+
                 <TimelineContent>
-                  <PackageManagerTabs
-                    cliCommand={cliCommand}
-                    className="pt-2"
-                  />
+                  <TimelineTitle>
+                    Install the following dependencies:
+                  </TimelineTitle>
+                  <TimelineDescription>
+                    <PackageManagerTabs
+                      cliCommand={cliCommand}
+                      className="pt-2"
+                    />
+                  </TimelineDescription>
                 </TimelineContent>
               </TimelineItem>
             )}
 
             <TimelineItem>
-              <TimelineHeading>
-                Copy and paste the following code or download the file into your
-                project.
-              </TimelineHeading>
-              <TimelineDot value={!!cliCommand ? 2 : 1} />
-              <TimelineLine />
+              <TimelineConnector>
+                <TimelineNode>{!!cliCommand ? 2 : 1}</TimelineNode>
+                <TimelineLine />
+              </TimelineConnector>
+
               <TimelineContent>
-                <CodeBlock
-                  {...{ name, code }}
-                  // registryUrl={registryUrl}
-                  className="my-6"
-                />
+                <TimelineTitle>
+                  Copy and paste the following code or download the file into
+                  your project.
+                </TimelineTitle>
+                <TimelineDescription>
+                  <CodeBlock
+                    {...{ name, code }}
+                    // registryUrl={registryUrl}
+                    className="my-6"
+                  />
+                </TimelineDescription>
               </TimelineContent>
             </TimelineItem>
 
             <TimelineItem>
-              <TimelineHeading>
-                Update the import paths to match your project setup.
-              </TimelineHeading>
-              <TimelineDot value={!!cliCommand ? 3 : 2} />
+              <TimelineConnector>
+                <TimelineNode>{!!cliCommand ? 3 : 2}</TimelineNode>
+              </TimelineConnector>
+
+              <TimelineContent>
+                <TimelineTitle>
+                  Update the import paths to match your project setup.
+                </TimelineTitle>
+              </TimelineContent>
             </TimelineItem>
           </Timeline>
         </TabsContent>

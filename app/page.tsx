@@ -31,7 +31,7 @@ const GradientDiv = () => (
 export default function Home() {
   return (
     <main className="flex-1">
-      <section className="relative w-full py-12 md:py-24 lg:py-32 xl:py-48">
+      <section className="relative h-screen w-full py-12 md:py-24 lg:py-32 xl:py-48">
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center space-y-4 text-center">
             <div className="space-y-2">
@@ -64,7 +64,7 @@ export default function Home() {
           cy={1}
           cr={1}
           className={cn(
-            "[mask-image:linear-gradient(to_bottom_right,white,transparent,white)]"
+            "h-full [mask-image:linear-gradient(to_bottom_right,white,transparent,white)]"
           )}
         />
       </section>

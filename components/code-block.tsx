@@ -35,8 +35,8 @@ export function CodeBlock({
   }, [code])
 
   return (
-    <Card className={cn("bg-code relative overflow-hidden", className)}>
-      <CardContent className="max-w-2xl p-0" {...props}>
+    <Card className={cn("bg-code relative overflow-hidden w-full", className)}>
+      <CardContent className="w-full p-0" {...props}>
         {registryUrl && (
           <div className="border-b px-8 pb-8 pt-6">
             <h2 className="mb-2.5 text-lg font-semibold">

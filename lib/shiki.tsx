@@ -30,7 +30,7 @@ export async function highlight(
           {...props}
           className={cn(
             props.className,
-            "h-full overflow-auto px-3 py-4 text-sm leading-none dark:!bg-foreground/5"
+            "h-full overflow-auto px-3 pb-6 pt-4 text-[13px] leading-none dark:!bg-foreground/5"
           )}
           style={{ ...props.style, backgroundColor: undefined }}
         />
@@ -43,8 +43,8 @@ export async function getHighlightedCodeNodes(code: string) {
   return await highlight(code, {
     lang: "tsx",
     themes: {
-      light: "vitesse-dark",
-      dark: "vitesse-dark"
+      light: "github-dark-high-contrast",
+      dark: "github-dark-high-contrast"
     },
     transformers: [transformerNotationDiff(), transformerNotationHighlight()]
   })

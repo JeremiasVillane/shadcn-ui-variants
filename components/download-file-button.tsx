@@ -35,6 +35,7 @@ export const DownloadFileButton = ({
       {...props}
       className={cn(
         "text-muted-foreground [&_svg]:size-3.5",
+        "transition-transform duration-200 ease-in-out active:scale-90",
         className
       )}
       onClick={downloadFile}

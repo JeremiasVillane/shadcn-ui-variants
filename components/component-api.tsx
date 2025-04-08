@@ -60,14 +60,14 @@ export default function ComponentAPI({ docs }: ComponentAPIProps) {
       docs.data.props?.length > 0 ? (
         <div className="rounded-md border">
           <Table>
-            <TableHeader className="bg-muted/30 text-sm">
+            <TableHeader className="bg-muted/30 text-xs md:text-sm">
               <TableRow>
                 <TableHead className="w-[180px]">Prop</TableHead>
                 <TableHead>Type</TableHead>
                 <TableHead className="w-[150px]">Default</TableHead>
               </TableRow>
             </TableHeader>
-            <TableBody className="text-sm">
+            <TableBody className="text-xs md:text-sm">
               {docs.data.props.map((prop) => (
                 <TableRow key={prop.name}>
                   <TableCell className="font-mono">
@@ -87,7 +87,7 @@ export default function ComponentAPI({ docs }: ComponentAPIProps) {
                           <PopoverTrigger>
                             <InfoIcon className="size-3 text-blue-700 dark:text-blue-500" />
                           </PopoverTrigger>
-                          <PopoverContent side="top" className="text-sm">
+                          <PopoverContent side="top" className="text-xs md:text-sm">
                             {prop.description}
                           </PopoverContent>
                         </Popover>

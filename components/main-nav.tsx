@@ -1,8 +1,5 @@
-"use client"
-
 import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { componentsIndex } from "@/data/site-index"
+import { ComponentDoc } from "@/types"
 
 import { cn } from "@/lib/utils"
 import {
@@ -15,50 +12,49 @@ import {
   navigationMenuTriggerStyle
 } from "@/components/ui/navigation-menu"
 
-export function MainNav() {
-  const pathname = usePathname()
+import ComponentNavCard from "./component-nav-card"
 
+interface MainNavProps {
+  navComponentCards: ComponentDoc[]
+}
+
+const navButtonStyle = cn(
+  navigationMenuTriggerStyle(),
+  "bg-transparent h-8 rounded-sm"
+)
+
+export default function MainNav({ navComponentCards }: MainNavProps) {
   return (
     <NavigationMenu>
       <NavigationMenuList>
         <NavigationMenuItem>
           <Link href="/" legacyBehavior passHref>
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+            <NavigationMenuLink className={navButtonStyle}>
               Home
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <NavigationMenuTrigger>Components</NavigationMenuTrigger>
+          <NavigationMenuTrigger className={navButtonStyle}>
+            Components
+          </NavigationMenuTrigger>
           <NavigationMenuContent>
-            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-              {Object.entries(componentsIndex).map(([_, component]) => (
-                <li key={component.title}>
-                  <NavigationMenuLink asChild>
-                    <Link
-                      href={component.url}
-                      className={cn(
-                        "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-                        pathname === component.url &&
-                          "bg-accent text-accent-foreground"
-                      )}
-                    >
-                      <div className="text-sm font-medium leading-none">
-                        {component.title}
-                      </div>
-                      <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                        {component.description}
-                      </p>
-                    </Link>
-                  </NavigationMenuLink>
-                </li>
-              ))}
+            <ul className="grid w-[400px] gap-3 p-4 md:grid-cols-2 xl:w-[600px]">
+              {navComponentCards?.map(
+                (component) =>
+                  component && (
+                    <ComponentNavCard
+                      key={component.name}
+                      component={component}
+                    />
+                  )
+              )}
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
         <NavigationMenuItem>
           <Link href="/docs" legacyBehavior passHref>
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+            <NavigationMenuLink className={navButtonStyle}>
               Documentation
             </NavigationMenuLink>
           </Link>

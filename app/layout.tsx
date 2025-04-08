@@ -8,6 +8,9 @@ import { ThemeProvider } from "@/components/theme-provider"
 
 import "../styles/globals.css"
 
+import { getComponentDocumentation } from "@/actions"
+import { components } from "@/data/site-index"
+
 import { cn } from "@/lib/utils"
 
 const geist = Geist({
@@ -26,17 +29,26 @@ export const metadata: Metadata = {
     "Custom variations of shadcn/ui components with interactive playgrounds"
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const navComponentCards = await Promise.all(
+    components.map(async (component) => {
+      const docs = await getComponentDocumentation(
+        `components/ui/${component.name}.tsx`
+      )
+      return docs.data || null
+    })
+  ).then((res) => res.filter((c) => !!c))
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={cn(geist.className, geistMono.variable, "antialiased")}>
         <ThemeProvider attribute="class" disableTransitionOnChange>
           <div className="relative flex min-h-screen flex-col">
-            <SiteHeader />
+            <SiteHeader navComponentCards={navComponentCards} />
             <div className="flex-1">{children}</div>
             <SiteFooter />
           </div>

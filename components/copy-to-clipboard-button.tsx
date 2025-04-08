@@ -1,7 +1,7 @@
 "use client"
 
 import { useCopyToClipboard } from "@/hooks"
-import { Copy, CopyCheck } from "lucide-react"
+import { Check, Copy } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
@@ -20,19 +20,29 @@ export const CopyToClipboardButton = ({
       size="xs"
       {...props}
       className={cn(
-        "text-muted-foreground [&_svg]:size-3.5",
+        "shrink-0 text-muted-foreground [&_svg]:size-3.5",
         className
       )}
       onClick={() => copyToClipboard(content)}
+      aria-label={
+        isCopied ? "Copied to clipboard" : "Copy command to clipboard"
+      }
     >
-      {isCopied ? (
-        <CopyCheck />
-      ) : (
-        <>
-          <Copy />
-          <span className="sr-only">Copy</span>
-        </>
-      )}
+      <span className="sr-only">{isCopied ? "Copied" : "Copy"}</span>
+      <Copy
+        className={cn(
+          "h-4 w-4 transition-transform duration-200 ease-in-out",
+          isCopied ? "scale-0" : "scale-100"
+        )}
+        aria-hidden={isCopied}
+      />
+      <Check
+        className={cn(
+          "absolute h-4 w-4 transition-transform duration-200 ease-in-out",
+          isCopied ? "scale-100" : "scale-0"
+        )}
+        aria-hidden={!isCopied}
+      />
     </Button>
   )
 }
