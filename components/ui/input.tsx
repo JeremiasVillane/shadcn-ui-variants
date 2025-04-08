@@ -5,12 +5,52 @@ import * as React from "react"
 import { cn } from "@/lib/utils"
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  /**
+   * Optional React element to be displayed as an icon at the beginning of the input,
+   * inside the border. Typically an SVG or an icon component.
+   */
   startIcon?: React.ReactElement<HTMLElement | SVGElement | unknown>
+
+  /**
+   * Optional React element to be displayed as an icon at the end of the input,
+   * inside the border. Typically an SVG or an icon component.
+   */
   endIcon?: React.ReactElement<HTMLElement | SVGElement | unknown>
+
+  /**
+   * Optional string content displayed inline at the start of the input,
+   * after the start icon (if present), inside the border. Useful for prefixes like units or symbols.
+   */
   startInline?: string
+
+  /**
+   * Optional string content displayed inline at the end of the input,
+   * before the end icon or character counter (if present), inside the border. Useful for suffixes.
+   */
   endInline?: string
+
+  /**
+   * Optional React node displayed as an addon before the input field,
+   * visually attached but outside the input's main container/border.
+   * Useful for labels, buttons, or dropdown triggers associated with the input.
+   */
   startAddon?: React.ReactNode
+
+  /**
+   * Optional React node displayed as an addon after the input field,
+   * visually attached but outside the input's main container/border.
+   * Useful for labels, buttons, or dropdown triggers associated with the input.
+   */
   endAddon?: React.ReactNode
+
+  /**
+   * Determines if and where the character count (current/maxLength) is displayed.
+   * Requires the 'maxLength' prop (from HTMLInputElement attributes) to be set.
+   * - 'inside': Show counter inside the input field border, near the end.
+   * - 'outside': Show counter below the input field.
+   * - 'false': Do not show the counter (default).
+   * @default "false"
+   */
   showMaxLength?: "inside" | "outside" | "false"
 }
 

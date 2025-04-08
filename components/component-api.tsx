@@ -165,10 +165,25 @@ function formatSimpleType(type: string): React.ReactNode {
   }
 
   // Handle common react types
-  const reactTypes = ["React.ReactNode", "React.ReactElement"]
+  const baseReactTypes = ["React.ReactNode", "React.ReactElement"]
 
-  if (reactTypes.includes(type)) {
-    return <span className="text-blue-400 dark:text-blue-400">{type}</span>
+  const matchedBaseType = baseReactTypes.find((baseType) =>
+    type.startsWith(baseType)
+  )
+
+  if (matchedBaseType) {
+    const nextCharIndex = matchedBaseType.length
+    if (type.length === nextCharIndex || type[nextCharIndex] === "<") {
+      const highlightedPart = type.substring(0, nextCharIndex)
+      const remainingPart = type.substring(nextCharIndex)
+
+      return (
+        <>
+          <span className="text-blue-400">{highlightedPart}</span>
+          {remainingPart}
+        </>
+      )
+    }
   }
 
   // Handle array types

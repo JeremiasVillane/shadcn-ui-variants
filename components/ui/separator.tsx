@@ -10,9 +10,14 @@ interface SeparatorProps
   extends React.ComponentPropsWithoutRef<typeof SeparatorPrimitive.Root> {
   /** @default "default" */
   variant?: "default" | "dotted" | "dashed"
+
+  /** Optional text to display in the center of the separator. */
   label?: string
-  /** @default false */
+
+  /** If true, displays the label inside a "chip" (rounded capsule).
+   * @default false */
   chip?: boolean
+
   /** @default "horizontal" */
   orientation?: "horizontal" | "vertical"
 }
