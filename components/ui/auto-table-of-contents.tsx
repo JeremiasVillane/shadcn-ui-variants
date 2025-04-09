@@ -11,15 +11,12 @@ function useUrlChange() {
   const lastUrlRef = React.useRef("")
 
   React.useEffect(() => {
-    // Safe access to window for SSR compatibility
     if (typeof window === "undefined") return
 
-    // Set initial URL
     const currentUrl = window.location.href
     lastUrlRef.current = currentUrl
     setUrl(currentUrl)
 
-    // Function to check if URL has changed
     const checkForUrlChange = () => {
       const newUrl = window.location.href
       if (newUrl !== lastUrlRef.current) {
@@ -38,7 +35,6 @@ function useUrlChange() {
 
     window.addEventListener("popstate", handlePopState)
 
-    // Cleanup function
     return () => {
       clearInterval(intervalId)
       window.removeEventListener("popstate", handlePopState)
@@ -121,7 +117,6 @@ export default function AutoTableOfContents({
                 .replace(/[^\w-]/g, "") || `heading-${extractedHeadings.length}`
             heading.id = id
           } else {
-            // Skip headings without IDs when autoGenerateIds is false
             return
           }
         }
@@ -133,33 +128,26 @@ export default function AutoTableOfContents({
         })
       })
 
-      // Only update state if we found enough headings
       if (extractedHeadings.length >= minHeadings) {
         setHeadings(extractedHeadings)
-
-        // Set up intersection observers for the new headings
         setupObservers(extractedHeadings)
       } else {
         setHeadings([])
       }
-    }, 100) // Small delay to ensure DOM is updated
+    }, 100)
 
     return () => {
       clearTimeout(timeoutId)
-      // Clean up observers on effect cleanup
       observersRef.current.forEach((observer) => observer.disconnect())
       observersRef.current = []
     }
   }, [containerSelector, maxDepth, minHeadings, autoGenerateIds, currentUrl])
 
-  // Set up intersection observers to track which heading is active
   const setupObservers = (headings: TOCItem[]) => {
     if (typeof IntersectionObserver === "undefined") {
-      // Fallback for environments without IntersectionObserver
       return
     }
 
-    // Create an intersection observer for each heading
     headings.forEach((heading) => {
       const element = document.getElementById(heading.id)
 
@@ -184,7 +172,6 @@ export default function AutoTableOfContents({
     })
   }
 
-  // Handle click on TOC item
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
     e.preventDefault()
 
@@ -201,7 +188,6 @@ export default function AutoTableOfContents({
     }
   }
 
-  // Don't render if there aren't enough headings
   if (headings.length < minHeadings) {
     return null
   }

@@ -3,7 +3,7 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { contentIndex } from "@/data/site-index"
+import { contentIndex, FullComponentDetails } from "@/data/site-index"
 
 import { toPascalCase } from "@/lib/utils"
 import { Separator } from "@/components/ui/separator"
@@ -13,7 +13,7 @@ export default function LeftSidebar() {
 
   const getLinkStyle = React.useCallback(
     (url: string) =>
-      `text-sm hover:text-foreground/80 ${pathname === url ? "text-foreground" : "text-muted-foreground"}`,
+      `rounded-sm rounded-l-none px-3 py-1 text-sm transition-colors ${pathname === url ? "bg-primary/10 font-medium text-primary border-l-2 border-foreground -ms-0.5" : "text-foreground/80 hover:bg-muted hover:text-foreground"}`,
     [pathname]
   )
 
@@ -27,7 +27,9 @@ export default function LeftSidebar() {
               <nav className="flex flex-col space-y-2">
                 {section.items.map((item) => {
                   const url =
-                    "url" in item ? item.url : `/components/${item.name}`
+                    "url" in item
+                      ? item.url
+                      : `/components/${(item as FullComponentDetails).name}`
                   return (
                     <Link key={url} href={url} className={getLinkStyle(url)}>
                       {toPascalCase(item.name)}

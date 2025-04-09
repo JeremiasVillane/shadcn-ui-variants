@@ -69,8 +69,6 @@ export function createPlayground(docs: ComponentDocResult) {
  *
  * @param value The input string to parse.
  * @returns The parsed value (boolean, number, null, undefined, object, array) or the original string.
- * The return type is `unknown` because the exact type is not known at compile time
- * and can vary a lot (primitives, objects, arrays).
  */
 export function parseStringValue(value: string | undefined) {
   if (!value) return ""

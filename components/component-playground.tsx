@@ -90,7 +90,7 @@ export function ComponentPlayground({
               language="tsx"
               filename={`${name}-playground.tsx`}
               code={code}
-              className="mb-6 border"
+              className="mb-7 border"
             />
           </CodeBlockWrapper>
         </TabsContent>

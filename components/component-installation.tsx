@@ -81,7 +81,7 @@ export default function ComponentInstallation({
                       language="tsx"
                       filename={`${name}.tsx`}
                       code={code}
-                      className="my-6 border"
+                      className="mb-7 mt-6 border"
                     />
                   </CodeBlockWrapper>
                 </TimelineDescription>

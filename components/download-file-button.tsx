@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react"
 import { Download } from "lucide-react"
 
 import { cn } from "@/lib/utils"

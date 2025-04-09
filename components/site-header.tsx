@@ -1,6 +1,8 @@
 import Link from "next/link"
+import { MaterialSymbolsStarRounded } from "@/public/assets/MaterialSymbolsStarRounded"
+import { MdiGithub } from "@/public/assets/MdiGithub"
 import { ComponentDoc } from "@/types"
-import { GalleryVerticalEnd, Menu } from "lucide-react"
+import { GalleryVerticalEnd, Menu, Star } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -12,6 +14,8 @@ import {
 import MainNav from "@/components/main-nav"
 import { MobileNav } from "@/components/mobile-nav"
 import { ThemeToggle } from "@/components/theme-toggle"
+
+import { HoverBorderGradient } from "./ui/hover-border-gradient"
 
 interface SiteHeaderProps {
   navComponentCards: ComponentDoc[]
@@ -32,21 +36,27 @@ export function SiteHeader({ navComponentCards }: SiteHeaderProps) {
           </section>
 
           <section className="flex items-center space-x-1">
-            <ThemeToggle />
-            <Button
-              variant="outline"
-              size="sm"
-              asChild
-              className="hidden sm:inline-flex"
+            <HoverBorderGradient
+              containerClassName="rounded-full"
+              as="button"
+              className="flex items-center space-x-1.5 bg-background px-2 py-0.5 text-sm text-foreground"
             >
-              <Link
-                href="https://github.com/JeremiasVillane/shadcn-ui-variants"
-                target="_blank"
-                rel="noreferrer"
-              >
-                GitHub
-              </Link>
-            </Button>
+              <span className="flex items-center space-x-1">
+                <MdiGithub className="size-5" />
+                <Link
+                  href="https://github.com/JeremiasVillane/shadcn-ui-variants"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="font-medium text-foreground/80"
+                >
+                  Star on GitHub
+                </Link>
+              </span>
+              <MaterialSymbolsStarRounded className="size-4 text-foreground/80" />
+            </HoverBorderGradient>
+
+            <ThemeToggle />
+
             <Sheet>
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon" className="md:hidden">

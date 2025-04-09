@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef } from "react"
+import * as React from "react"
 import type { Variants } from "framer-motion"
 import { AnimatePresence, motion, useInView } from "framer-motion"
 
@@ -30,7 +30,7 @@ export function BlurFade({
   inViewMargin = "-50px",
   blur = "6px"
 }: BlurFadeProps) {
-  const ref = useRef(null)
+  const ref = React.useRef(null)
   const inViewResult = useInView(ref, { once: true, margin: inViewMargin })
   const isInView = !inView || inViewResult
   const defaultVariants: Variants = {
