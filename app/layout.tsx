@@ -1,6 +1,7 @@
 import type React from "react"
 import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
+import registry from "@/registry.json"
 import { WebSite, WithContext } from "schema-dts"
 
 import { SiteFooter } from "@/components/site-footer"
@@ -9,8 +10,6 @@ import { ThemeProvider } from "@/components/theme-provider"
 
 import "../styles/globals.css"
 
-import { getComponentDocumentation } from "@/actions"
-import { components } from "@/data/site-index"
 import { publicUrl } from "@/env.mjs"
 
 import { cn } from "@/lib/utils"
@@ -75,6 +74,8 @@ export const metadata: Metadata = {
   }
 }
 
+const componentsData = registry.items
+
 export default async function RootLayout({
   children
 }: Readonly<{
@@ -86,15 +87,6 @@ export default async function RootLayout({
     name: "Shadcn UI Variants",
     url: publicUrl
   }
-
-  const navComponentCards = await Promise.all(
-    components.map(async (component) => {
-      const docs = await getComponentDocumentation(
-        `components/ui/${component.name}.tsx`
-      )
-      return docs.data || null
-    })
-  ).then((res) => res.filter((c) => !!c))
 
   return (
     <html lang="en" suppressHydrationWarning>
@@ -108,7 +100,7 @@ export default async function RootLayout({
 
         <ThemeProvider attribute="class" disableTransitionOnChange>
           <div className="relative flex min-h-screen flex-col">
-            <SiteHeader navComponentCards={navComponentCards} />
+            <SiteHeader {...{ componentsData }} />
             <div className="flex-1">{children}</div>
             <SiteFooter />
           </div>

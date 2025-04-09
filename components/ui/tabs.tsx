@@ -84,8 +84,7 @@ const tabsTriggerVariants = cva(
   }
 )
 
-/** Tabs component with extensive style and animation variations. */
-export const Tabs = ({ variant = "default", ...props }: TabsProps) => {
+const Tabs = ({ variant = "default", ...props }: TabsProps) => {
   const [positions, setPositions] = React.useState<
     { value: string; left: number; width: number }[]
   >([])
@@ -236,5 +235,5 @@ const TabsContent = React.forwardRef<
 ))
 TabsContent.displayName = TabsPrimitive.Content.displayName
 
-export { TabsContent, TabsList, TabsTrigger }
+export { Tabs, TabsContent, TabsList, TabsTrigger }
 export type { TabsProps }

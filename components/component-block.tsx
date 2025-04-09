@@ -8,6 +8,8 @@ import ComponentInstallation from "./component-installation"
 import { ComponentPlayground } from "./component-playground"
 
 interface ComponentBlockProps {
+  name: string
+  title: string
   docs: {
     data: ComponentDoc
     error?: undefined
@@ -20,20 +22,22 @@ interface ComponentBlockProps {
 }
 
 export default async function ComponentBlock({
+  name,
+  title,
   docs,
   cliCommand,
   playground,
   PlaygroundComponent,
   playgroundCode
 }: ComponentBlockProps) {
-  const src = `components/ui/${docs.data?.name}.tsx`
+  const src = `components/ui/${name}.tsx`
   const code = await getFileContent(src)
 
   return (
     <main className="flex flex-col rounded-md bg-background pb-96">
       <ComponentPlayground
-        name={docs.data.name}
-        title={docs.data.title}
+        name={name}
+        title={title}
         playground={playground}
         PlaygroundComponent={PlaygroundComponent}
         playgroundCode={playgroundCode}
@@ -41,7 +45,7 @@ export default async function ComponentBlock({
 
       <Separator className="my-9" />
 
-      <ComponentInstallation {...{ name: docs.data.name, code, cliCommand }} />
+      <ComponentInstallation {...{ name, code, cliCommand }} />
 
       <Separator className="my-9" />
 

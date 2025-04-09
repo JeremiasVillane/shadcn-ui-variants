@@ -1,8 +1,8 @@
 import Link from "next/link"
 import { MaterialSymbolsStarRounded } from "@/public/assets/MaterialSymbolsStarRounded"
 import { MdiGithub } from "@/public/assets/MdiGithub"
-import { ComponentDoc } from "@/types"
-import { GalleryVerticalEnd, Menu, Star } from "lucide-react"
+import { ComponentRegistryMainData } from "@/types"
+import { GalleryVerticalEnd, Menu } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -18,10 +18,10 @@ import { ThemeToggle } from "@/components/theme-toggle"
 import { HoverBorderGradient } from "./ui/hover-border-gradient"
 
 interface SiteHeaderProps {
-  navComponentCards: ComponentDoc[]
+  componentsData: ComponentRegistryMainData[]
 }
 
-export function SiteHeader({ navComponentCards }: SiteHeaderProps) {
+export function SiteHeader({ componentsData }: SiteHeaderProps) {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center gap-4 space-x-4 sm:justify-between sm:space-x-0">
@@ -32,7 +32,7 @@ export function SiteHeader({ navComponentCards }: SiteHeaderProps) {
 
         <div className="flex flex-1 items-center justify-end space-x-4 md:justify-between">
           <section className="hidden md:flex">
-            <MainNav navComponentCards={navComponentCards} />
+            <MainNav componentsData={componentsData} />
           </section>
 
           <section className="flex items-center space-x-1">
@@ -66,7 +66,7 @@ export function SiteHeader({ navComponentCards }: SiteHeaderProps) {
               </SheetTrigger>
               <SheetContent side="right">
                 <SheetTitle className="sr-only">Navigation menu</SheetTitle>
-                <MobileNav navComponentCards={navComponentCards} />
+                <MobileNav componentsData={componentsData} />
               </SheetContent>
             </Sheet>
           </section>

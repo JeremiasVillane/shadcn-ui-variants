@@ -54,8 +54,7 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   showMaxLength?: "inside" | "outside" | "false"
 }
 
-/** An advanced input component with toggable extensions. */
-export const Input = React.forwardRef<HTMLInputElement, InputProps>(
+const Input = React.forwardRef<HTMLInputElement, InputProps>(
   (
     {
       className,
@@ -189,4 +188,5 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
 )
 Input.displayName = "Input"
 
+export { Input }
 export type { InputProps }

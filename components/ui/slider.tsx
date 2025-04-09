@@ -65,8 +65,7 @@ const sliderRootVariants = cva(
   }
 )
 
-/** A versatile slider component with a variety of styles and advanced behaviours. */
-export const Slider = React.forwardRef<
+const Slider = React.forwardRef<
   React.ComponentRef<typeof SliderPrimitive.Root>,
   SliderProps
 >(
@@ -359,7 +358,6 @@ export const Slider = React.forwardRef<
               showTicks ? "pb-6" : "pb-1"
             )}
           >
-
             {showLabels && (
               <span
                 className={cn(
@@ -371,7 +369,6 @@ export const Slider = React.forwardRef<
                 <span>{endLabel}</span>
               </span>
             )}
-
 
             {showTooltip && (
               <div
@@ -489,4 +486,5 @@ export const Slider = React.forwardRef<
 )
 Slider.displayName = SliderPrimitive.Root.displayName
 
+export { Slider }
 export type { SliderProps }

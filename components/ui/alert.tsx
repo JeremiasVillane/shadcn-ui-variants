@@ -131,8 +131,7 @@ const variantIcons = {
   info: <InfoIcon className="size-4" />
 }
 
-/** Alert component with variants and styles for different statuses. */
-export const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
   (
     {
       className,
@@ -192,5 +191,5 @@ const AlertDescription = React.forwardRef<
 ))
 AlertDescription.displayName = "AlertDescription"
 
-export { AlertDescription, AlertTitle }
+export { Alert, AlertDescription, AlertTitle }
 export type { AlertProps }

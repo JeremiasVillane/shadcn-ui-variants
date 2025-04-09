@@ -100,8 +100,7 @@ type AccordionPrimitiveRootProps = React.ComponentPropsWithoutRef<
   typeof AccordionPrimitive.Root
 >
 
-/** An accordion component with many variations and styles. */
-export const Accordion = ({
+const Accordion = ({
   variant = "default",
   styleVariant = "outline",
   className,
@@ -179,5 +178,5 @@ const AccordionContent = React.forwardRef<
 ))
 AccordionContent.displayName = AccordionPrimitive.Content.displayName
 
-export { AccordionContent, AccordionItem, AccordionTrigger }
+export { Accordion, AccordionContent, AccordionItem, AccordionTrigger }
 export type { AccordionProps }

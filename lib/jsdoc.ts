@@ -1,8 +1,6 @@
 import { ComponentDoc, PropDefinition } from "@/types"
 import ts from "typescript"
 
-import { toWordCase } from "./utils"
-
 /**
  * Parse a component file to extract documentation
  * @param fileContent The content of the component file
@@ -21,51 +19,9 @@ export function parseComponentFile(
     true
   )
 
-  const title = getComponentName(sourceFile, fileName)
-  const name = fileName.replace(/\.(tsx|jsx|ts|js)$/, "")
-  const description = getComponentDescription(sourceFile)
   const props = extractProps(sourceFile)
 
-  return {
-    title,
-    name,
-    description,
-    props
-  }
-}
-
-/**
- * Extract the component name from the source file
- */
-function getComponentName(sourceFile: ts.SourceFile, fileName: string): string {
-  // Try to find the component name from the default export
-  let componentName = ""
-
-  // Visit each node in the source file
-  ts.forEachChild(sourceFile, (node) => {
-    // Look for export default function declarations
-    if (
-      ts.isExportAssignment(node) &&
-      node.expression &&
-      ts.isIdentifier(node.expression)
-    ) {
-      componentName = node.expression.text
-    } else if (
-      ts.isFunctionDeclaration(node) &&
-      node.name &&
-      node.modifiers?.some((m) => m.kind === ts.SyntaxKind.ExportKeyword) &&
-      node.modifiers?.some((m) => m.kind === ts.SyntaxKind.DefaultKeyword)
-    ) {
-      componentName = node.name.text
-    }
-  })
-
-  // If we couldn't find a component name, use the file name
-  if (!componentName) {
-    componentName = toWordCase(fileName.replace(/\.(tsx|jsx|ts|js)$/, ""))
-  }
-
-  return componentName
+  return { props }
 }
 
 /**
@@ -129,79 +85,6 @@ function extractDescriptionFromJSDoc(
       }
     }
   }
-  return description
-}
-
-/**
- * Gets the main JSDoc description of an exported component in a file.
- * Searches function declarations, export assignments, and exported variable declarations.
- * @param sourceFile The TypeScript SourceFile to parse.
- * @returns The component description found or an empty string.
- */
-function getComponentDescription(sourceFile: ts.SourceFile): string {
-  let description = ""
-
-  // Visit each top-level child node in the source file
-  ts.forEachChild(sourceFile, (node) => {
-    if (description) return
-
-    let potentialComponentNode: ts.Node | undefined = undefined
-
-    // Case 1: export function MyComponent() {}
-    if (
-      ts.isFunctionDeclaration(node) &&
-      node.modifiers?.some((m) => m.kind === ts.SyntaxKind.ExportKeyword)
-    ) {
-      potentialComponentNode = node
-    }
-    // Case 2: export default MyComponent; OR export default function() {} / class {} / () => {}
-    else if (ts.isExportAssignment(node)) {
-      // If you directly export a function, class or arrow function, use that expression
-      if (
-        ts.isFunctionDeclaration(node.expression) ||
-        ts.isClassDeclaration(node.expression) ||
-        ts.isFunctionExpression(node.expression) ||
-        ts.isArrowFunction(node.expression)
-      ) {
-        potentialComponentNode = node.expression
-      }
-    }
-    // Case 3: export const MyComponent = () => {}; OR export let/var ...
-    else if (
-      ts.isVariableStatement(node) &&
-      node.modifiers?.some((m) => m.kind === ts.SyntaxKind.ExportKeyword)
-    ) {
-      // Iterate over the statements in the list (ex: const a = 1, b = 2;)
-      for (const declaration of node.declarationList.declarations) {
-        // Assume that the component is the first statement exported in the statement
-        // and that it has an initializer (function, arrow function, etc.)
-        if (declaration.initializer) {
-          // The JSDoc may be in the individual statement...
-          potentialComponentNode = declaration
-          description = extractDescriptionFromJSDoc(
-            potentialComponentNode,
-            sourceFile
-          )
-          if (description) return
-
-          // ...or sometimes in the entire VariableStatement
-          potentialComponentNode = node
-          break // Use the statement's JSDoc if it was not found in the statement
-        }
-      }
-    }
-
-    // If we find a candidate component node, extract its JSDoc description
-    if (potentialComponentNode) {
-      description = extractDescriptionFromJSDoc(
-        potentialComponentNode,
-        sourceFile
-      )
-      // If found, the 'return' inside the forEachChild will stop the iteration
-      // if the description already has a value (thanks to the 'if (description) return;' at the beginning).
-    }
-  })
-
   return description
 }
 

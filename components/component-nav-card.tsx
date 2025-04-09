@@ -1,16 +1,15 @@
 "use client"
 
-import * as React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { ComponentDoc } from "@/types"
+import { ComponentRegistryMainData } from "@/types"
 
 import { cn } from "@/lib/utils"
 
 import { NavigationMenuLink } from "./ui/navigation-menu"
 
 interface ComponentNavCardProps {
-  component: ComponentDoc
+  component: ComponentRegistryMainData
 }
 
 export default function ComponentNavCard({ component }: ComponentNavCardProps) {

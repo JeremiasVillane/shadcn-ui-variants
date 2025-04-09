@@ -114,8 +114,7 @@ type AlertDialogPrimitiveRootProps = React.ComponentPropsWithoutRef<
   typeof AlertDialogPrimitive.Root
 >
 
-/** Extended alert dialog with variants and extra props to handle different scenarios. */
-export const AlertDialog = ({
+const AlertDialog = ({
   variant = "default",
   styleVariant = "left",
   withIcon = false,
@@ -407,6 +406,7 @@ const AlertDialogCancel = React.forwardRef<
 AlertDialogCancel.displayName = AlertDialogPrimitive.Cancel.displayName
 
 export {
+  AlertDialog,
   AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,

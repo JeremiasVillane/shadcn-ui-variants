@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { ComponentDoc } from "@/types"
+import { ComponentRegistryMainData } from "@/types"
 
 import { cn } from "@/lib/utils"
 import {
@@ -14,16 +14,16 @@ import {
 
 import ComponentNavCard from "./component-nav-card"
 
-interface MainNavProps {
-  navComponentCards: ComponentDoc[]
-}
-
 const navButtonStyle = cn(
   navigationMenuTriggerStyle(),
   "bg-transparent h-8 rounded-sm"
 )
 
-export default function MainNav({ navComponentCards }: MainNavProps) {
+interface MainNavProps {
+  componentsData: ComponentRegistryMainData[]
+}
+
+export default function MainNav({ componentsData }: MainNavProps) {
   return (
     <NavigationMenu>
       <NavigationMenuList>
@@ -40,7 +40,7 @@ export default function MainNav({ navComponentCards }: MainNavProps) {
           </NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid w-[400px] gap-3 p-4 md:grid-cols-2 xl:w-[600px]">
-              {navComponentCards?.map(
+              {componentsData?.map(
                 (component) =>
                   component && (
                     <ComponentNavCard

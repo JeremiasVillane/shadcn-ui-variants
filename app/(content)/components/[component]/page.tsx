@@ -1,7 +1,8 @@
 import { notFound } from "next/navigation"
 import { getComponentDocumentation } from "@/actions"
-import { componentsIndex } from "@/data/site-index"
+import { componentsIndex } from "@/data/components-index"
 import { publicUrl } from "@/env.mjs"
+import registry from "@/registry.json"
 
 import { constructMetadata } from "@/lib/metadata"
 import { generateOgImageUrl } from "@/lib/og"
@@ -20,14 +21,14 @@ export const generateStaticParams = async () => {
 export const generateMetadata = async (props: {
   params: Promise<{ component: string }>
 }) => {
-  const name = (await props.params).component
-  const docs = await getComponentDocumentation(`components/ui/${name}.tsx`)
+  const nameParams = (await props.params).component
+  const componentData = registry.items.find((comp) => comp.name === nameParams)
 
-  if (!docs.data) return
+  if (!componentData) return
 
-  const title = `Shadcn UI Variants | ${docs.data.title}`
+  const title = `Shadcn UI Variants | ${componentData.title}`
 
-  const description = `${docs.data.description} Preview, customize, copy and install ${docs.data.title} component variants to streamline your web development workflow.`
+  const description = `${componentData.description} Preview, customize, copy and install ${componentData.title} component variants to streamline your web development workflow.`
 
   return constructMetadata({
     title,
@@ -46,7 +47,7 @@ export const generateMetadata = async (props: {
       ]
     },
     alternates: {
-      canonical: `${publicUrl}/components/${name}`
+      canonical: `${publicUrl}/components/${nameParams}`
     }
   })
 }
@@ -56,12 +57,17 @@ interface ComponentPageProps {
 }
 
 export default async function ComponentPage({ params }: ComponentPageProps) {
-  const name = (await params).component
-  const details = componentsIndex[name]
+  const nameParams = (await params).component
+  const details = componentsIndex[nameParams]
 
   if (!details) return notFound()
 
-  const docs = await getComponentDocumentation(`components/ui/${name}.tsx`)
+  const { name, title, description } = registry.items.find(
+    (comp) => comp.name === nameParams
+  )!
+  const docs = await getComponentDocumentation(
+    `components/ui/${nameParams}.tsx`
+  )
   const playground = { ...createPlayground(docs), ...details.playground }
 
   if (!docs.data) {
@@ -71,12 +77,14 @@ export default async function ComponentPage({ params }: ComponentPageProps) {
   return (
     <div>
       <DynamicBreadcrumb activeLinks={false} separatorVariant="chevrons" />
-      <MainHeading>{docs.data.title}</MainHeading>
-      <DescriptionText>{docs.data.description}</DescriptionText>
+      <MainHeading>{title}</MainHeading>
+      <DescriptionText>{description}</DescriptionText>
 
       <Separator className="mb-8 mt-6" />
 
       <ComponentBlock
+        name={name}
+        title={title}
         docs={docs}
         cliCommand={details.cliCommand}
         playground={playground}

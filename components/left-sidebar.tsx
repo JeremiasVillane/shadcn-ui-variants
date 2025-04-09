@@ -3,7 +3,7 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { contentIndex, FullComponentDetails } from "@/data/site-index"
+import { contentIndex } from "@/data/content-index"
 
 import { toWordCase } from "@/lib/utils"
 import { Separator } from "@/components/ui/separator"
@@ -27,9 +27,7 @@ export default function LeftSidebar() {
               <nav className="flex flex-col space-y-2">
                 {section.items.map((item) => {
                   const url =
-                    "url" in item
-                      ? item.url
-                      : `/components/${(item as FullComponentDetails).name}`
+                    "url" in item ? item.url : `/components/${item.name}`
                   return (
                     <Link key={url} href={url} className={getLinkStyle(url)}>
                       {toWordCase(item.name)}

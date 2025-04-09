@@ -35,8 +35,7 @@ const separatorVariants = cva("shrink-0 bg-border", {
   }
 })
 
-/** Separator component with new variants and styles. */
-export const Separator = React.forwardRef<
+const Separator = React.forwardRef<
   React.ComponentRef<typeof SeparatorPrimitive.Root>,
   SeparatorProps
 >(
@@ -103,4 +102,5 @@ export const Separator = React.forwardRef<
 )
 Separator.displayName = SeparatorPrimitive.Root.displayName
 
+export { Separator }
 export type { SeparatorProps }

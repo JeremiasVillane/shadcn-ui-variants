@@ -99,8 +99,7 @@ const isInsetButton = (component: React.FC, node: React.ReactNode) =>
   typeof node.type !== "string" &&
   (node.type as React.FC).displayName === component.displayName
 
-/** A supercharged button component with additional variants, animations, extensions and auxiliar subcomponents. */
-export const Button = React.forwardRef<
+const Button = React.forwardRef<
   HTMLButtonElement | HTMLDivElement,
   ButtonProps
 >(
@@ -251,5 +250,5 @@ export const Button = React.forwardRef<
 )
 Button.displayName = "Button"
 
-export { buttonVariants, LeftInsetButton, RightInsetButton }
+export { Button, buttonVariants, LeftInsetButton, RightInsetButton }
 export type { ButtonProps, BaseButtonProps as InsetButtonProps }

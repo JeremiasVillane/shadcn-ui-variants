@@ -29,8 +29,7 @@ const BreadcrumbContext = React.createContext<BreadcrumbContextValue>({
   badgeOutline: false
 })
 
-/** Breadcrumb component with variants, different styles and separators. */
-export const Breadcrumb = React.forwardRef<HTMLElement, BreadcrumbProps>(
+const Breadcrumb = React.forwardRef<HTMLElement, BreadcrumbProps>(
   (
     { separatorVariant = "default", variant = "default", className, ...props },
     ref
@@ -229,6 +228,7 @@ const BreadcrumbEllipsis = ({
 BreadcrumbEllipsis.displayName = "BreadcrumbEllipsis"
 
 export {
+  Breadcrumb,
   BreadcrumbList,
   BreadcrumbItem,
   BreadcrumbLink,
