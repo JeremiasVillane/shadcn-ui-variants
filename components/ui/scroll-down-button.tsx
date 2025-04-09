@@ -57,7 +57,7 @@ export function ScrollDownButton({
       href={`#${targetId}`}
       onClick={handleSmoothScroll}
       className={cn(
-        "relative inline-block cursor-pointer pt-[60px]",
+        "relative inline-block cursor-pointer pt-[60px] focus-visible:outline-0",
         className
       )}
       aria-label={`Scroll down to ${targetId}`}

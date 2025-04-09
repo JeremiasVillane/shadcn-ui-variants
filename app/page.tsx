@@ -45,11 +45,11 @@ export default function Home() {
               <BlurIn
                 duration={0.25}
                 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none"
-                word="Custom Variants for shadcn/ui"
+                word="New variants for shadcn/ui"
               />
               <BlurIn
                 duration={0.5}
-                word="Explore and implement beautiful custom variations of shadcn/ui
+                word="Explore and implement enhanced variations of shadcn/ui
                 components with interactive playgrounds."
                 className="mx-auto max-w-[700px] text-base text-muted-foreground md:text-xl"
               />
