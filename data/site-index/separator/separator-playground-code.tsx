@@ -31,9 +31,9 @@ export function SeparatorPlayground() {
   return (
     <Card className="${isVertical ? "w-auto max-w-2xl" : "w-[350px]"}">
       <CardHeader>
-        <CardTitle>Login to your account</CardTitle>
+        <CardTitle>Enter your personal data</CardTitle>
         <CardDescription>
-          Enter your credentials below to login to your account
+          I swear we will not sell your information
         </CardDescription>
       </CardHeader>
       <CardContent>

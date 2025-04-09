@@ -65,7 +65,7 @@ export function ComponentPlayground({
 
         <TabsContent value="preview" className="p-4">
           <Card className="relative p-4 pt-9">
-            <CardContent className="flex justify-center">
+            <CardContent className="flex min-h-80 items-center justify-center px-12">
               <PlaygroundComponent {...playgroundState} />
               <div className="absolute right-2 top-2 flex">
                 <CopyToClipboardButton content={code} />
@@ -90,7 +90,7 @@ export function ComponentPlayground({
               language="tsx"
               filename={`${name}-playground.tsx`}
               code={code}
-              className="border"
+              className="mb-6 border"
             />
           </CodeBlockWrapper>
         </TabsContent>

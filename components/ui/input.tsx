@@ -93,7 +93,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     const renderInline = (content: React.ReactNode, side: "start" | "end") => (
       <span
         className={cn(
-          "flex items-center bg-background text-sm text-muted-foreground",
+          "flex select-none items-center bg-background text-sm text-muted-foreground",
           side === "start"
             ? "order-after-icon pl-2"
             : "order-before-counter pr-2"
@@ -112,7 +112,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           )}
         >
           {startAddon && (
-            <div className="flex items-center border-r border-input bg-accent px-3 text-foreground/80">
+            <div className="flex select-none items-center border-r border-input bg-accent px-3 text-foreground/80">
               {startAddon}
             </div>
           )}
@@ -154,7 +154,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
             {endInline && renderInline(endInline, "end")}
 
             {showMaxLength === "inside" && maxLength && (
-              <span className="pr-2 text-xs text-muted-foreground/80">
+              <span className="select-none pr-2 text-xs text-muted-foreground/80">
                 {characterCount}/{maxLength}
               </span>
             )}
@@ -172,7 +172,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           </div>
 
           {endAddon && (
-            <div className="flex items-center border-l border-input bg-accent px-3">
+            <div className="flex select-none items-center border-l border-input bg-accent px-3">
               {endAddon}
             </div>
           )}

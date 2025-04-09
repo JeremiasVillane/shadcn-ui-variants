@@ -39,7 +39,7 @@ export const inputPlaygroundCode = ({
   inputProps.push(`placeholder="Enter your information..."`)
 
   if (startIcon !== "none") {
-    inputProps.push(`startIcon={${jsxStringToName(startIcon)}}`)
+    inputProps.push(`startIcon={${startIcon}}`)
   }
   if (endIcon !== "none") {
     inputProps.push(`endIcon={${endIcon}}`)
@@ -73,7 +73,7 @@ import { Label } from "@/components/ui/label"
 
 export function InputPlayground() {
   return (
-    <div className="*:not-first:mt-2">
+    <div className="space-y-1.5">
       <Label htmlFor="inputId">Advanced input</Label>
       <Input ${inputProps.join(" ")} />
     </div>

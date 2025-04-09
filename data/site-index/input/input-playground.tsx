@@ -36,7 +36,7 @@ export function InputPlayground({
   }
 
   return (
-    <div className="*:not-first:mt-2 space-y-1.5">
+    <div className="space-y-1.5">
       <Label htmlFor="inputId">Advanced input:</Label>
       <Input
         id="inputId"

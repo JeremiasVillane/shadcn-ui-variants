@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { DotBackground } from "@/components/ui/dot-background"
 import { GridBackground } from "@/components/ui/grid-background"
+import { ScrollDownButton } from "@/components/ui/scroll-down-button"
 import { WordFadeIn } from "@/components/ui/word-fade-in"
 
 export const metadata: Metadata = {
@@ -68,12 +69,17 @@ export default function Home() {
               </Link>
             </BlurFade>
           </div>
+
+          <ScrollDownButton targetId="features" className="mx-auto w-full mt-6" />
         </div>
       </section>
 
       <section className="relative flex h-[90vh] w-full items-center justify-center p-12">
         <article className="container px-4 md:px-6">
-          <div className="flex flex-col items-center justify-center space-y-12 text-center md:gap-8">
+          <div
+            id="features"
+            className="flex flex-col items-center justify-center space-y-12 text-center md:gap-8"
+          >
             <BlurFade inView delay={0.3} duration={0.7} className="space-y-4">
               <h2 className="text-4xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
                 Key Features

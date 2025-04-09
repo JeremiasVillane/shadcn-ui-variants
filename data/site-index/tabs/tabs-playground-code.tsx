@@ -28,8 +28,8 @@ export const TabsPlayground = () => {
         <div className="mt-4 rounded-md bg-muted/50 p-4">
           <h3 className="text-lg font-medium">Ponder your existence</h3>
           <p className="mt-2 text-sm text-muted-foreground">
-            Did you come into the world to pay taxes? Probably not. But you
-            still have to pay them!
+            Did you come into this world to debug AI code? Probably not. But you
+            still keep doing it!
           </p>
         </div>
       </TabsContent>
