@@ -48,6 +48,10 @@ export function toPascalCase(input: string): string {
     .join("")
 }
 
+export function toWordCase(input: string): string {
+  return input.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())
+}
+
 export function createPlayground(docs: ComponentDocResult) {
   return docs?.data?.props.reduce(
     (acc, prop) => {

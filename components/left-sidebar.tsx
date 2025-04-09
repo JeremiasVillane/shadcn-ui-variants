@@ -5,7 +5,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { contentIndex, FullComponentDetails } from "@/data/site-index"
 
-import { toPascalCase } from "@/lib/utils"
+import { toWordCase } from "@/lib/utils"
 import { Separator } from "@/components/ui/separator"
 
 export default function LeftSidebar() {
@@ -32,7 +32,7 @@ export default function LeftSidebar() {
                       : `/components/${(item as FullComponentDetails).name}`
                   return (
                     <Link key={url} href={url} className={getLinkStyle(url)}>
-                      {toPascalCase(item.name)}
+                      {toWordCase(item.name)}
                     </Link>
                   )
                 })}

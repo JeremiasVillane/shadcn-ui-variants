@@ -1,7 +1,7 @@
 import { ComponentDoc, PropDefinition } from "@/types"
 import ts from "typescript"
 
-import { toPascalCase } from "./utils"
+import { toWordCase } from "./utils"
 
 /**
  * Parse a component file to extract documentation
@@ -62,7 +62,7 @@ function getComponentName(sourceFile: ts.SourceFile, fileName: string): string {
 
   // If we couldn't find a component name, use the file name
   if (!componentName) {
-    componentName = toPascalCase(fileName.replace(/\.(tsx|jsx|ts|js)$/, ""))
+    componentName = toWordCase(fileName.replace(/\.(tsx|jsx|ts|js)$/, ""))
   }
 
   return componentName

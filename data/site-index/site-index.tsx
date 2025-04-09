@@ -1,4 +1,4 @@
-import { toPascalCase } from "@/lib/utils"
+import { toWordCase } from "@/lib/utils"
 
 import { accordion } from "./accordion"
 import { alert } from "./alert"
@@ -43,7 +43,7 @@ export const components: FullComponentDetails[] = Object.entries(
   return {
     ...value,
     name: key,
-    title: toPascalCase(key),
+    title: toWordCase(key),
     url: `/components/${key}`
   }
 })

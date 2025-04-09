@@ -5,6 +5,7 @@ import { componentsIndex } from "@/data/site-index"
 import { constructMetadata } from "@/lib/metadata"
 import { generateOgImageUrl } from "@/lib/og"
 import { absoluteUrl, createPlayground } from "@/lib/utils"
+import { DynamicBreadcrumb } from "@/components/ui/dynamic-breadcrumb"
 import { Separator } from "@/components/ui/separator"
 import ComponentBlock from "@/components/component-block"
 import { DescriptionText, MainHeading } from "@/components/typography"
@@ -68,6 +69,7 @@ export default async function ComponentPage({ params }: ComponentPageProps) {
 
   return (
     <div>
+      <DynamicBreadcrumb activeLinks={false} separatorVariant="chevrons" />
       <MainHeading>{docs.data.title}</MainHeading>
       <DescriptionText>{docs.data.description}</DescriptionText>
 
