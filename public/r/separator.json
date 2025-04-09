@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "separator",
+  "type": "registry:ui",
+  "title": "Separator",
+  "description": "Separator component with new variants and styles.",
+  "dependencies": [
+    "@radix-ui/react-separator"
+  ],
+  "files": [
+    {
+      "path": "components/ui/separator.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport * as SeparatorPrimitive from \"@radix-ui/react-separator\"\nimport { cva } from \"class-variance-authority\"\n\nimport { cn } from \"@/lib/utils\"\n\ninterface SeparatorProps\n  extends React.ComponentPropsWithoutRef<typeof SeparatorPrimitive.Root> {\n  /** @default \"default\" */\n  variant?: \"default\" | \"dotted\" | \"dashed\"\n\n  /** Optional text to display in the center of the separator. */\n  label?: string\n\n  /** If true, displays the label inside a \"chip\" (rounded capsule).\n   * @default false */\n  chip?: boolean\n\n  /** @default \"horizontal\" */\n  orientation?: \"horizontal\" | \"vertical\"\n}\n\nconst separatorVariants = cva(\"shrink-0 bg-border\", {\n  variants: {\n    variant: {\n      default: \"\",\n      dotted: \"border border-dotted bg-transparent\",\n      dashed: \"border border-dashed bg-transparent\"\n    },\n    defaultVariants: {\n      variant: \"default\"\n    }\n  }\n})\n\n/** Separator component with new variants and styles. */\nexport const Separator = React.forwardRef<\n  React.ComponentRef<typeof SeparatorPrimitive.Root>,\n  SeparatorProps\n>(\n  (\n    {\n      className,\n      orientation = \"horizontal\",\n      decorative = true,\n      variant,\n      label,\n      chip = false,\n      ...props\n    },\n    ref\n  ) => {\n    const isVertical = orientation === \"vertical\"\n\n    const primitiveClasses = cn(\n      separatorVariants({ variant }),\n      \"relative\",\n      isVertical\n        ? `h-full ${variant === \"default\" ? \"w-[1px]\" : \"w-px border-l border-t-0 border-b-0 border-r-0\"}`\n        : `w-full ${variant === \"default\" ? \"h-[1px]\" : \"h-px border-t border-l-0 border-r-0 border-b-0\"}`\n    )\n\n    const labelClasses = cn(\n      \"absolute bg-background px-2 text-center text-sm text-foreground/80 z-10\",\n      isVertical\n        ? \"left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2\"\n        : \"left-1/2 top-0 -translate-x-1/2 -translate-y-1/2\",\n      chip\n        ? \"flex h-8 min-w-8 items-center justify-center rounded-full border bg-muted p-1.5 text-center text-xs\"\n        : \"\"\n    )\n\n    if (!isVertical) {\n      return (\n        <SeparatorPrimitive.Root\n          ref={ref}\n          decorative={decorative}\n          orientation={orientation}\n          className={cn(primitiveClasses, className)}\n          {...props}\n        >\n          {!!label && <div className={labelClasses}>{label}</div>}\n        </SeparatorPrimitive.Root>\n      )\n    }\n\n    return (\n      <div className=\"flex justify-center self-stretch\">\n        <SeparatorPrimitive.Root\n          ref={ref}\n          decorative={decorative}\n          orientation={orientation}\n          className={cn(primitiveClasses, className)}\n          {...props}\n        >\n          {!!label && <div className={labelClasses}>{label}</div>}\n        </SeparatorPrimitive.Root>\n      </div>\n    )\n  }\n)\nSeparator.displayName = SeparatorPrimitive.Root.displayName\n\nexport type { SeparatorProps }\n",
+      "type": "registry:ui"
+    }
+  ]
+}

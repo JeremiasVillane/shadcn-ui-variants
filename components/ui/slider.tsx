@@ -125,14 +125,12 @@ export const Slider = React.forwardRef<
     const sliderAndTicksContainerRef = React.useRef<HTMLDivElement>(null)
     const thumbRefs = React.useRef<(HTMLSpanElement | null)[]>([])
 
-    // --- Value to display/use in Render ---
     const displayValue = React.useMemo(() => {
       return Array.isArray(sliderValue)
         ? sliderValue
         : [sliderValue ?? initialValue[0]]
     }, [sliderValue, initialValue])
 
-    // --- Generate Ticks Values ---
     const tickValues = React.useMemo(() => {
       const values = []
       if (numberOfTicks < 2 || min >= max) {
@@ -157,7 +155,7 @@ export const Slider = React.forwardRef<
     // ****** EFFECTS ****** //
     // Synchronize Slider -> Input Strings
     React.useEffect(() => {
-      const currentInternalValue = displayValue // displayValue is already an array
+      const currentInternalValue = displayValue
       const currentSliderStrings = currentInternalValue.map(String)
       if (
         JSON.stringify(currentSliderStrings) !==
@@ -175,7 +173,7 @@ export const Slider = React.forwardRef<
           setActiveThumbIndex(null)
         }
       }
-      // To ensure it runs before other events if needed
+      // To ensure it runs before other events
       window.addEventListener("pointerup", handleGlobalPointerUp, true)
       window.addEventListener("pointercancel", handleGlobalPointerUp, true)
       return () => {
@@ -307,7 +305,7 @@ export const Slider = React.forwardRef<
           const finalNumericValueStr = String(numericValue) // Use the value already set/validated
           if (rawString !== finalNumericValueStr) {
             const finalStrings = currentSliderValueArray.map(String) // Rebuild strings from the current state
-            finalStrings[index] = finalNumericValueStr // Ensure that this input has the correct value.
+            finalStrings[index] = finalNumericValueStr
             setInputStringValues(finalStrings)
           }
         }
@@ -330,15 +328,12 @@ export const Slider = React.forwardRef<
       }
     }
 
-    // ****** RENDER VARIABLES ****** //
     const showLabels = startLabel || endLabel
     const currentTooltipValue =
       activeThumbIndex !== null ? displayValue[activeThumbIndex] : undefined
 
-    // ****** RENDER ****** //
     return (
       <div className="w-full">
-        {/* Output Display */}
         {withOutput && (
           <div className="mb-1 flex justify-end">
             <output className="text-sm font-medium tabular-nums">
@@ -349,7 +344,6 @@ export const Slider = React.forwardRef<
           </div>
         )}
 
-        {/* Main Flex Container (Slider/Ticks + Inputs) */}
         <div
           className={cn(
             "flex",
@@ -357,16 +351,15 @@ export const Slider = React.forwardRef<
             withInput ? "gap-4" : "gap-0"
           )}
         >
-          {/* Left Column: Slider + Ticks + Labels */}
           <div
-            ref={sliderAndTicksContainerRef} // Ref for measuring position
+            ref={sliderAndTicksContainerRef}
             className={cn(
-              "relative w-full", // Necessary for positioning tooltip and absolute ticks
+              "relative w-full",
               withInput ? "flex-grow" : "",
-              showTicks ? "pb-6" : "pb-1" // Padding bottom for ticks or light for thumb
+              showTicks ? "pb-6" : "pb-1"
             )}
           >
-            {/* Start/End Labels */}
+
             {showLabels && (
               <span
                 className={cn(
@@ -379,7 +372,7 @@ export const Slider = React.forwardRef<
               </span>
             )}
 
-            {/* Tooltip (Conditional Rendering) */}
+
             {showTooltip && (
               <div
                 style={tooltipStyle}
@@ -388,16 +381,14 @@ export const Slider = React.forwardRef<
                   "transition-opacity duration-100 ease-out"
                 )}
               >
-                {/* Show value only if there is an active thumb */}
                 {activeThumbIndex !== null ? currentTooltipValue : ""}
               </div>
             )}
 
-            {/* Slider Root */}
             <SliderPrimitive.Root
               ref={ref}
               value={displayValue}
-              defaultValue={initialValue} // Radix uses this if value is initially undefined
+              defaultValue={initialValue}
               onValueChange={handleSliderChange}
               min={min}
               max={max}
@@ -424,7 +415,6 @@ export const Slider = React.forwardRef<
               ))}
             </SliderPrimitive.Root>
 
-            {/* Ticks Container (Absolute at bottom) */}
             {showTicks && tickValues.length > 0 && (
               <div
                 className={cn(
@@ -461,11 +451,8 @@ export const Slider = React.forwardRef<
                 })}
               </div>
             )}
-            {/* End Ticks Container */}
           </div>
-          {/* End Left Column (Slider+Ticks) */}
 
-          {/* Right Column: Input Fields */}
           {withInput &&
             displayValue.map((_, index) => (
               <input
@@ -495,10 +482,8 @@ export const Slider = React.forwardRef<
                 aria-label={`Value ${index + 1}`}
               />
             ))}
-          {/* End Input Fields */}
         </div>
-        {/* End Main Flex Container */}
-      </div> // End Root Container
+      </div>
     )
   }
 )

@@ -44,12 +44,12 @@ export default function PackageManagersTabs({
 }: PackageManagersTabsProps & TabsProps) {
   return (
     <Tabs
-      variant="underlined"
+      variant="bootstrap"
       defaultValue={tabs[0].value}
       className={cn("min-w-0", className)}
       {...props}
     >
-      <TabsList className="p-1">
+      <TabsList>
         {tabs.map((tab) => (
           <TabsTrigger
             key={tab.value}
@@ -62,13 +62,14 @@ export default function PackageManagersTabs({
           </TabsTrigger>
         ))}
       </TabsList>
+
       {tabs.map((tab) => (
         <TabsContent key={tab.value} value={tab.value}>
           <div className="flex h-10 items-center justify-between gap-2 overflow-hidden rounded-md border bg-neutral-900 px-2">
             <CodeBlock
               language="llvm"
               code={`${tab.content} ${cliCommand}`}
-              className="truncate bg-transparent px-2 py-1 text-[13px]"
+              className="truncate bg-transparent px-2 py-1"
             />
             <CopyToClipboardButton content={`${tab.content} ${cliCommand}`} />
           </div>

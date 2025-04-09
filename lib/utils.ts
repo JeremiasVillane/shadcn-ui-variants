@@ -1,16 +1,9 @@
-import { config } from "@/config"
 import { ComponentDocResult } from "@/types"
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
-}
-
-export function absoluteUrl(path: string) {
-  return process.env.NODE_ENV === "development"
-    ? `http://localhost:4000${path}`
-    : `https://${config.appUrl}${path}`
 }
 
 export function camelToNormalCase(input: string): string {

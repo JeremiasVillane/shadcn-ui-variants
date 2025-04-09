@@ -1,10 +1,11 @@
 import { notFound } from "next/navigation"
 import { getComponentDocumentation } from "@/actions"
 import { componentsIndex } from "@/data/site-index"
+import { publicUrl } from "@/env.mjs"
 
 import { constructMetadata } from "@/lib/metadata"
 import { generateOgImageUrl } from "@/lib/og"
-import { absoluteUrl, createPlayground } from "@/lib/utils"
+import { createPlayground } from "@/lib/utils"
 import { DynamicBreadcrumb } from "@/components/ui/dynamic-breadcrumb"
 import { Separator } from "@/components/ui/separator"
 import ComponentBlock from "@/components/component-block"
@@ -45,7 +46,7 @@ export const generateMetadata = async (props: {
       ]
     },
     alternates: {
-      canonical: absoluteUrl(`/components/${name}`)
+      canonical: `${publicUrl}/components/${name}`
     }
   })
 }

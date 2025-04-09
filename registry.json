@@ -1,0 +1,144 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "acme",
+  "homepage": "https://acme.com",
+  "items": [
+    {
+      "name": "accordion",
+      "type": "registry:ui",
+      "title": "Accordion",
+      "description": "An accordion component with many variations and styles.",
+      "files": [
+        {
+          "path": "components/ui/accordion.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": ["@radix-ui/react-accordion"],
+      "tailwind": {
+        "config": {
+          "theme": {
+            "extend": {
+              "keyframes": {
+                "accordion-down": {
+                  "from": { "height": "0" },
+                  "to": { "height": "var(--radix-accordion-content-height)" }
+                },
+                "accordion-up": {
+                  "from": { "height": "var(--radix-accordion-content-height)" },
+                  "to": { "height": "0" }
+                }
+              },
+              "animation": {
+                "accordion-down": "accordion-down 0.2s ease-out",
+                "accordion-up": "accordion-up 0.2s ease-out"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "alert",
+      "type": "registry:ui",
+      "title": "Alert",
+      "description": "Alert component with variants and styles for different statuses.",
+      "files": [
+        {
+          "path": "components/ui/alert.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "alert-dialog",
+      "type": "registry:ui",
+      "title": "Alert Dialog",
+      "description": "Extended alert dialog with variants and extra props to handle different scenarios.",
+      "files": [
+        {
+          "path": "components/ui/alert-dialog.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": ["@radix-ui/react-alert-dialog"],
+      "registryDependencies": ["button"]
+    },
+    {
+      "name": "breadcrumb",
+      "type": "registry:ui",
+      "title": "Breadcrumb",
+      "description": "Breadcrumb component with variants, different styles and separators.",
+      "files": [
+        {
+          "path": "components/ui/breadcrumb.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "title": "Button",
+      "description": "A supercharged button component with additional variants, animations, extensions and auxiliar subcomponents.",
+      "files": [
+        {
+          "path": "components/ui/button.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": ["@radix-ui/react-slot"]
+    },
+    {
+      "name": "input",
+      "type": "registry:ui",
+      "title": "Input",
+      "description": "An advanced input component with toggable extensions.",
+      "files": [
+        {
+          "path": "components/ui/input.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "separator",
+      "type": "registry:ui",
+      "title": "Separator",
+      "description": "Separator component with new variants and styles.",
+      "files": [
+        {
+          "path": "components/ui/separator.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": ["@radix-ui/react-separator"]
+    },
+    {
+      "name": "slider",
+      "type": "registry:ui",
+      "title": "Slider",
+      "description": "A versatile slider component with a variety of styles and advanced behaviours.",
+      "files": [
+        {
+          "path": "components/ui/slider.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": ["@radix-ui/react-slider"]
+    },
+    {
+      "name": "tabs",
+      "type": "registry:ui",
+      "title": "Tabs",
+      "description": "Tabs component with extensive style and animation variations.",
+      "files": [
+        {
+          "path": "components/ui/tabs.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": ["@radix-ui/react-tabs"]
+    }
+  ]
+}

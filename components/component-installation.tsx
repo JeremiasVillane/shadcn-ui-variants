@@ -1,9 +1,9 @@
+import { publicUrl } from "@/env.mjs"
 import { TabsContent } from "@radix-ui/react-tabs"
 
 import { SubHeading } from "@/components/typography"
 
 import { CodeBlockWrapper } from "./code-block-wrapper"
-// import { CodeBlock } from "./code-block"
 import PackageManagerTabs from "./package-manager-tabs"
 import { CodeBlock } from "./ui/code-block"
 import { Tabs, TabsList, TabsTrigger } from "./ui/tabs"
@@ -35,11 +35,19 @@ export default function ComponentInstallation({
         Installation
       </SubHeading>
 
-      <Tabs variant="underlined" defaultValue="manual">
+      <Tabs variant="underlined" defaultValue="cli">
         <TabsList>
-          <TabsTrigger value="manual">Manual</TabsTrigger>
           <TabsTrigger value="cli">CLI</TabsTrigger>
+          <TabsTrigger value="manual">Manual</TabsTrigger>
         </TabsList>
+
+        <TabsContent value="cli">
+          <PackageManagerTabs
+            variant="bootstrap"
+            cliCommand={`add ${publicUrl}/r/${name}.json`}
+            className="py-4"
+          />
+        </TabsContent>
 
         <TabsContent value="manual">
           <Timeline className="py-6">
@@ -100,12 +108,6 @@ export default function ComponentInstallation({
               </TimelineContent>
             </TimelineItem>
           </Timeline>
-        </TabsContent>
-
-        <TabsContent value="cli">
-          <div className="py-6 font-medium text-foreground/80">
-            Coming soon...
-          </div>
         </TabsContent>
       </Tabs>
     </section>

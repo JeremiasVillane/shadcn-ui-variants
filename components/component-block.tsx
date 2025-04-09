@@ -28,15 +28,6 @@ export default async function ComponentBlock({
 }: ComponentBlockProps) {
   const src = `components/ui/${docs.data?.name}.tsx`
   const code = await getFileContent(src)
-  // const protocol = process.env.NODE_ENV === "development" ? "http" : "https"
-  // const registryUrl = `${protocol}://${config.appUrl}/r/${name}.json`
-
-  // Dynamically import the component from its path
-  // const DynamicComponent = dynamic(() =>
-  //   import(`@/components/data/components-index/${name}/${example}.tsx`).catch(
-  //     () => BlockNotFound
-  //   )
-  // )
 
   return (
     <main className="flex flex-col rounded-md bg-background pb-96">

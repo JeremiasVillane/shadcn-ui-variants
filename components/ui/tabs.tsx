@@ -75,7 +75,7 @@ const tabsTriggerVariants = cva(
         segmented:
           "w-full data-[state=active]:bg-primary data-[state=active]:text-primary-foreground",
         bootstrap:
-          "-mb-[2px] rounded-t border border-transparent border-b-border px-5 py-2.5 data-[state=active]:border-border data-[state=active]:border-b-background",
+          "-mb-[2px] rounded-t border border-transparent border-b-border px-5 py-2.5 data-[state=active]:border-border data-[state=active]:border-b-background data-[state=active]:text-foreground text-foreground/60",
         vercel:
           "relative px-3 py-2 text-muted-foreground data-[state=active]:text-foreground transition-colors z-20"
       }
