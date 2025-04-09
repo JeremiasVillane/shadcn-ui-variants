@@ -11,7 +11,7 @@ export const constructMetadata = (metadata: Metadata): Metadata => {
       type: "website",
       images: [
         {
-          url: "/images/og-image.png",
+          url: "/og-image.png",
           height: 630,
           width: 1200,
           alt: "Shadcn UI Variants"

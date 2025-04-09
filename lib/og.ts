@@ -1,3 +1,5 @@
+import { publicUrl } from "@/env.mjs"
+
 export const generateOgImageUrl = ({
   title,
   type,
@@ -7,9 +9,7 @@ export const generateOgImageUrl = ({
   type: string
   mode?: "light" | "dark"
 }) => {
-  const url = process.env.NEXT_PUBLIC_APP_URL
-    ? `https://${process.env.NEXT_PUBLIC_APP_URL}`
-    : "http://localhost:4000"
+  const url = publicUrl
 
   const ogUrl = new URL(`${url}/api/og`)
   ogUrl.searchParams.set("heading", title)

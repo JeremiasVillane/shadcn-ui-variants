@@ -27,7 +27,7 @@ export function SiteHeader({ navComponentCards }: SiteHeaderProps) {
       <div className="container flex h-16 items-center gap-4 space-x-4 sm:justify-between sm:space-x-0">
         <Link href="/" className="flex items-center space-x-2">
           <GalleryVerticalEnd className="h-6 w-6" />
-          <span className="inline-block font-bold">Shadcn Variants</span>
+          <span className="inline-block font-bold">Shadcn UI Variants</span>
         </Link>
 
         <div className="flex flex-1 items-center justify-end space-x-4 md:justify-between">
@@ -39,20 +39,20 @@ export function SiteHeader({ navComponentCards }: SiteHeaderProps) {
             <HoverBorderGradient
               containerClassName="rounded-full"
               as="button"
-              className="flex items-center space-x-1.5 bg-background px-2 py-0.5 text-sm text-foreground"
+              className="flex items-center space-x-0 bg-background px-2 py-0.5 text-sm text-foreground lg:space-x-1.5"
             >
               <span className="flex items-center space-x-1">
-                <MdiGithub className="size-5" />
+                <MdiGithub className="size-5 shrink-0" />
                 <Link
                   href="https://github.com/JeremiasVillane/shadcn-ui-variants"
                   target="_blank"
                   rel="noreferrer"
                   className="font-medium text-foreground/80"
                 >
-                  Star on GitHub
+                  <span className="hidden lg:flex">Star on GitHub</span>
                 </Link>
               </span>
-              <MaterialSymbolsStarRounded className="size-4 text-foreground/80" />
+              <MaterialSymbolsStarRounded className="size-4 shrink-0 text-foreground/80" />
             </HoverBorderGradient>
 
             <ThemeToggle />

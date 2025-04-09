@@ -24,6 +24,12 @@ interface ScrollDownButtonProps {
    * Additional CSS classes applied to the arrow element (span).
    */
   arrowClassName?: string
+  /**
+   * Offset in pixels to account for fixed headers or other elements.
+   * Example: 80 (for an 80px header).
+   * @default 0
+   */
+  offset?: number
 }
 
 /**
@@ -34,7 +40,8 @@ export function ScrollDownButton({
   text,
   className,
   textClassName,
-  arrowClassName
+  arrowClassName,
+  offset = 0
 }: ScrollDownButtonProps) {
   const handleSmoothScroll = (event: React.MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault()
@@ -42,9 +49,13 @@ export function ScrollDownButton({
     const targetElement = document.getElementById(targetId)
 
     if (targetElement) {
-      targetElement.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
+      const elementPosition =
+        targetElement.getBoundingClientRect().top + window.scrollY
+      const offsetPosition = elementPosition - offset
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth"
       })
     } else {
       console.warn(`Smooth scroll target not found: #${targetId}`)

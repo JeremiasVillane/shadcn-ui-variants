@@ -23,9 +23,9 @@ export const metadata: Metadata = {
 }
 
 const cardStyle =
-  "flex w-full h-full cursor-default flex-col items-center justify-center overflow-hidden p-20 shadow-lg hover:border-foreground/20 transition-colors ease-in-out"
+  "flex w-full h-full cursor-default flex-col items-center justify-center overflow-hidden p-20 shadow-lg hover:border-foreground/20 transition-colors ease-in-out gap-2"
 const titleStyle = "flex flex-col items-center justify-center whitespace-nowrap"
-const subtitleStyle = "text-balance pb-2 leading-tight"
+const subtitleStyle = "pb-2 leading-tight text-pretty py-2 md:py-0"
 const descriptionStyle = "text-sm text-muted-foreground hidden md:flex"
 
 export default function Home() {
@@ -34,7 +34,7 @@ export default function Home() {
       className="flex h-full flex-1 flex-col"
       bgStyle="opacity-50 bg-background/30"
     >
-      <section className="relative flex h-[80vh] w-full items-center justify-center md:h-screen">
+      <section className="relative flex h-screen w-full items-center justify-center md:h-screen">
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center space-y-4 text-center">
             <BlurFade>
@@ -55,26 +55,33 @@ export default function Home() {
               />
             </div>
 
-            <BlurFade className="space-x-4 py-6">
+            <BlurFade className="flex w-full flex-col justify-center gap-3 space-x-0 px-20 py-6 md:flex-row md:items-center md:gap-0 md:space-x-4 md:px-0">
               <Link href="/components/accordion">
                 <Button
                   iconRight={<ArrowRight />}
                   iconAnimation="translateXRight"
+                  className="w-full md:w-fit"
                 >
                   Explore Components
                 </Button>
               </Link>
               <Link href="/docs">
-                <Button variant="outline">Documentation</Button>
+                <Button variant="outline" className="w-full">
+                  Documentation
+                </Button>
               </Link>
             </BlurFade>
           </div>
 
-          <ScrollDownButton targetId="features" className="mx-auto w-full mt-6" />
+          <ScrollDownButton
+            targetId="features"
+            offset={100}
+            className="mx-auto mt-6 w-full"
+          />
         </div>
       </section>
 
-      <section className="relative flex h-[90vh] w-full items-center justify-center p-12">
+      <section className="relative flex min-h-screen w-full items-center justify-center p-12">
         <article className="container px-4 md:px-6">
           <div
             id="features"
@@ -89,13 +96,13 @@ export default function Home() {
               </p>
             </BlurFade>
 
-            <div className="flex h-[600px] w-full flex-col gap-4 lg:h-[250px] lg:flex-row">
+            <div className="flex min-h-[600px] w-full flex-col gap-4 lg:min-h-[250px] lg:flex-row">
               <BlurFade inView delay={0.3} duration={0.3}>
                 <Card className={cardStyle}>
-                  <header className="pb-2">
+                  <header>
                     <div className={titleStyle}>
                       <Paintbrush className="mb-2 size-6" />
-                      <h3>Custom Variants</h3>
+                      <h3 className="leading-tight">Custom Variants</h3>
                     </div>
                     <p className={subtitleStyle}>
                       Explore beautiful custom variants
@@ -111,10 +118,12 @@ export default function Home() {
 
               <BlurFade inView delay={0.5} duration={0.5}>
                 <Card className={cardStyle}>
-                  <header className="pb-2">
+                  <header>
                     <div className={titleStyle}>
                       <Layers className="mb-2 size-6" />
-                      <h3>Interactive Playground</h3>
+                      <h3 className="text-pretty leading-tight md:text-nowrap">
+                        Interactive Playground
+                      </h3>
                     </div>
                     <p className={subtitleStyle}>
                       Test and customize components
@@ -130,10 +139,10 @@ export default function Home() {
 
               <BlurFade inView delay={0.6} duration={0.8}>
                 <Card className={cardStyle}>
-                  <header className="pb-2">
+                  <header>
                     <div className={titleStyle}>
                       <GalleryVerticalEnd className="mb-2 size-6" />
-                      <h3>Code Snippets</h3>
+                      <h3 className="leading-tight">Code Snippets</h3>
                     </div>
                     <p className={subtitleStyle}>View and copy complete code</p>
                   </header>
