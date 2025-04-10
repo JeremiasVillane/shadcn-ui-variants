@@ -6,7 +6,6 @@ import {
 import { breadcrumbPlaygroundCode } from "./breadcrumb-playground-code"
 
 export const breadcrumb: ComponentDetails<BreadcrumbPlaygroundProps> = {
-  cliCommand: "add badge",
   PlaygroundComponent: BreadcrumbPlayground,
   playgroundCode: breadcrumbPlaygroundCode
 }

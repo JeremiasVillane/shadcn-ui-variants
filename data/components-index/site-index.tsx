@@ -10,7 +10,6 @@ import { tabs } from "./tabs"
 
 export interface ComponentDetails<T = any> {
   playground?: Record<string, string[] | string | number | boolean>
-  cliCommand?: string
   PlaygroundComponent: (args: T) => React.JSX.Element
   playgroundCode: (args: T) => string
 }

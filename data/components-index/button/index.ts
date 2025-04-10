@@ -12,7 +12,6 @@ export const button: ComponentDetails<ButtonPlaygroundProps> = {
       "none"
     ]
   },
-  cliCommand: "add button",
   PlaygroundComponent: ButtonPlayground,
   playgroundCode: buttonPlaygroundCode
 }

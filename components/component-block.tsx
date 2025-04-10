@@ -10,11 +10,13 @@ import { ComponentPlayground } from "./component-playground"
 interface ComponentBlockProps {
   name: string
   title: string
+  dependencies: string[] | undefined
+  registryDependencies: string[] | undefined
+  tailwind: Record<string, any> | undefined
   docs: {
     data: ComponentDoc
     error?: undefined
   }
-  cliCommand?: string
   playground: { [x: string]: string | number | boolean | string[] }
   PlaygroundComponent: (...args: any[]) => React.JSX.Element
   playgroundCode: (...args: any[]) => string
@@ -24,8 +26,10 @@ interface ComponentBlockProps {
 export default async function ComponentBlock({
   name,
   title,
+  dependencies,
+  registryDependencies,
+  tailwind,
   docs,
-  cliCommand,
   playground,
   PlaygroundComponent,
   playgroundCode
@@ -36,16 +40,14 @@ export default async function ComponentBlock({
   return (
     <main className="flex flex-col rounded-md bg-background pb-96">
       <ComponentPlayground
-        name={name}
-        title={title}
-        playground={playground}
-        PlaygroundComponent={PlaygroundComponent}
-        playgroundCode={playgroundCode}
+        {...{ name, title, playground, PlaygroundComponent, playgroundCode }}
       />
 
       <Separator className="my-9" />
 
-      <ComponentInstallation {...{ name, code, cliCommand }} />
+      <ComponentInstallation
+        {...{ name, code, dependencies, registryDependencies, tailwind }}
+      />
 
       <Separator className="my-9" />
 

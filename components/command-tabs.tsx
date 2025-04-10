@@ -10,68 +10,54 @@ import {
 import { CopyToClipboardButton } from "./copy-to-clipboard-button"
 import { CodeBlock } from "./ui/code-block"
 
-interface PackageManagersTabsProps {
-  cliCommand: string
+export type CommandMapType = {
+  pnpm: string
+  npm: string
+  yarn: string
+  bun: string
 }
 
-const tabs = [
-  {
-    name: "pnpm",
-    value: "pnpm",
-    content: "pnpm dlx shadcn@latest"
-  },
-  {
-    name: "npm",
-    value: "npm",
-    content: "npx shadcn@latest"
-  },
-  {
-    name: "yarn",
-    value: "yarn",
-    content: "npx shadcn@latest"
-  },
-  {
-    name: "bun",
-    value: "bun",
-    content: "bunx --bun shadcn@latest"
-  }
-]
+interface PackageManagersTabsProps {
+  commandMap: CommandMapType
+}
 
 export default function PackageManagersTabs({
-  cliCommand,
+  commandMap,
   className,
   ...props
 }: PackageManagersTabsProps & TabsProps) {
+  const tabs = Object.entries(commandMap)
+
   return (
     <Tabs
       variant="bootstrap"
-      defaultValue={tabs[0].value}
+      defaultValue={tabs[0][0]}
       className={cn("min-w-0", className)}
       {...props}
     >
       <TabsList>
-        {tabs.map((tab) => (
+        {tabs.map(([tabTitle, _]) => (
           <TabsTrigger
-            key={tab.value}
-            value={tab.value}
+            key={tabTitle}
+            value={tabTitle}
             className="px-2.5 sm:px-3"
           >
             <code className="flex items-center gap-1 text-[13px]">
-              {tab.name}
+              {tabTitle}
             </code>
           </TabsTrigger>
         ))}
       </TabsList>
 
-      {tabs.map((tab) => (
-        <TabsContent key={tab.value} value={tab.value}>
+      {tabs.map(([tabTitle, tabContent]) => (
+        <TabsContent key={tabTitle} value={tabTitle}>
           <div className="flex h-10 items-center justify-between gap-2 overflow-hidden rounded-md border bg-neutral-900 px-2">
             <CodeBlock
               language="llvm"
-              code={`${tab.content} ${cliCommand}`}
+              code={tabContent}
               className="truncate bg-transparent px-2 py-1"
             />
-            <CopyToClipboardButton content={`${tab.content} ${cliCommand}`} />
+            <CopyToClipboardButton content={tabContent} />
           </div>
         </TabsContent>
       ))}

@@ -16,7 +16,6 @@ export const alertDialog: ComponentDetails<AlertDialogPlaygroundProps> = {
     separatedHeader: false,
     separatedFooter: false
   },
-  cliCommand: "add alert-dialog",
   PlaygroundComponent: AlertDialogPlayground,
   playgroundCode: alertDialogPlaygroundCode
 }

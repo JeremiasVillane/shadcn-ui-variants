@@ -12,7 +12,6 @@ export const alert: ComponentDetails<AlertPlaygroundProps> = {
       "<CircleFadingArrowUp />"
     ]
   },
-  cliCommand: "add alert",
   PlaygroundComponent: AlertPlayground,
   playgroundCode: alertPlaygroundCode
 }
