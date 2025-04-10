@@ -1,0 +1,103 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "scroll-down-button",
+  "type": "registry:ui",
+  "title": "Scroll Down Button",
+  "author": "Based on code by nxworld",
+  "description": "A animated button that scrolls down to the next section of the page.",
+  "files": [
+    {
+      "path": "components/ui/scroll-down-button.tsx",
+      "content": "\"use client\"\r\n\r\nimport * as React from \"react\"\r\nimport { cva, type VariantProps } from \"class-variance-authority\"\r\n\r\nimport { cn } from \"@/lib/utils\"\r\n\r\ninterface ScrollDownButtonProps\r\n  extends Omit<React.HTMLAttributes<HTMLAnchorElement>, \"children\" | \"color\">,\r\n    VariantProps<typeof scrollDownLinkVariants> {\r\n  /** @default \"fading-arrow\" */\r\n  // prettier-ignore\r\n  variant?: \"fading-arrow\" | \"bouncing-arrow\" | \"spinning-arrow\" | \"multi-arrow\" | \"arrow-simple\" | \"arrow-in-circle\" | \"pulsing-circle\" | \"mouse-animated\" | \"mouse-simple\" | \"mouse-arrow\"\r\n  /**\r\n   * The ID of the element to scroll to (without the '#').\r\n   * Example: \"section05\"\r\n   */\r\n  targetId: string\r\n  /**\r\n   * Optional additional CSS classes for the button.\r\n   */\r\n  iconContainerClassName?: string\r\n  /**\r\n   * Optional additional CSS classes for the icon element.\r\n   */\r\n  iconElementClassName?: string\r\n  /**\r\n   * Optional text to display alongside the button.\r\n   */\r\n  text?: string\r\n  /**\r\n   * Additional CSS classes applied to the text element.\r\n   */\r\n  textClassName?: string\r\n  /**\r\n   * Offset in pixels to account for fixed headers or other elements.\r\n   * Example: 80 (for an 80px header).\r\n   *\r\n   * @default 80 */\r\n  offset?: number\r\n}\r\n\r\nconst scrollDownIconVariants = cva(\"absolute top-0 left-1/2 transform\", {\r\n  variants: {\r\n    variant: {\r\n      \"fading-arrow\":\r\n        \"-ml-3 w-6 h-6 border-l border-b border-foreground bg-transparent -rotate-45 animate-fading-arrow\",\r\n      \"bouncing-arrow\":\r\n        \"-ml-3 w-6 h-6 border-l border-b border-foreground bg-transparent -rotate-45 animate-bouncing-arrow\",\r\n      \"spinning-arrow\":\r\n        \"-ml-3 w-6 h-6 border-l border-b border-foreground bg-transparent -rotate-45 animate-spinning-arrow\",\r\n      \"multi-arrow\": \"-ml-3 h-[calc(32px+24px)] w-6\",\r\n      \"arrow-simple\":\r\n        \"-ml-3 w-6 h-6 border-l border-b border-foreground bg-transparent -rotate-45\",\r\n      \"arrow-in-circle\":\r\n        \"-ml-[23px] w-[46px] h-[46px] border border-foreground rounded-full\",\r\n      \"pulsing-circle\":\r\n        \"-ml-[23px] w-[46px] h-[46px] border border-foreground rounded-full\",\r\n      \"mouse-animated\":\r\n        \"-ml-[15px] w-[30px] h-[50px] border-2 border-foreground rounded-[50px]\",\r\n      \"mouse-simple\":\r\n        \"-ml-[15px] w-[30px] h-[50px] border-2 border-foreground rounded-[50px]\",\r\n      \"mouse-arrow\":\r\n        \"-ml-[15px] w-[30px] h-[50px] border-2 border-foreground rounded-[50px]\"\r\n    }\r\n  }\r\n})\r\n\r\nconst scrollDownLinkVariants = cva(\r\n  \"relative inline-block cursor-pointer group focus-visible:outline-0 text-foreground\",\r\n  {\r\n    variants: {\r\n      variant: {\r\n        \"fading-arrow\": \"pt-[70px]\",\r\n        \"bouncing-arrow\": \"pt-[60px]\",\r\n        \"spinning-arrow\": \"pt-[70px]\",\r\n        \"multi-arrow\": \"pt-[80px]\",\r\n        \"arrow-simple\": \"pt-[60px]\",\r\n        \"arrow-in-circle\": \"pt-[60px]\",\r\n        \"pulsing-circle\": \"pt-[60px]\",\r\n        \"mouse-animated\": \"pt-[60px]\",\r\n        \"mouse-simple\": \"pt-[60px]\",\r\n        \"mouse-arrow\": \"pt-[80px]\"\r\n      }\r\n    },\r\n    defaultVariants: {\r\n      variant: \"bouncing-arrow\"\r\n    }\r\n  }\r\n)\r\n\r\nconst ScrollDownButton = React.forwardRef<\r\n  HTMLAnchorElement,\r\n  ScrollDownButtonProps\r\n>(\r\n  (\r\n    {\r\n      className,\r\n      variant = \"fading-arrow\",\r\n      targetId,\r\n      text,\r\n      iconContainerClassName,\r\n      iconElementClassName,\r\n      textClassName,\r\n      offset = 80,\r\n      ...props\r\n    },\r\n    ref\r\n  ) => {\r\n    const handleSmoothScroll = (event: React.MouseEvent<HTMLAnchorElement>) => {\r\n      event.preventDefault()\r\n      const targetElement = document.getElementById(targetId)\r\n      if (targetElement) {\r\n        const elementPosition =\r\n          targetElement.getBoundingClientRect().top + window.scrollY\r\n        const offsetPosition = elementPosition - offset\r\n        window.scrollTo({ top: offsetPosition, behavior: \"smooth\" })\r\n      } else {\r\n        console.warn(`Smooth scroll target not found: #${targetId}`)\r\n      }\r\n    }\r\n\r\n    const renderIconInternal = () => {\r\n      const commonInternalArrow = cn(\r\n        \"absolute w-4 h-4 border-l border-b border-foreground bg-transparent transform -rotate-45\",\r\n        iconElementClassName\r\n      )\r\n      const commonInternalDot = cn(\r\n        \"absolute w-[6px] h-[6px] rounded-full bg-foreground\",\r\n        iconElementClassName\r\n      )\r\n\r\n      switch (variant) {\r\n        case \"arrow-in-circle\":\r\n          return (\r\n            <span\r\n              className={cn(\r\n                commonInternalArrow,\r\n                \"left-1/2 top-1/2 -ml-2 -mt-3\"\r\n              )}\r\n            />\r\n          )\r\n        case \"pulsing-circle\":\r\n          return (\r\n            <>\r\n              <span className=\"animate-pulsing-circle absolute left-0 top-0 -z-10 h-[44px] w-[44px] rounded-full opacity-0 shadow-[0_0_0_0_rgba(255,255,255,0.1)] group-hover:shadow-[0_0_0_60px_rgba(255,255,255,0.1)]\" />\r\n              <span\r\n                className={cn(\r\n                  commonInternalArrow,\r\n                  \"left-1/2 top-1/2 -ml-2 -mt-3\"\r\n                )}\r\n              />\r\n            </>\r\n          )\r\n        case \"multi-arrow\":\r\n          const multiArrowBase =\r\n            \"absolute w-6 h-6 opacity-0 box-border -ml-3 border-l-foreground border-b-foreground border-l border-solid border-b left-2/4 top-0 -rotate-45 animate-multi-arrow opacity-0\"\r\n          return (\r\n            <>\r\n              <span\r\n                className={cn(\r\n                  multiArrowBase,\r\n                  \"top-0 [animation-delay:0s]\",\r\n                  iconElementClassName\r\n                )}\r\n              />\r\n              <span\r\n                className={cn(\r\n                  multiArrowBase,\r\n                  \"top-[16px] [animation-delay:.15s]\",\r\n                  iconElementClassName\r\n                )}\r\n              />\r\n              <span\r\n                className={cn(\r\n                  multiArrowBase,\r\n                  \"top-[32px] [animation-delay:.3s]\",\r\n                  iconElementClassName\r\n                )}\r\n              />\r\n            </>\r\n          )\r\n        case \"mouse-simple\":\r\n          return (\r\n            <span\r\n              className={cn(commonInternalDot, \"left-1/2 top-[10px] -ml-[3px]\")}\r\n            />\r\n          )\r\n        case \"mouse-arrow\":\r\n          return (\r\n            <>\r\n              <span\r\n                className={cn(\r\n                  commonInternalDot,\r\n                  \"left-1/2 top-[10px] -ml-[3px]\"\r\n                )}\r\n              />\r\n              <span\r\n                className={cn(\r\n                  \"absolute bottom-[-18px] left-1/2 -ml-[9px] h-[18px] w-[18px] -rotate-45 transform border-b border-l border-foreground bg-transparent\",\r\n                  iconElementClassName\r\n                )}\r\n              />\r\n            </>\r\n          )\r\n        case \"mouse-animated\":\r\n          return (\r\n            <span\r\n              className={cn(\r\n                commonInternalDot,\r\n                \"animate-mouse-animated left-1/2 top-[10px] -ml-[3px] opacity-0\"\r\n              )}\r\n            />\r\n          )\r\n\r\n        default:\r\n          return null\r\n      }\r\n    }\r\n\r\n    return (\r\n      <a\r\n        ref={ref}\r\n        className={cn(\r\n          scrollDownLinkVariants({ variant }),\r\n          className,\r\n          iconElementClassName\r\n        )}\r\n        href={`#${targetId}`}\r\n        onClick={handleSmoothScroll}\r\n        aria-label={`Scroll down to ${targetId}`}\r\n        {...props}\r\n      >\r\n        <span\r\n          className={cn(\r\n            scrollDownIconVariants({ variant }),\r\n            iconContainerClassName\r\n          )}\r\n        >\r\n          {renderIconInternal()}\r\n        </span>\r\n\r\n        {!!text && (\r\n          <span\r\n            className={cn(\r\n              \"absolute -bottom-7 left-1/2 -translate-x-1/2 text-lg\",\r\n              textClassName ?? \"text-foreground/80\"\r\n            )}\r\n          >\r\n            {text}\r\n          </span>\r\n        )}\r\n      </a>\r\n    )\r\n  }\r\n)\r\nScrollDownButton.displayName = \"ScrollDownButton\"\r\n\r\nexport { ScrollDownButton, scrollDownIconVariants, scrollDownLinkVariants }\r\nexport type { ScrollDownButtonProps }\r\n",
+      "type": "registry:ui"
+    }
+  ],
+  "tailwind": {
+    "config": {
+      "theme": {
+        "extend": {
+          "keyframes": {
+            "pulsing-circle": {
+              "0%": {
+                "opacity": "0"
+              },
+              "30%": {
+                "opacity": "1"
+              },
+              "60%": {
+                "boxShadow": "0 0 0 60px rgba(255, 255, 255, 0.1)",
+                "opacity": "0"
+              },
+              "100%": {
+                "opacity": "0"
+              }
+            },
+            "bouncing-arrow": {
+              "0%, 40%, 100%": {
+                "transform": "rotate(-45deg) translate(0, 0)"
+              },
+              "20%": {
+                "transform": "rotate(-45deg) translate(-10px, 10px)"
+              }
+            },
+            "fading-arrow": {
+              "0%": {
+                "transform": "rotate(-45deg) translate(0, 0)",
+                "opacity": "0"
+              },
+              "50%": {
+                "opacity": "1"
+              },
+              "100%": {
+                "transform": "rotate(-45deg) translate(-20px, 20px)",
+                "opacity": "0"
+              }
+            },
+            "spinning-arrow": {
+              "0%, 100%": {
+                "transform": "rotateY(0) rotateZ(-45deg) translate(0, 0)",
+                "opacity": "0"
+              },
+              "50%": {
+                "opacity": "1"
+              },
+              "100%": {
+                "transform": "rotateY(720deg) rotateZ(-45deg) translate(-20px, 20px)",
+                "opacity": "0"
+              }
+            },
+            "multi-arrow": {
+              "0%, 100%": {
+                "opacity": "0"
+              },
+              "50%": {
+                "opacity": "1"
+              }
+            },
+            "mouse-animated": {
+              "0%, 100%": {
+                "transform": "translate(0, 0)",
+                "opacity": "0"
+              },
+              "40%": {
+                "opacity": "1"
+              },
+              "80%": {
+                "transform": "translate(0, 20px)",
+                "opacity": "0"
+              }
+            }
+          },
+          "animation": {
+            "pulsing-circle": "pulsing-circle 3s infinite",
+            "bouncing-arrow": "bouncing-arrow 2s infinite",
+            "fading-arrow": "fading-arrow 1.5s infinite",
+            "spinning-arrow": "spinning-arrow 1.5s infinite",
+            "multi-arrow": "multi-arrow 2s infinite",
+            "mouse-animated": "mouse-animated 2s infinite"
+          }
+        }
+      }
+    }
+  }
+}

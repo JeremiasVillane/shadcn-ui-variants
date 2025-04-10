@@ -4,6 +4,7 @@ import { alertDialog } from "./alert-dialog"
 import { breadcrumb } from "./breadcrumb"
 import { button } from "./button"
 import { input } from "./input"
+import { scrollDownButton } from "./scroll-down-button"
 import { separator } from "./separator"
 import { slider } from "./slider"
 import { tabs } from "./tabs"
@@ -23,6 +24,7 @@ export const componentsIndex: ComponentsIndex = {
   breadcrumb,
   button,
   input,
+  "scroll-down-button": scrollDownButton,
   separator,
   slider,
   tabs

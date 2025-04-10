@@ -66,7 +66,12 @@ export default async function ComponentPage({ params }: ComponentPageProps) {
   const nameParams = (await params).component
   const indexData = componentsIndex[nameParams]
 
-  if (!indexData) return notFound()
+  if (!indexData) {
+    console.warn(
+      `Component ${nameParams} not found in componentsIndex. Please check the index file.`
+    )
+    return notFound()
+  }
 
   const registryItem = registry.items.find(
     (comp) => comp.name === nameParams
@@ -98,6 +103,12 @@ export default async function ComponentPage({ params }: ComponentPageProps) {
             </Badge>
           </Link>
         )}
+
+      {!!registryItem.author && (
+        <div className="text-right text-xs text-foreground/50">
+          {registryItem.author}
+        </div>
+      )}
 
       <Separator className="mb-8 mt-6" />
 

@@ -85,7 +85,19 @@ const config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" }
         },
-        "scroll-down-btn": {
+        "pulsing-circle": {
+          "0%, 100%": { opacity: "0" },
+          "30%": { opacity: "1" },
+          "60%": {
+            boxShadow: "0 0 0 44px hsl(var(--muted))",
+            opacity: "0"
+          }
+        },
+        "bouncing-arrow": {
+          "0%, 40%, 100%": { transform: "rotate(-45deg) translate(0, 0)" },
+          "20%": { transform: "rotate(-45deg) translate(-10px, 10px)" }
+        },
+        "fading-arrow": {
           "0%": {
             transform: "rotate(-45deg) translate(0, 0)",
             opacity: "0"
@@ -97,12 +109,43 @@ const config = {
             transform: "rotate(-45deg) translate(-20px, 20px)",
             opacity: "0"
           }
+        },
+        "spinning-arrow": {
+          "0%, 100%": {
+            transform: "rotateY(0) rotateZ(-45deg) translate(0, 0)",
+            opacity: "0"
+          },
+          "50%": { opacity: "1" },
+          "100%": {
+            transform: "rotateY(720deg) rotateZ(-45deg) translate(-20px, 20px)",
+            opacity: "0"
+          }
+        },
+        "multi-arrow": {
+          "0%, 100%": { opacity: "0" },
+          "50%": { opacity: "1" }
+        },
+        "mouse-animated": {
+          "0%, 100%": {
+            transform: "translate(0, 0)",
+            opacity: "0"
+          },
+          "40%": { opacity: "1" },
+          "80%": {
+            transform: "translate(0, 20px)",
+            opacity: "0"
+          }
         }
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "scroll-down-btn": "scroll-down-btn 1.5s infinite"
+        "pulsing-circle": "pulsing-circle 3s infinite",
+        "bouncing-arrow": "bouncing-arrow 2s infinite",
+        "fading-arrow": "fading-arrow 1.5s infinite",
+        "spinning-arrow": "spinning-arrow 1.5s infinite",
+        "multi-arrow": "multi-arrow 2s infinite",
+        "mouse-animated": "mouse-animated 2s infinite"
       }
     }
   },
