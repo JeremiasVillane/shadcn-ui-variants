@@ -11,7 +11,7 @@ interface MobileNavProps {
   registryItems: RegistryItem[]
 }
 
-export function MobileNav({ registryItems }: MobileNavProps) {
+export default function MobileNav({ registryItems }: MobileNavProps) {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col space-y-2">

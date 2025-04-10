@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/tabs"
 
 import { CopyToClipboardButton } from "./copy-to-clipboard-button"
-import { CodeBlock } from "./ui/code-block"
+import { CodeBlock } from "../ui/code-block"
 
 export type CommandMapType = {
   pnpm: string
@@ -17,15 +17,15 @@ export type CommandMapType = {
   bun: string
 }
 
-interface PackageManagersTabsProps {
+interface CommandTabsProps {
   commandMap: CommandMapType
 }
 
-export default function PackageManagersTabs({
+export function CommandTabs({
   commandMap,
   className,
   ...props
-}: PackageManagersTabsProps & TabsProps) {
+}: CommandTabsProps & TabsProps) {
   const tabs = Object.entries(commandMap)
 
   return (

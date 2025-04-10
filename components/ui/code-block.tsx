@@ -5,9 +5,7 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
 import { tomorrow } from "react-syntax-highlighter/dist/cjs/styles/prism"
 
 import { cn } from "@/lib/utils"
-
-import { CopyToClipboardButton } from "../copy-to-clipboard-button"
-import { DownloadFileButton } from "../download-file-button"
+import { CopyToClipboardButton, DownloadFileButton } from "@/components/common"
 
 type CodeBlockProps = {
   language: string
@@ -100,7 +98,7 @@ export const CodeBlock = ({
           margin: 0,
           padding: 0,
           background: "transparent",
-          fontSize: "0.875rem", // text-sm equivalent
+          fontSize: "0.875rem" // text-sm equivalent
         }}
         wrapLines={true}
         showLineNumbers={!!filename}

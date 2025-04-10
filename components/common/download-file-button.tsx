@@ -3,7 +3,7 @@ import { Download } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
-import { Button, ButtonProps } from "./ui/button"
+import { Button, ButtonProps } from "../ui/button"
 
 interface DownloadFileButtonProps {
   sourceCode: string

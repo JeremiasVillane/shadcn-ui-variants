@@ -4,8 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google"
 import registry from "@/registry.json"
 import { WebSite, WithContext } from "schema-dts"
 
-import { SiteFooter } from "@/components/site-footer"
-import { SiteHeader } from "@/components/site-header"
+import { SiteFooter, SiteHeader } from "@/components/layout"
 import { ThemeProvider } from "@/components/theme-provider"
 
 import "../styles/globals.css"

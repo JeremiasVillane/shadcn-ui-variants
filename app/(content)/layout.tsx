@@ -1,7 +1,6 @@
 import * as React from "react"
 
-import LeftSidebar from "@/components/left-sidebar"
-import TOC from "@/components/toc"
+import { LeftSidebar, TOC } from "@/components/layout"
 
 export default function ComponentsLayout({
   children

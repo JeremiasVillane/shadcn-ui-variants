@@ -5,7 +5,7 @@ import path from "path"
 import { unstable_cache } from "next/cache"
 import { ComponentDocResult } from "@/types"
 
-import { parseComponentFile } from "@/lib/jsdoc"
+import { parseComponentFile } from "@/lib/jsdoc-utils"
 
 export async function getComponentDocumentation(
   componentPath: string | null | undefined

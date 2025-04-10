@@ -3,13 +3,12 @@ import { publicUrl } from "@/env.mjs"
 import { RegistryItem } from "@/types"
 import { TabsContent } from "@radix-ui/react-tabs"
 
-import { toWordCase } from "@/lib/utils"
+import { toWordCase } from "@/lib/string-utils"
+import { CodeBlockWrapper, CommandTabs } from "@/components/common"
 import { SubHeading } from "@/components/typography"
 
-import { CodeBlockWrapper } from "./code-block-wrapper"
-import CommandTabs from "./command-tabs"
-import { CodeBlock } from "./ui/code-block"
-import { Tabs, TabsList, TabsTrigger } from "./ui/tabs"
+import { CodeBlock } from "../ui/code-block"
+import { Tabs, TabsList, TabsTrigger } from "../ui/tabs"
 import {
   Timeline,
   TimelineConnector,
@@ -19,7 +18,7 @@ import {
   TimelineLine,
   TimelineNode,
   TimelineTitle
-} from "./ui/timeline"
+} from "../ui/timeline"
 
 const commonDependencies = "class-variance-authority tailwind-merge clsx"
 
@@ -28,7 +27,7 @@ interface ComponentInstallationProps {
   code: string
 }
 
-export default async function ComponentInstallation({
+export default function ComponentInstallation({
   registryItem: { name, dependencies, registryDependencies, tailwind },
   code
 }: ComponentInstallationProps) {

@@ -6,13 +6,15 @@ import { RegistryItem } from "@/types"
 import { Card, CardContent } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import {
+  CodeBlockWrapper,
+  CopyToClipboardButton,
+  DownloadFileButton
+} from "@/components/common"
 import { DescriptionTextSmall, SubHeading } from "@/components/typography"
 
-import { CodeBlockWrapper } from "./code-block-wrapper"
-import { CopyToClipboardButton } from "./copy-to-clipboard-button"
-import { DownloadFileButton } from "./download-file-button"
-import { PlaygroundControls } from "./playground-controls"
-import { CodeBlock } from "./ui/code-block"
+import { CodeBlock } from "../ui/code-block"
+import PlaygroundControls from "./playground-controls"
 
 interface PlaygroundProps {
   name: RegistryItem["name"]
@@ -22,7 +24,7 @@ interface PlaygroundProps {
   playgroundCode: (...args: any[]) => string
 }
 
-export function ComponentPlayground({
+export default function ComponentPlayground({
   name,
   title,
   playground,

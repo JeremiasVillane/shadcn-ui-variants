@@ -24,7 +24,7 @@ interface PlaygroundControlsProps {
   >
 }
 
-export function PlaygroundControls({
+export default function PlaygroundControls({
   playground,
   playgroundState,
   updatePlaygroundState

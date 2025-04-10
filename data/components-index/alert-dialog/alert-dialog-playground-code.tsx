@@ -1,6 +1,6 @@
 "use client"
 
-import { jsxStringToName } from "@/lib/utils"
+import { jsxStringToName } from "@/lib/string-utils"
 
 import { AlertDialogPlaygroundProps } from "./alert-dialog-playground"
 

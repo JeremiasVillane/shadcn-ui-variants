@@ -31,7 +31,7 @@ export function parseComponentFile(
  * @param sourceFile The source file to get text from if needed.
  * @returns The description found or an empty string.
  */
-function extractDescriptionFromJSDoc(
+export function extractDescriptionFromJSDoc(
   node: ts.Node,
   sourceFile: ts.SourceFile
 ): string {

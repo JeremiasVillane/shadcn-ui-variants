@@ -1,6 +1,7 @@
 "use client"
 
-import type React from "react"
+import * as React from "react"
+import { formatType } from "@/helpers/parse-prop-types"
 import { ComponentDocResult } from "@/types"
 import { AlertCircle, Info, InfoIcon } from "lucide-react"
 
@@ -19,8 +20,8 @@ import {
   TableRow
 } from "@/components/ui/table"
 
-import { Tooltiper } from "./tooltiper"
-import { SubHeading } from "./typography"
+import { Tooltiper } from "../tooltiper"
+import { SubHeading } from "../typography"
 
 interface ComponentAPIProps {
   docs: ComponentDocResult
@@ -75,7 +76,10 @@ export default function ComponentAPI({ docs }: ComponentAPIProps) {
                       <span>
                         {prop.name}
                         {prop.required && (
-                          <Tooltiper content="Required">
+                          <Tooltiper
+                            content="Required"
+                            className="border bg-background text-xs text-foreground md:text-sm"
+                          >
                             <span className="cursor-default text-red-600">
                               *
                             </span>
@@ -87,7 +91,10 @@ export default function ComponentAPI({ docs }: ComponentAPIProps) {
                           <PopoverTrigger>
                             <InfoIcon className="size-3 text-blue-700 dark:text-blue-500" />
                           </PopoverTrigger>
-                          <PopoverContent side="top" className="text-xs md:text-sm">
+                          <PopoverContent
+                            side="top"
+                            className="text-xs md:text-sm"
+                          >
                             {prop.description}
                           </PopoverContent>
                         </Popover>
@@ -130,87 +137,4 @@ export default function ComponentAPI({ docs }: ComponentAPIProps) {
       {pageContent}
     </section>
   )
-}
-
-// Helper function to format complex types for better readability
-function formatType(type: string): React.ReactNode {
-  // Handle union types
-  if (type.includes(" | ")) {
-    return type.split(" | ").map((t, i, arr) => (
-      <span key={i}>
-        {formatSimpleType(t)}
-        {i < arr.length - 1 && (
-          <span className="text-muted-foreground"> | </span>
-        )}
-      </span>
-    ))
-  }
-
-  return formatSimpleType(type)
-}
-
-function formatSimpleType(type: string): React.ReactNode {
-  // Handle common types
-  const commonTypes = [
-    "string",
-    "number",
-    "boolean",
-    "object",
-    "array",
-    "function"
-  ]
-
-  if (commonTypes.includes(type)) {
-    return <span className="text-green-600 dark:text-green-400">{type}</span>
-  }
-
-  // Handle common react types
-  const baseReactTypes = ["React.ReactNode", "React.ReactElement"]
-
-  const matchedBaseType = baseReactTypes.find((baseType) =>
-    type.startsWith(baseType)
-  )
-
-  if (matchedBaseType) {
-    const nextCharIndex = matchedBaseType.length
-    if (type.length === nextCharIndex || type[nextCharIndex] === "<") {
-      const highlightedPart = type.substring(0, nextCharIndex)
-      const remainingPart = type.substring(nextCharIndex)
-
-      return (
-        <>
-          <span className="text-blue-400">{highlightedPart}</span>
-          {remainingPart}
-        </>
-      )
-    }
-  }
-
-  // Handle array types
-  if (type.endsWith("[]")) {
-    const baseType = type.slice(0, -2)
-    return (
-      <>
-        <span>{formatSimpleType(baseType)}</span>
-        <span className="text-yellow-600 dark:text-yellow-400">[]</span>
-      </>
-    )
-  }
-
-  // Handle generic types
-  if (type.includes("<") && type.includes(">")) {
-    const baseType = type.slice(0, type.indexOf("<"))
-    const genericType = type.slice(type.indexOf("<") + 1, type.lastIndexOf(">"))
-
-    return (
-      <>
-        <span className="text-blue-600 dark:text-blue-400">{baseType}</span>
-        <span>{"<"}</span>
-        {formatType(genericType)}
-        <span>{">"}</span>
-      </>
-    )
-  }
-
-  return type
 }

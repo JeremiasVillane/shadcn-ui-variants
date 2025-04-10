@@ -1,11 +1,11 @@
 import { ComponentDoc, RegistryItem } from "@/types"
 
-import { getFileContent } from "@/lib/file"
+import { getFileContent } from "@/lib/file-utils"
 import { Separator } from "@/components//ui/separator"
 
 import ComponentAPI from "./component-api"
 import ComponentInstallation from "./component-installation"
-import { ComponentPlayground } from "./component-playground"
+import ComponentPlayground from "./component-playground"
 
 interface ComponentBlockProps {
   registryItem: RegistryItem
@@ -19,7 +19,7 @@ interface ComponentBlockProps {
   children?: React.ReactNode
 }
 
-export default async function ComponentBlock({
+export async function ComponentBlock({
   registryItem,
   docs,
   playground,

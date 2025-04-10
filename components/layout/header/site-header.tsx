@@ -5,17 +5,17 @@ import { RegistryItem } from "@/types"
 import { GalleryVerticalEnd, Menu } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
+import { HoverBorderGradient } from "@/components/ui/hover-border-gradient"
 import {
   Sheet,
   SheetContent,
   SheetTitle,
   SheetTrigger
 } from "@/components/ui/sheet"
-import MainNav from "@/components/main-nav"
-import { MobileNav } from "@/components/mobile-nav"
 import { ThemeToggle } from "@/components/theme-toggle"
 
-import { HoverBorderGradient } from "./ui/hover-border-gradient"
+import MainNav from "./main-nav"
+import MobileNav from "./mobile-nav"
 
 interface SiteHeaderProps {
   registryItems: RegistryItem[]
@@ -27,7 +27,9 @@ export function SiteHeader({ registryItems }: SiteHeaderProps) {
       <div className="container flex h-16 items-center gap-4 space-x-4 sm:justify-between sm:space-x-0">
         <Link href="/" className="flex items-center space-x-2">
           <GalleryVerticalEnd className="h-6 w-6" />
-          <span className="inline-block font-bold">Shadcn UI Variants</span>
+          <span className="hidden font-bold md:inline-block">
+            Shadcn UI Variants
+          </span>
         </Link>
 
         <div className="flex flex-1 items-center justify-end space-x-4 md:justify-between">

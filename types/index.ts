@@ -1,3 +1,18 @@
+/**
+ * This file contains TypeScript type definitions for the registry item structure.
+ * It includes types for component documentation, prop definitions,
+ * registry items, Tailwind configuration, CSS variables, and CSS values.
+ *
+ * These types are used to define the structure of the registry items and their properties.
+ * They are used in the registry.json file and in the codebase to ensure type safety
+ * and consistency when working with registry items.
+ */
+
+/**
+ * Represents a prop definition for a component.
+ * It includes the name, type, required status,
+ * default value, and description of the prop. *
+ */
 export type PropDefinition = {
   name: string
   type: string
@@ -6,10 +21,47 @@ export type PropDefinition = {
   description: string
 }
 
+/**
+ * Represents the structure of a component documentation.
+ * It contains an array of prop definitions for the component.
+ *
+ * @type {ComponentDoc}
+ * @property {PropDefinition[]} props - An array of prop definitions for the component.
+ */
 export type ComponentDoc = {
   props: PropDefinition[]
 }
 
+/**
+ * Represents the result of a component documentation lookup.
+ * It can either be a successful result with the component documentation
+ * or an error message.
+ *
+ * @type {ComponentDocResult}
+ * @property {ComponentDoc} data - The component documentation if successful.
+ * @property {string} error - The error message if the lookup failed.
+ * @example
+ * const result: ComponentDocResult = {
+ *   data: {
+ *     props: [
+ *      {
+ *       name: "propName",
+ *       type: "string",
+ *       required: true,
+ *       defaultValue: "default",
+ *       description: "Description of the prop"
+ *     }
+ *   ]
+ *  },
+ *  error: undefined
+ * }
+ *
+ * @example
+ * const result: ComponentDocResult = {
+ *     data: undefined,
+ *     error: "Component not found"
+ *   }
+ */
 export type ComponentDocResult =
   | { data: ComponentDoc; error?: undefined }
   | { data?: undefined; error: string }
@@ -126,7 +178,7 @@ export interface RegistryFile {
   /**
    * The path to the file relative to the registry root.
    */
-  path: string // Required based on if/then/else logic in schema
+  path: string
 
   /**
    * The content of the file.
@@ -136,8 +188,8 @@ export interface RegistryFile {
   /**
    * The type of the file. This is used to determine the type of the file when resolved for a project.
    */
-  type: // Required based on if/then/else logic in schema
-  | "registry:lib"
+  type:
+    | "registry:lib"
     | "registry:block"
     | "registry:component"
     | "registry:ui"
@@ -150,7 +202,7 @@ export interface RegistryFile {
    * The target path of the file. This is the path to the file in the project.
    * Required if type is 'registry:file' or 'registry:page'.
    */
-  target?: string // Conditionally required based on if/then/else logic
+  target?: string
 }
 
 /**

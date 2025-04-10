@@ -5,7 +5,7 @@ import { Check, Copy } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
-import { Button, ButtonProps } from "./ui/button"
+import { Button, ButtonProps } from "../ui/button"
 
 export const CopyToClipboardButton = ({
   content,

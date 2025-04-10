@@ -5,10 +5,10 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { contentIndex } from "@/data/content-index"
 
-import { toWordCase } from "@/lib/utils"
+import { toWordCase } from "@/lib/string-utils"
 import { Separator } from "@/components/ui/separator"
 
-export default function LeftSidebar() {
+export function LeftSidebar() {
   const pathname = usePathname()
 
   const getLinkStyle = React.useCallback(

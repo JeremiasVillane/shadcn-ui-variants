@@ -1,5 +1,12 @@
 import { Metadata } from "next"
 
+/** This function constructs the metadata for the application,
+ * including title, description, Open Graph data, and authors.
+ * It also includes a manifest file for the application.
+ *
+ * @param {Metadata} metadata - The metadata object containing the title, description, and Open Graph data.
+ * @returns {Metadata} - The constructed metadata object.
+ */
 export const constructMetadata = (metadata: Metadata): Metadata => {
   return {
     title: metadata.title,

@@ -1,6 +1,7 @@
 import registry from "@/registry.json"
+import { RegistryItem } from "@/types"
 
-const components = registry.items
+const components = registry.items as RegistryItem[]
 
 export const contentIndex = [
   {
