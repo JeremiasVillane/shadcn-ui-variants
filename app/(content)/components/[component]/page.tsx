@@ -4,6 +4,7 @@ import { getComponentDocumentation } from "@/actions"
 import { componentsIndex } from "@/data/components-index"
 import { publicUrl } from "@/env.mjs"
 import registry from "@/registry.json"
+import { RegistryItem } from "@/types"
 import { ExternalLink } from "lucide-react"
 
 import { constructMetadata } from "@/lib/metadata"
@@ -25,7 +26,9 @@ export const generateMetadata = async (props: {
   params: Promise<{ component: string }>
 }) => {
   const nameParams = (await props.params).component
-  const componentData = registry.items.find((comp) => comp.name === nameParams)
+  const componentData = registry.items.find(
+    (comp) => comp.name === nameParams
+  ) as RegistryItem
 
   if (!componentData) return
 
@@ -65,14 +68,9 @@ export default async function ComponentPage({ params }: ComponentPageProps) {
 
   if (!indexData) return notFound()
 
-  const {
-    name,
-    title,
-    description,
-    dependencies,
-    registryDependencies,
-    tailwind
-  } = registry.items.find((comp) => comp.name === nameParams)!
+  const registryItem = registry.items.find(
+    (comp) => comp.name === nameParams
+  )! as RegistryItem
   const docs = await getComponentDocumentation(
     `components/ui/${nameParams}.tsx`
   )
@@ -85,29 +83,27 @@ export default async function ComponentPage({ params }: ComponentPageProps) {
   return (
     <div>
       <DynamicBreadcrumb activeLinks={false} separatorVariant="chevrons" />
-      <MainHeading>{title}</MainHeading>
-      <DescriptionText>{description}</DescriptionText>
-      {!!dependencies && dependencies[0].startsWith("@radix-ui") && (
-        <Link
-          href={`https://www.radix-ui.com/docs/primitives/components/${name}#api-reference`}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Badge className="mt-3 flex w-fit items-center justify-center gap-1 bg-muted text-foreground/80 hover:text-background/80">
-            Official API Reference <ExternalLink className="size-3" />
-          </Badge>
-        </Link>
-      )}
+      <MainHeading>{registryItem.title}</MainHeading>
+      <DescriptionText>{registryItem.description}</DescriptionText>
+      {!!registryItem.dependencies &&
+        registryItem.dependencies[0].startsWith("@radix-ui") &&
+        registryItem.name !== "button" && (
+          <Link
+            href={`https://www.radix-ui.com/docs/primitives/components/${registryItem.name}#api-reference`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Badge className="mt-3 flex w-fit items-center justify-center gap-1 bg-muted text-foreground/80 hover:text-background/80">
+              Official API Reference <ExternalLink className="size-3" />
+            </Badge>
+          </Link>
+        )}
 
       <Separator className="mb-8 mt-6" />
 
       <ComponentBlock
         {...{
-          name,
-          title,
-          dependencies,
-          registryDependencies,
-          tailwind,
+          registryItem,
           docs,
           playground,
           PlaygroundComponent: indexData.PlaygroundComponent,

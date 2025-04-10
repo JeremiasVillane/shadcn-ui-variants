@@ -1,4 +1,4 @@
-import { ComponentDoc } from "@/types"
+import { ComponentDoc, RegistryItem } from "@/types"
 
 import { getFileContent } from "@/lib/file"
 import { Separator } from "@/components//ui/separator"
@@ -8,11 +8,7 @@ import ComponentInstallation from "./component-installation"
 import { ComponentPlayground } from "./component-playground"
 
 interface ComponentBlockProps {
-  name: string
-  title: string
-  dependencies: string[] | undefined
-  registryDependencies: string[] | undefined
-  tailwind: Record<string, any> | undefined
+  registryItem: RegistryItem
   docs: {
     data: ComponentDoc
     error?: undefined
@@ -24,30 +20,30 @@ interface ComponentBlockProps {
 }
 
 export default async function ComponentBlock({
-  name,
-  title,
-  dependencies,
-  registryDependencies,
-  tailwind,
+  registryItem,
   docs,
   playground,
   PlaygroundComponent,
   playgroundCode
 }: ComponentBlockProps) {
-  const src = `components/ui/${name}.tsx`
+  const src = `components/ui/${registryItem.name}.tsx`
   const code = await getFileContent(src)
 
   return (
     <main className="flex flex-col rounded-md bg-background pb-96">
       <ComponentPlayground
-        {...{ name, title, playground, PlaygroundComponent, playgroundCode }}
+        {...{
+          name: registryItem.name,
+          title: registryItem.title,
+          playground,
+          PlaygroundComponent,
+          playgroundCode
+        }}
       />
 
       <Separator className="my-9" />
 
-      <ComponentInstallation
-        {...{ name, code, dependencies, registryDependencies, tailwind }}
-      />
+      <ComponentInstallation {...{ registryItem, code }} />
 
       <Separator className="my-9" />
 

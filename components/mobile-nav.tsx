@@ -1,17 +1,17 @@
 "use client"
 
 import Link from "next/link"
-import { ComponentRegistryMainData } from "@/types"
+import { RegistryItem } from "@/types"
 
 import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Separator } from "@/components/ui/separator"
 
 interface MobileNavProps {
-  componentsData: ComponentRegistryMainData[]
+  registryItems: RegistryItem[]
 }
 
-export function MobileNav({ componentsData }: MobileNavProps) {
+export function MobileNav({ registryItems }: MobileNavProps) {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col space-y-2">
@@ -23,7 +23,7 @@ export function MobileNav({ componentsData }: MobileNavProps) {
           <h4 className="font-medium">Components</h4>
           <ScrollArea className="h-[300px]">
             <div className="flex flex-col space-y-2">
-              {componentsData?.map(
+              {registryItems?.map(
                 (component) =>
                   component && (
                     <Link

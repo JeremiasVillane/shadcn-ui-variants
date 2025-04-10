@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { RegistryItem } from "@/types"
 
 import { Card, CardContent } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
@@ -14,8 +15,8 @@ import { PlaygroundControls } from "./playground-controls"
 import { CodeBlock } from "./ui/code-block"
 
 interface PlaygroundProps {
-  name: string
-  title: string
+  name: RegistryItem["name"]
+  title: RegistryItem["title"]
   playground: { [x: string]: string | number | boolean | string[] }
   PlaygroundComponent: (...args: any[]) => React.JSX.Element
   playgroundCode: (...args: any[]) => string

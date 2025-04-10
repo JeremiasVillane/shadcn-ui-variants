@@ -11,6 +11,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 import "../styles/globals.css"
 
 import { publicUrl } from "@/env.mjs"
+import { RegistryItem } from "@/types"
 
 import { cn } from "@/lib/utils"
 
@@ -74,7 +75,7 @@ export const metadata: Metadata = {
   }
 }
 
-const componentsData = registry.items
+const registryItems = registry.items as RegistryItem[]
 
 export default async function RootLayout({
   children
@@ -100,7 +101,7 @@ export default async function RootLayout({
 
         <ThemeProvider attribute="class" disableTransitionOnChange>
           <div className="relative flex min-h-screen flex-col">
-            <SiteHeader {...{ componentsData }} />
+            <SiteHeader {...{ registryItems }} />
             <div className="flex-1">{children}</div>
             <SiteFooter />
           </div>

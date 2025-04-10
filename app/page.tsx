@@ -12,7 +12,6 @@ import { BlurIn } from "@/components/ui/blur-in"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { DotBackground } from "@/components/ui/dot-background"
-import { GridBackground } from "@/components/ui/grid-background"
 import { ScrollDownButton } from "@/components/ui/scroll-down-button"
 import { WordFadeIn } from "@/components/ui/word-fade-in"
 

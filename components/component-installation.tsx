@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { publicUrl } from "@/env.mjs"
+import { RegistryItem } from "@/types"
 import { TabsContent } from "@radix-ui/react-tabs"
 
 import { toWordCase } from "@/lib/utils"
@@ -23,19 +24,13 @@ import {
 const commonDependencies = "class-variance-authority tailwind-merge clsx"
 
 interface ComponentInstallationProps {
-  name: string
+  registryItem: RegistryItem
   code: string
-  dependencies: string[] | undefined
-  registryDependencies: string[] | undefined
-  tailwind: Record<string, any> | undefined
 }
 
 export default async function ComponentInstallation({
-  name,
-  code,
-  dependencies,
-  registryDependencies,
-  tailwind
+  registryItem: { name, dependencies, registryDependencies, tailwind },
+  code
 }: ComponentInstallationProps) {
   return (
     <section className="flex flex-col">

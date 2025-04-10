@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { ComponentRegistryMainData } from "@/types"
+import { RegistryItem } from "@/types"
 
 import { cn } from "@/lib/utils"
 import {
@@ -20,10 +20,10 @@ const navButtonStyle = cn(
 )
 
 interface MainNavProps {
-  componentsData: ComponentRegistryMainData[]
+  registryItems: RegistryItem[]
 }
 
-export default function MainNav({ componentsData }: MainNavProps) {
+export default function MainNav({ registryItems }: MainNavProps) {
   return (
     <NavigationMenu>
       <NavigationMenuList>
@@ -40,7 +40,7 @@ export default function MainNav({ componentsData }: MainNavProps) {
           </NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid w-[400px] gap-3 p-4 md:grid-cols-2 xl:w-[600px]">
-              {componentsData?.map(
+              {registryItems?.map(
                 (component) =>
                   component && (
                     <ComponentNavCard

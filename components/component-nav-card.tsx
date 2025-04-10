@@ -2,14 +2,14 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { ComponentRegistryMainData } from "@/types"
+import { RegistryItem } from "@/types"
 
 import { cn } from "@/lib/utils"
 
 import { NavigationMenuLink } from "./ui/navigation-menu"
 
 interface ComponentNavCardProps {
-  component: ComponentRegistryMainData
+  component: RegistryItem
 }
 
 export default function ComponentNavCard({ component }: ComponentNavCardProps) {
