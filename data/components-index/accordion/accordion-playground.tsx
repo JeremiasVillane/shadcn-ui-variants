@@ -46,8 +46,12 @@ export function AccordionPlayground({
     >
       {items.map(({ title, content }, index) => (
         <AccordionItem key={index} value={`item-${index}`}>
-          <AccordionTrigger>{title}</AccordionTrigger>
-          <AccordionContent>{content}</AccordionContent>
+          <AccordionTrigger className="text-left text-base md:text-xl lg:text-2xl">
+            {title}
+          </AccordionTrigger>
+          <AccordionContent className="text-xs md:text-sm">
+            {content}
+          </AccordionContent>
         </AccordionItem>
       ))}
     </Accordion>
@@ -60,8 +64,12 @@ export function AccordionPlayground({
     >
       {items.map(({ title, content }, index) => (
         <AccordionItem key={index} value={`item-${index}`}>
-          <AccordionTrigger>{title}</AccordionTrigger>
-          <AccordionContent>{content}</AccordionContent>
+          <AccordionTrigger className="text-left text-base md:text-xl lg:text-2xl">
+            {title}
+          </AccordionTrigger>
+          <AccordionContent className="text-xs md:text-sm">
+            {content}
+          </AccordionContent>
         </AccordionItem>
       ))}
     </Accordion>

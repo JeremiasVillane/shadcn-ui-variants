@@ -3,6 +3,7 @@ import { publicUrl } from "@/env.mjs"
 import { RegistryItem } from "@/types"
 import { TabsContent } from "@radix-ui/react-tabs"
 
+import { getFileContent } from "@/lib/file-utils"
 import { toWordCase } from "@/lib/string-utils"
 import { CodeBlockWrapper, CommandTabs } from "@/components/common"
 import { SubHeading } from "@/components/typography"
@@ -27,10 +28,14 @@ interface ComponentInstallationProps {
   code: string
 }
 
-export default function ComponentInstallation({
-  registryItem: { name, dependencies, registryDependencies, tailwind },
+export default async function ComponentInstallation({
+  registryItem: { name, dependencies, registryDependencies, tailwind, files },
   code
 }: ComponentInstallationProps) {
+  const extraFiles = files?.filter((f) => f.type !== "registry:ui")
+
+  let stepCounter = 0
+
   return (
     <section className="flex flex-col">
       <SubHeading id="installation" className="mb-6">
@@ -61,7 +66,7 @@ export default function ComponentInstallation({
             {!!registryDependencies && (
               <TimelineItem>
                 <TimelineConnector>
-                  <TimelineNode>1</TimelineNode>
+                  <TimelineNode>{++stepCounter}</TimelineNode>
                   <TimelineLine />
                 </TimelineConnector>
 
@@ -93,7 +98,7 @@ export default function ComponentInstallation({
 
             <TimelineItem>
               <TimelineConnector>
-                <TimelineNode>{!!registryDependencies ? 2 : 1}</TimelineNode>
+                <TimelineNode>{++stepCounter}</TimelineNode>
                 <TimelineLine />
               </TimelineConnector>
 
@@ -128,7 +133,7 @@ export default function ComponentInstallation({
 
             <TimelineItem>
               <TimelineConnector>
-                <TimelineNode>{!!registryDependencies ? 3 : 2}</TimelineNode>
+                <TimelineNode>{++stepCounter}</TimelineNode>
                 <TimelineLine />
               </TimelineConnector>
 
@@ -136,7 +141,7 @@ export default function ComponentInstallation({
                 <TimelineTitle>Add util file:</TimelineTitle>
                 <TimelineDescription className="pt-5">
                   <CodeBlock
-                    className="pb-3"
+                    className="border pb-3"
                     language="tsx"
                     filename="lib/utils.ts"
                     code={`import { ClassValue, clsx } from "clsx";
@@ -150,10 +155,9 @@ export function cn(...inputs: ClassValue[]) {
                 </TimelineDescription>
               </TimelineContent>
             </TimelineItem>
-
             <TimelineItem>
               <TimelineConnector>
-                <TimelineNode>{!!registryDependencies ? 4 : 3}</TimelineNode>
+                <TimelineNode>{++stepCounter}</TimelineNode>
                 <TimelineLine />
               </TimelineConnector>
 
@@ -175,23 +179,48 @@ export function cn(...inputs: ClassValue[]) {
               </TimelineContent>
             </TimelineItem>
 
-            <TimelineItem>
-              <TimelineConnector>
-                <TimelineNode>{!!registryDependencies ? 5 : 4}</TimelineNode>
-                {!!tailwind && <TimelineLine />}
-              </TimelineConnector>
+            {extraFiles?.map(async (file, idx) => {
+              const filePath = file.path
+              const fileName = filePath.split("/").pop() as string
+              const fileNameWithoutExtension = fileName.split(".")[0]
 
-              <TimelineContent>
-                <TimelineTitle>
-                  Update the import paths to match your project setup.
-                </TimelineTitle>
-              </TimelineContent>
-            </TimelineItem>
+              const fileContent = await getFileContent(filePath)
+
+              return (
+                <TimelineItem key={idx}>
+                  <TimelineConnector>
+                    <TimelineNode>{++stepCounter}</TimelineNode>
+                    <TimelineLine />
+                  </TimelineConnector>
+
+                  <TimelineContent>
+                    <TimelineTitle>
+                      Add{" "}
+                      <span className="rounded-sm bg-muted px-1 font-mono text-sm font-normal">
+                        {fileNameWithoutExtension}
+                      </span>{" "}
+                      {file.type.split(":").at(-1)}:
+                    </TimelineTitle>
+                    <TimelineDescription className="pt-5">
+                      <CodeBlockWrapper>
+                        <CodeBlock
+                          language="tsx"
+                          filename={fileName}
+                          code={fileContent}
+                          className="mb-7 border"
+                        />
+                      </CodeBlockWrapper>
+                    </TimelineDescription>
+                  </TimelineContent>
+                </TimelineItem>
+              )
+            })}
 
             {!!tailwind && (
               <TimelineItem>
                 <TimelineConnector>
-                  <TimelineNode>{!!registryDependencies ? 6 : 5}</TimelineNode>
+                  <TimelineNode>{++stepCounter}</TimelineNode>
+                  <TimelineLine />
                 </TimelineConnector>
 
                 <TimelineContent>
@@ -215,6 +244,18 @@ export function cn(...inputs: ClassValue[]) {
                 </TimelineContent>
               </TimelineItem>
             )}
+
+            <TimelineItem>
+              <TimelineConnector>
+                <TimelineNode>{++stepCounter}</TimelineNode>
+              </TimelineConnector>
+
+              <TimelineContent>
+                <TimelineTitle>
+                  Update the import paths to match your project setup.
+                </TimelineTitle>
+              </TimelineContent>
+            </TimelineItem>
           </Timeline>
         </TabsContent>
       </Tabs>

@@ -16,7 +16,7 @@ import { DescriptionTextSmall, SubHeading } from "@/components/typography"
 import { CodeBlock } from "../ui/code-block"
 import PlaygroundControls from "./playground-controls"
 
-interface PlaygroundProps {
+interface ComponentPlaygroundProps {
   name: RegistryItem["name"]
   title: RegistryItem["title"]
   playground: { [x: string]: string | number | boolean | string[] }
@@ -30,7 +30,7 @@ export default function ComponentPlayground({
   playground,
   PlaygroundComponent,
   playgroundCode
-}: PlaygroundProps) {
+}: ComponentPlaygroundProps) {
   const initialState = Object.keys(playground).reduce(
     (acc, key) => {
       const value = playground[key]
@@ -68,7 +68,7 @@ export default function ComponentPlayground({
 
         <TabsContent value="preview" className="p-4">
           <Card className="relative p-4 pt-9">
-            <CardContent className="flex min-h-80 items-center justify-center px-12">
+            <CardContent className="flex min-h-80 items-center justify-center px-0 md:px-12 overflow-auto">
               <PlaygroundComponent {...playgroundState} />
               <div className="absolute right-2 top-2 flex">
                 <CopyToClipboardButton content={code} />

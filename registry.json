@@ -65,6 +65,22 @@
       "registryDependencies": ["button"]
     },
     {
+      "name": "auto-toc",
+      "type": "registry:ui",
+      "title": "Auto Table of Contents",
+      "description": "This component automatically scans your page content for heading elements and builds a dynamic table of contents without requiring manual input.",
+      "files": [
+        {
+          "path": "components/ui/auto-toc.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "hooks/use-url-change.ts",
+          "type": "registry:hook"
+        }
+      ]
+    },
+    {
       "name": "breadcrumb",
       "type": "registry:ui",
       "title": "Breadcrumb",

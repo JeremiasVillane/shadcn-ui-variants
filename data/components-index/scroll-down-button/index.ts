@@ -8,7 +8,6 @@ import { scrollDownButtonPlaygroundCode } from "./scroll-down-button-playground-
 export const scrollDownButton: ComponentDetails<ScrollDownButtonPlaygroundProps> =
   {
     playground: {
-      offset: 80,
       targetId: "installation",
       iconContainerClassName: undefined as any,
       iconElementClassName: undefined as any,

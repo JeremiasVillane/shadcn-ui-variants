@@ -30,7 +30,7 @@ export function LeftSidebar() {
                     "url" in item ? item.url : `/components/${item.name}`
                   return (
                     <Link key={url} href={url} className={getLinkStyle(url)}>
-                      {toWordCase(item.name)}
+                      {item.title}
                     </Link>
                   )
                 })}

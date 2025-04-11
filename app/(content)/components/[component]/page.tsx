@@ -48,7 +48,7 @@ export const generateMetadata = async (props: {
           }),
           width: 1200,
           height: 630,
-          alt: "Custom Shadcn UI Component Variants"
+          alt: `Custom Shadcn UI ${componentData.title} Variants`
         }
       ]
     },
@@ -76,6 +76,7 @@ export default async function ComponentPage({ params }: ComponentPageProps) {
   const registryItem = registry.items.find(
     (comp) => comp.name === nameParams
   )! as RegistryItem
+
   const docs = await getComponentDocumentation(
     `components/ui/${nameParams}.tsx`
   )
@@ -90,6 +91,7 @@ export default async function ComponentPage({ params }: ComponentPageProps) {
       <DynamicBreadcrumb activeLinks={false} separatorVariant="chevrons" />
       <MainHeading>{registryItem.title}</MainHeading>
       <DescriptionText>{registryItem.description}</DescriptionText>
+
       {!!registryItem.dependencies &&
         registryItem.dependencies[0].startsWith("@radix-ui") &&
         registryItem.name !== "button" && (
@@ -118,7 +120,9 @@ export default async function ComponentPage({ params }: ComponentPageProps) {
           docs,
           playground,
           PlaygroundComponent: indexData.PlaygroundComponent,
-          playgroundCode: indexData.playgroundCode
+          playgroundCode: indexData.playgroundCode,
+          DemoComponent: indexData.DemoComponent,
+          ExtrasComponent: indexData.ExtrasComponent
         }}
       />
     </div>

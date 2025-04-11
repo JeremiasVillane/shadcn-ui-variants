@@ -44,13 +44,12 @@ export default function Home() {
               <BlurIn
                 duration={0.25}
                 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none"
-                word="New variants for shadcn/ui"
+                word="Custom variants for shadcn/ui"
               />
               <BlurIn
                 duration={0.5}
-                word="Explore and implement enhanced variations of shadcn/ui
-                components with interactive playgrounds."
-                className="mx-auto max-w-[700px] text-base text-muted-foreground md:text-xl"
+                word="Beautiful components built upon shadcn/ui with interactive playgrounds."
+                className="mx-auto max-w-[700px] text-base text-pretty text-muted-foreground md:text-xl"
               />
             </div>
 
@@ -110,7 +109,7 @@ export default function Home() {
 
                   <p className={descriptionStyle}>
                     Each component comes with multiple custom variants that you
-                    can easily copy and use in your projects.
+                    can easily implement in your projects.
                   </p>
                 </Card>
               </BlurFade>
@@ -141,14 +140,16 @@ export default function Home() {
                   <header>
                     <div className={titleStyle}>
                       <GalleryVerticalEnd className="mb-2 size-6" />
-                      <h3 className="leading-tight">Code Snippets</h3>
+                      <h3 className="leading-tight">New components</h3>
                     </div>
-                    <p className={subtitleStyle}>View and copy complete code</p>
+                    <p className={subtitleStyle}>
+                      Original components and variants
+                    </p>
                   </header>
 
                   <p className={descriptionStyle}>
-                    Get the exact code you need for each custom component,
-                    including installation instructions.
+                    New components built following the same design system as
+                    shadcn/ui, with extended functionality and variants.
                   </p>
                 </Card>
               </BlurFade>

@@ -8,7 +8,7 @@ export const contentIndex = [
     label: "Get Started",
     items: [
       {
-        name: "Introduction",
+        title: "Introduction",
         url: "/docs"
       }
     ]

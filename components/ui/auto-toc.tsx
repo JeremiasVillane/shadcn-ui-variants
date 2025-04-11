@@ -4,68 +4,51 @@ import * as React from "react"
 import { AlignLeft } from "lucide-react"
 
 import { cn } from "@/lib/utils"
+import { useUrlChange } from "@/hooks/use-url-change"
 
-// Custom hook to detect URL changes using polling
-function useUrlChange() {
-  const [url, setUrl] = React.useState("")
-  const lastUrlRef = React.useRef("")
-
-  React.useEffect(() => {
-    if (typeof window === "undefined") return
-
-    const currentUrl = window.location.href
-    lastUrlRef.current = currentUrl
-    setUrl(currentUrl)
-
-    const checkForUrlChange = () => {
-      const newUrl = window.location.href
-      if (newUrl !== lastUrlRef.current) {
-        lastUrlRef.current = newUrl
-        setUrl(newUrl)
-      }
-    }
-
-    // Set up polling to check for URL changes
-    const intervalId = setInterval(checkForUrlChange, 100)
-
-    // Also check on popstate events for back/forward navigation
-    const handlePopState = () => {
-      checkForUrlChange()
-    }
-
-    window.addEventListener("popstate", handlePopState)
-
-    return () => {
-      clearInterval(intervalId)
-      window.removeEventListener("popstate", handlePopState)
-    }
-  }, [])
-
-  return url
-}
-
-export interface TOCItem {
+interface TOCItem {
   id: string
   text: string
   level: number
 }
 
 interface AutoTableOfContentsProps {
+  /** The CSS selector for the container element containing headings.
+   * @default "main" */
   containerSelector?: string
+
+  /** The title displayed above the table of contents.
+   * @default "Table of Contents" */
   title?: string
+
+  /** Maximum depth of heading levels to include in the table of contents.
+   * @default 3 */
   maxDepth?: number
+
+  /** Minimum number of headings required to display the table of contents.
+   * @default 2 */
   minHeadings?: number
+
+  /** Additional CSS classes for the navigation container. */
   className?: string
+
+  /** Flag to auto-generate IDs for headings without an existing ID.
+   * @default false */
   autoGenerateIds?: boolean
+
+  /** Offset for scrolling to headings. Useful for sticky headers.
+   * @default 100 */
+  offset?: number
 }
 
-export default function AutoTableOfContents({
+function AutoTableOfContents({
   containerSelector = "main",
   title = "Table of Contents",
   maxDepth = 3,
   minHeadings = 2,
   className,
-  autoGenerateIds = false
+  autoGenerateIds = false,
+  offset = 100
 }: AutoTableOfContentsProps) {
   const [headings, setHeadings] = React.useState<TOCItem[]>([])
   const [activeId, setActiveId] = React.useState<string>("")
@@ -90,7 +73,6 @@ export default function AutoTableOfContents({
       const container = document.querySelector(containerSelector)
       if (!container) return
 
-      // Find all heading elements within the specified container
       const headingElements = container.querySelectorAll(
         "h1, h2, h3, h4, h5, h6"
       )
@@ -179,7 +161,7 @@ export default function AutoTableOfContents({
 
     if (element) {
       window.scrollTo({
-        top: element.offsetTop - 100, // Offset to account for fixed headers
+        top: element.offsetTop - offset,
         behavior: "smooth"
       })
 
@@ -239,3 +221,6 @@ export default function AutoTableOfContents({
     </nav>
   )
 }
+
+export { AutoTableOfContents }
+export type { AutoTableOfContentsProps, TOCItem }

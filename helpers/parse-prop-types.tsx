@@ -83,7 +83,7 @@ function splitTopLevelUnions(typeString: string): string[] {
 function formatType(type: string): React.ReactNode {
   type = type.trim()
 
-  // 1. Handle Top Level Joins FIRST
+  // Handle Top Level Joins FIRST
   const unionParts = splitTopLevelUnions(type)
   if (unionParts.length > 1) {
     const enumType = (
@@ -121,7 +121,7 @@ function formatType(type: string): React.ReactNode {
 
   const currentType = unionParts[0]
 
-  // 2. Handle array types (Type[])
+  // Handle array types (Type[])
   if (currentType.endsWith("[]")) {
     const baseType = currentType.slice(0, -2)
     return (
@@ -132,7 +132,7 @@ function formatType(type: string): React.ReactNode {
     )
   }
 
-  // 3. Handle generic types (Base<GenericContent>)
+  // Handle generic types (Base<GenericContent>)
   const genericMatch = currentType.match(/^([a-zA-Z0-9_.]+)<(.+)>$/)
   if (genericMatch) {
     const [, baseType, genericContent] = genericMatch
@@ -152,7 +152,7 @@ function formatType(type: string): React.ReactNode {
     )
   }
 
-  // 4. Handle common JS types & null/undefined/unknown
+  // Handle common JS types & null/undefined/unknown
   if (commonTypes.includes(currentType)) {
     if (["null", "undefined", "unknown"].includes(currentType)) {
       return (
@@ -166,12 +166,12 @@ function formatType(type: string): React.ReactNode {
     )
   }
 
-  // 5. Handle base React types (no generics)
+  // Handle base React types (no generics)
   if (baseReactTypes.includes(currentType)) {
     return <span className="text-blue-400">{currentType}</span>
   }
 
-  // 6. Handle function types
+  // Handle function types
   if (
     currentType.includes("(") &&
     currentType.includes(")") &&
@@ -197,7 +197,6 @@ function formatType(type: string): React.ReactNode {
     )
   }
 
-  // 7. Default case: Tipo desconocido o simple identificador
   return <span className="text-gray-700 dark:text-gray-300">{currentType}</span>
 }
 

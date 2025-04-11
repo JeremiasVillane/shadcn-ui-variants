@@ -2,7 +2,7 @@
 
 import * as React from "react"
 
-import AutoTableOfContents from "../ui/auto-table-of-contents"
+import { AutoTableOfContents } from "../ui/auto-toc"
 
 export function TOC(props: React.ComponentPropsWithRef<"div">) {
   return (

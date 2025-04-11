@@ -4,6 +4,7 @@ import { getFileContent } from "@/lib/file-utils"
 import { Separator } from "@/components//ui/separator"
 
 import ComponentAPI from "./component-api"
+import { ComponentDemo } from "./component-demo"
 import ComponentInstallation from "./component-installation"
 import ComponentPlayground from "./component-playground"
 
@@ -14,8 +15,10 @@ interface ComponentBlockProps {
     error?: undefined
   }
   playground: { [x: string]: string | number | boolean | string[] }
-  PlaygroundComponent: (...args: any[]) => React.JSX.Element
-  playgroundCode: (...args: any[]) => string
+  PlaygroundComponent?: (...args: any[]) => React.JSX.Element
+  playgroundCode?: (...args: any[]) => string
+  DemoComponent?: () => React.JSX.Element
+  ExtrasComponent?: () => React.JSX.Element
   children?: React.ReactNode
 }
 
@@ -24,26 +27,52 @@ export async function ComponentBlock({
   docs,
   playground,
   PlaygroundComponent,
-  playgroundCode
+  playgroundCode,
+  DemoComponent,
+  ExtrasComponent
 }: ComponentBlockProps) {
   const src = `components/ui/${registryItem.name}.tsx`
   const code = await getFileContent(src)
 
+  const demoSrc = `data/components-index/${registryItem.name}/${registryItem.name}-demo.tsx`
+  const demoCode = !!DemoComponent ? await getFileContent(demoSrc) : null
+
   return (
     <main className="flex flex-col rounded-md bg-background pb-96">
-      <ComponentPlayground
-        {...{
-          name: registryItem.name,
-          title: registryItem.title,
-          playground,
-          PlaygroundComponent,
-          playgroundCode
-        }}
-      />
+      {!!PlaygroundComponent && !!playgroundCode && (
+        <ComponentPlayground
+          {...{
+            name: registryItem.name,
+            title: registryItem.title,
+            playground,
+            PlaygroundComponent,
+            playgroundCode
+          }}
+        />
+      )}
+
+      {!!DemoComponent && !!demoCode && (
+        <ComponentDemo
+          {...{
+            name: registryItem.name,
+            title: registryItem.title,
+            DemoComponent,
+            demoCode
+          }}
+        />
+      )}
 
       <Separator className="my-9" />
 
       <ComponentInstallation {...{ registryItem, code }} />
+
+      {!!ExtrasComponent && (
+        <>
+          <Separator className="my-9" />
+
+          <ExtrasComponent />
+        </>
+      )}
 
       <Separator className="my-9" />
 
