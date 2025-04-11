@@ -9,17 +9,17 @@ import { CodeBlockWrapper, CommandTabs } from "@/components/common"
 import { SubHeading } from "@/components/typography"
 
 import { CodeBlock } from "../ui/code-block"
-import { Tabs, TabsList, TabsTrigger } from "../ui/tabs"
 import {
-  Timeline,
-  TimelineConnector,
-  TimelineContent,
-  TimelineDescription,
-  TimelineItem,
-  TimelineLine,
-  TimelineNode,
-  TimelineTitle
-} from "../ui/timeline"
+  Stepper,
+  StepperConnector,
+  StepperContent,
+  StepperDescription,
+  StepperDot,
+  StepperItem,
+  StepperLine,
+  StepperTitle
+} from "../ui/simple-stepper"
+import { Tabs, TabsList, TabsTrigger } from "../ui/tabs"
 
 const commonDependencies = "class-variance-authority tailwind-merge clsx"
 
@@ -62,20 +62,20 @@ export default async function ComponentInstallation({
         </TabsContent>
 
         <TabsContent value="manual">
-          <Timeline className="py-6">
+          <Stepper className="py-6">
             {!!registryDependencies && (
-              <TimelineItem>
-                <TimelineConnector>
-                  <TimelineNode>{++stepCounter}</TimelineNode>
-                  <TimelineLine />
-                </TimelineConnector>
+              <StepperItem>
+                <StepperConnector>
+                  <StepperDot>{++stepCounter}</StepperDot>
+                  <StepperLine />
+                </StepperConnector>
 
-                <TimelineContent>
-                  <TimelineTitle>
+                <StepperContent>
+                  <StepperTitle>
                     First, you need to install the following components:
-                  </TimelineTitle>
+                  </StepperTitle>
 
-                  <TimelineDescription>
+                  <StepperDescription>
                     <ol className="pt-3">
                       {registryDependencies.map((dep, idx) => (
                         <li
@@ -91,20 +91,20 @@ export default async function ComponentInstallation({
                         </li>
                       ))}
                     </ol>
-                  </TimelineDescription>
-                </TimelineContent>
-              </TimelineItem>
+                  </StepperDescription>
+                </StepperContent>
+              </StepperItem>
             )}
 
-            <TimelineItem>
-              <TimelineConnector>
-                <TimelineNode>{++stepCounter}</TimelineNode>
-                <TimelineLine />
-              </TimelineConnector>
+            <StepperItem>
+              <StepperConnector>
+                <StepperDot>{++stepCounter}</StepperDot>
+                <StepperLine />
+              </StepperConnector>
 
-              <TimelineContent>
-                <TimelineTitle>Install dependencies:</TimelineTitle>
-                <TimelineDescription>
+              <StepperContent>
+                <StepperTitle>Install dependencies:</StepperTitle>
+                <StepperDescription>
                   <div className="flex flex-col gap-6 pt-4">
                     <CommandTabs
                       commandMap={{
@@ -127,19 +127,19 @@ export default async function ComponentInstallation({
                       />
                     ))}
                   </div>
-                </TimelineDescription>
-              </TimelineContent>
-            </TimelineItem>
+                </StepperDescription>
+              </StepperContent>
+            </StepperItem>
 
-            <TimelineItem>
-              <TimelineConnector>
-                <TimelineNode>{++stepCounter}</TimelineNode>
-                <TimelineLine />
-              </TimelineConnector>
+            <StepperItem>
+              <StepperConnector>
+                <StepperDot>{++stepCounter}</StepperDot>
+                <StepperLine />
+              </StepperConnector>
 
-              <TimelineContent>
-                <TimelineTitle>Add util file:</TimelineTitle>
-                <TimelineDescription className="pt-5">
+              <StepperContent>
+                <StepperTitle>Add util file:</StepperTitle>
+                <StepperDescription className="pt-5">
                   <CodeBlock
                     className="border pb-3"
                     language="tsx"
@@ -152,21 +152,21 @@ export function cn(...inputs: ClassValue[]) {
 }
 `}
                   />
-                </TimelineDescription>
-              </TimelineContent>
-            </TimelineItem>
-            <TimelineItem>
-              <TimelineConnector>
-                <TimelineNode>{++stepCounter}</TimelineNode>
-                <TimelineLine />
-              </TimelineConnector>
+                </StepperDescription>
+              </StepperContent>
+            </StepperItem>
+            <StepperItem>
+              <StepperConnector>
+                <StepperDot>{++stepCounter}</StepperDot>
+                <StepperLine />
+              </StepperConnector>
 
-              <TimelineContent>
-                <TimelineTitle>
+              <StepperContent>
+                <StepperTitle>
                   Copy and paste the following code or download the file into
                   your project.
-                </TimelineTitle>
-                <TimelineDescription>
+                </StepperTitle>
+                <StepperDescription>
                   <CodeBlockWrapper>
                     <CodeBlock
                       language="tsx"
@@ -175,9 +175,9 @@ export function cn(...inputs: ClassValue[]) {
                       className="mb-7 mt-5 border"
                     />
                   </CodeBlockWrapper>
-                </TimelineDescription>
-              </TimelineContent>
-            </TimelineItem>
+                </StepperDescription>
+              </StepperContent>
+            </StepperItem>
 
             {extraFiles?.map(async (file, idx) => {
               const filePath = file.path
@@ -187,21 +187,21 @@ export function cn(...inputs: ClassValue[]) {
               const fileContent = await getFileContent(filePath)
 
               return (
-                <TimelineItem key={idx}>
-                  <TimelineConnector>
-                    <TimelineNode>{++stepCounter}</TimelineNode>
-                    <TimelineLine />
-                  </TimelineConnector>
+                <StepperItem key={idx}>
+                  <StepperConnector>
+                    <StepperDot>{++stepCounter}</StepperDot>
+                    <StepperLine />
+                  </StepperConnector>
 
-                  <TimelineContent>
-                    <TimelineTitle>
+                  <StepperContent>
+                    <StepperTitle>
                       Add{" "}
                       <span className="rounded-sm bg-muted px-1 font-mono text-sm font-normal">
                         {fileNameWithoutExtension}
                       </span>{" "}
                       {file.type.split(":").at(-1)}:
-                    </TimelineTitle>
-                    <TimelineDescription className="pt-5">
+                    </StepperTitle>
+                    <StepperDescription className="pt-5">
                       <CodeBlockWrapper>
                         <CodeBlock
                           language="tsx"
@@ -210,28 +210,28 @@ export function cn(...inputs: ClassValue[]) {
                           className="mb-7 border"
                         />
                       </CodeBlockWrapper>
-                    </TimelineDescription>
-                  </TimelineContent>
-                </TimelineItem>
+                    </StepperDescription>
+                  </StepperContent>
+                </StepperItem>
               )
             })}
 
             {!!tailwind && (
-              <TimelineItem>
-                <TimelineConnector>
-                  <TimelineNode>{++stepCounter}</TimelineNode>
-                  <TimelineLine />
-                </TimelineConnector>
+              <StepperItem>
+                <StepperConnector>
+                  <StepperDot>{++stepCounter}</StepperDot>
+                  <StepperLine />
+                </StepperConnector>
 
-                <TimelineContent>
-                  <TimelineTitle>
+                <StepperContent>
+                  <StepperTitle>
                     Add the followind to your{" "}
                     <span className="rounded-md bg-muted px-1 font-mono text-sm font-normal">
                       tailwind.config.ts
                     </span>{" "}
                     file:
-                  </TimelineTitle>
-                  <TimelineDescription>
+                  </StepperTitle>
+                  <StepperDescription>
                     <CodeBlockWrapper>
                       <CodeBlock
                         language="ts"
@@ -240,23 +240,23 @@ export function cn(...inputs: ClassValue[]) {
                         className="mb-7 mt-5 border"
                       />
                     </CodeBlockWrapper>
-                  </TimelineDescription>
-                </TimelineContent>
-              </TimelineItem>
+                  </StepperDescription>
+                </StepperContent>
+              </StepperItem>
             )}
 
-            <TimelineItem>
-              <TimelineConnector>
-                <TimelineNode>{++stepCounter}</TimelineNode>
-              </TimelineConnector>
+            <StepperItem>
+              <StepperConnector>
+                <StepperDot>{++stepCounter}</StepperDot>
+              </StepperConnector>
 
-              <TimelineContent>
-                <TimelineTitle>
+              <StepperContent>
+                <StepperTitle>
                   Update the import paths to match your project setup.
-                </TimelineTitle>
-              </TimelineContent>
-            </TimelineItem>
-          </Timeline>
+                </StepperTitle>
+              </StepperContent>
+            </StepperItem>
+          </Stepper>
         </TabsContent>
       </Tabs>
     </section>

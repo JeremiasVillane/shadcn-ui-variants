@@ -10,13 +10,14 @@ import { scrollDownButton } from "./scroll-down-button"
 import { separator } from "./separator"
 import { slider } from "./slider"
 import { tabs } from "./tabs"
+import { timeline } from "./timeline"
 
 export interface ComponentDetails<T = any> {
   playground?: Record<string, string[] | string | number | boolean>
   PlaygroundComponent?: (args: T) => React.JSX.Element
   playgroundCode?: (args: T) => string
   DemoComponent?: () => React.JSX.Element
-  ExtrasComponent?: () => React.JSX.Element
+  ExtrasComponent?: () => React.JSX.Element | Promise<React.JSX.Element>
 }
 
 type ComponentsIndex = Record<string, ComponentDetails>
@@ -33,5 +34,6 @@ export const componentsIndex: ComponentsIndex = {
   "scroll-down-button": scrollDownButton,
   separator,
   slider,
+  timeline,
   tabs
 }

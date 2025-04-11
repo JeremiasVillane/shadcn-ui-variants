@@ -255,6 +255,18 @@
         }
       ],
       "dependencies": ["@radix-ui/react-tabs"]
+    },
+    {
+      "name": "timeline",
+      "type": "registry:ui",
+      "title": "Timeline",
+      "description": "Displays a list of events or steps in chronological or sequential order.",
+      "files": [
+        {
+          "path": "components/ui/timeline.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }

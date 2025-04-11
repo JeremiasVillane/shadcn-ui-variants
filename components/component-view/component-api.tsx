@@ -3,7 +3,7 @@
 import * as React from "react"
 import { formatType } from "@/helpers/parse-prop-types"
 import { ComponentDocResult } from "@/types"
-import { AlertCircle, Info, InfoIcon } from "lucide-react"
+import { AlertCircle, InfoIcon } from "lucide-react"
 
 import { Card, CardContent } from "@/components/ui/card"
 import {
@@ -37,19 +37,6 @@ export default function ComponentAPI({ docs }: ComponentAPIProps) {
           <div className="flex items-center gap-2 text-destructive">
             <AlertCircle className="h-5 w-5" />
             <p>Failed to load component documentation: {docs.error}</p>
-          </div>
-        </CardContent>
-      </Card>
-    )
-  }
-
-  if (!docs.data) {
-    pageContent = (
-      <Card className="w-full">
-        <CardContent className="pt-6">
-          <div className="flex items-center gap-2 text-muted-foreground">
-            <Info className="h-5 w-5" />
-            <p>No documentation available for this component.</p>
           </div>
         </CardContent>
       </Card>
@@ -120,21 +107,18 @@ export default function ComponentAPI({ docs }: ComponentAPIProps) {
             </TableBody>
           </Table>
         </div>
-      ) : (
-        <div className="flex items-center gap-2 py-4 text-muted-foreground">
-          <Info className="h-5 w-5" />
-          <p>This component does not have any documented props.</p>
-        </div>
-      )
+      ) : null
   }
 
   return (
-    <section>
-      <SubHeading id="api-reference" className="mb-6">
-        API Reference
-      </SubHeading>
+    !!pageContent && (
+      <section>
+        <SubHeading id="api-reference" className="mb-6">
+          API Reference
+        </SubHeading>
 
-      {pageContent}
-    </section>
+        {pageContent}
+      </section>
+    )
   )
 }

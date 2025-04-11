@@ -18,7 +18,7 @@ interface ComponentBlockProps {
   PlaygroundComponent?: (...args: any[]) => React.JSX.Element
   playgroundCode?: (...args: any[]) => string
   DemoComponent?: () => React.JSX.Element
-  ExtrasComponent?: () => React.JSX.Element
+  ExtrasComponent?: () => React.JSX.Element | Promise<React.JSX.Element>
   children?: React.ReactNode
 }
 
