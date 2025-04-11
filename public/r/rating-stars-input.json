@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "rating-stars-input",
+  "type": "registry:ui",
+  "title": "Rating Stars Input",
+  "description": "A customizable and accessible star rating input component.",
+  "files": [
+    {
+      "path": "components/ui/rating-stars-input.tsx",
+      "content": "\"use client\"\r\n\r\nimport { forwardRef, useState } from \"react\"\r\nimport { Star } from \"lucide-react\"\r\n\r\nimport { cn } from \"@/lib/utils\"\r\n\r\ninterface RatingStarsInputProps {\r\n  /** An optional name for the input element. Useful for integration with forms. */\r\n  name?: string\r\n  /** The current numeric value of the rating (0-5). */\r\n  value: number\r\n  /** Callback invoked when the rating value changes. */\r\n  onChange: (value: number) => void\r\n  /** Optional callback for when the input loses focus. */\r\n  onBlur?: () => void\r\n  /** Optional flag to disable the input.\r\n   * @default false */\r\n  disabled?: boolean\r\n}\r\n\r\nconst RatingStarsInput = forwardRef<HTMLDivElement, RatingStarsInputProps>(\r\n  ({ name, value, onChange, onBlur, disabled }, ref) => {\r\n    const [hoveredRating, setHoveredRating] = useState<number | null>(null)\r\n\r\n    return (\r\n      <div ref={ref} className=\"flex gap-1\" tabIndex={0} onBlur={onBlur}>\r\n        <input type=\"hidden\" name={name} value={value} />\r\n        {Array.from({ length: 5 }).map((_, index) => {\r\n          const isFilled =\r\n            hoveredRating !== null ? index < hoveredRating : index < value\r\n\r\n          return (\r\n            <button\r\n              key={index}\r\n              type=\"button\"\r\n              className=\"p-0.5\"\r\n              onClick={() => onChange(index + 1)}\r\n              onMouseEnter={() => !disabled && setHoveredRating(index + 1)}\r\n              onMouseLeave={() => !disabled && setHoveredRating(null)}\r\n              disabled={disabled}\r\n            >\r\n              <Star\r\n                className={cn(\r\n                  \"h-6 w-6 transition-colors\",\r\n                  isFilled\r\n                    ? \"fill-primary text-primary\"\r\n                    : \"fill-muted stroke-muted-foreground\"\r\n                )}\r\n                aria-hidden=\"true\"\r\n              />\r\n              <span className=\"sr-only\">Rate {index + 1} stars</span>\r\n            </button>\r\n          )\r\n        })}\r\n      </div>\r\n    )\r\n  }\r\n)\r\nRatingStarsInput.displayName = \"RatingStarsInput\"\r\n\r\nexport { RatingStarsInput }\r\nexport type { RatingStarsInputProps }\r\n",
+      "type": "registry:ui"
+    }
+  ]
+}

@@ -26,7 +26,7 @@ export function ComponentTabs({ code, name, Component }: ComponentTabsProps) {
 
       <TabsContent value="preview" className="p-4">
         <Card className="relative p-4 pt-9">
-          <CardContent className="flex min-h-80 items-center justify-center px-12">
+          <CardContent className="flex min-h-80 items-center justify-center overflow-auto px-0 md:px-12">
             <Component />
             <div className="absolute right-2 top-2 flex">
               <CopyToClipboardButton content={code} />
@@ -42,7 +42,7 @@ export function ComponentTabs({ code, name, Component }: ComponentTabsProps) {
             language="tsx"
             filename={`${name}.tsx`}
             code={code}
-            className="border pb-3"
+            className="mb-7 border"
           />
         </CodeBlockWrapper>
       </TabsContent>

@@ -131,6 +131,18 @@
       ]
     },
     {
+      "name": "rating-stars-input",
+      "type": "registry:ui",
+      "title": "Rating Stars Input",
+      "description": "A customizable and accessible star rating input component.",
+      "files": [
+        {
+          "path": "components/ui/rating-stars-input.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "scroll-down-button",
       "type": "registry:ui",
       "title": "Scroll Down Button",

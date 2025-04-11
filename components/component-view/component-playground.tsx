@@ -68,7 +68,7 @@ export default function ComponentPlayground({
 
         <TabsContent value="preview" className="p-4">
           <Card className="relative p-4 pt-9">
-            <CardContent className="flex min-h-80 items-center justify-center px-0 md:px-12 overflow-auto">
+            <CardContent className="flex min-h-80 items-center justify-center overflow-auto px-0 md:px-12">
               <PlaygroundComponent {...playgroundState} />
               <div className="absolute right-2 top-2 flex">
                 <CopyToClipboardButton content={code} />
