@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "dynamic-breadcrumb",
+  "type": "registry:ui",
+  "title": "Dynamic Breadcrumb",
+  "description": "A dynamic breadcrumb component that generates navigation based on the current URL path.",
+  "registryDependencies": [
+    "breadcrumb"
+  ],
+  "files": [
+    {
+      "path": "components/ui/dynamic-breadcrumb.tsx",
+      "content": "\"use client\"\r\n\r\nimport * as React from \"react\"\r\n\r\nimport { cn } from \"@/lib/utils\"\r\nimport {\r\n  Breadcrumb,\r\n  BreadcrumbItem,\r\n  BreadcrumbLink,\r\n  BreadcrumbList,\r\n  BreadcrumbPage,\r\n  BreadcrumbSeparator,\r\n  type BreadcrumbProps\r\n} from \"@/components/ui/breadcrumb\"\r\n\r\ninterface DynamicBreadcrumbProps {\r\n  /** Whether to show the home link at the start of the breadcrumb\r\n   *  @default false */\r\n  displayHome?: boolean\r\n  /** Whether to make the links active or not\r\n   *  @default false */\r\n  activeLinks?: boolean\r\n  /** Additional CSS classes to apply to the breadcrumb container */\r\n  className?: string\r\n}\r\n\r\nfunction DynamicBreadcrumb({\r\n  displayHome = false,\r\n  activeLinks = false,\r\n  className,\r\n  ...props\r\n}: DynamicBreadcrumbProps & BreadcrumbProps) {\r\n  const [pathSegments, setPathSegments] = React.useState<string[]>([])\r\n\r\n  React.useEffect(() => {\r\n    if (typeof window === \"undefined\") return\r\n    const pathname = window.location.pathname\r\n    const segments = pathname.split(\"/\").filter((segment) => segment)\r\n    setPathSegments(segments)\r\n  }, [])\r\n\r\n  return (\r\n    <Breadcrumb className={cn(\"pb-3\", className)} {...props}>\r\n      <BreadcrumbList>\r\n        {displayHome && (\r\n          <>\r\n            <BreadcrumbItem>\r\n              <BreadcrumbLink asChild>\r\n                {activeLinks ? <a href=\"/\">Home</a> : <span>Home</span>}\r\n              </BreadcrumbLink>\r\n            </BreadcrumbItem>\r\n            {pathSegments.length > 0 && <BreadcrumbSeparator />}\r\n          </>\r\n        )}\r\n\r\n        {pathSegments.map((segment, index) => {\r\n          const href = \"/\" + pathSegments.slice(0, index + 1).join(\"/\")\r\n          const isLast = index === pathSegments.length - 1\r\n\r\n          const displayName = segment\r\n            .replace(/-/g, \" \")\r\n            .replace(/\\b\\w/g, (c) => c.toUpperCase())\r\n\r\n          return (\r\n            <React.Fragment key={href}>\r\n              <BreadcrumbItem>\r\n                {isLast ? (\r\n                  <BreadcrumbPage>{displayName}</BreadcrumbPage>\r\n                ) : (\r\n                  <>\r\n                    <BreadcrumbLink asChild>\r\n                      {activeLinks ? (\r\n                        <a href={href}>{displayName}</a>\r\n                      ) : (\r\n                        <span className=\"cursor-default\">{displayName}</span>\r\n                      )}\r\n                    </BreadcrumbLink>\r\n                  </>\r\n                )}\r\n              </BreadcrumbItem>\r\n\r\n              {!isLast && <BreadcrumbSeparator />}\r\n            </React.Fragment>\r\n          )\r\n        })}\r\n      </BreadcrumbList>\r\n    </Breadcrumb>\r\n  )\r\n}\r\n\r\nexport { DynamicBreadcrumb }\r\nexport type { DynamicBreadcrumbProps }\r\n",
+      "type": "registry:ui"
+    }
+  ]
+}

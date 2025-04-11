@@ -4,6 +4,7 @@ import { alertDialog } from "./alert-dialog"
 import { autoTOC } from "./auto-toc"
 import { breadcrumb } from "./breadcrumb"
 import { button } from "./button"
+import { dynamicBreadcrumb } from "./dynamic-breadcrumb"
 import { input } from "./input"
 import { scrollDownButton } from "./scroll-down-button"
 import { separator } from "./separator"
@@ -27,6 +28,7 @@ export const componentsIndex: ComponentsIndex = {
   "auto-toc": autoTOC,
   breadcrumb,
   button,
+  "dynamic-breadcrumb": dynamicBreadcrumb,
   input,
   "scroll-down-button": scrollDownButton,
   separator,

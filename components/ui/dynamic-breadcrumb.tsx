@@ -9,27 +9,24 @@ import {
   BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbPage,
-  BreadcrumbProps,
-  BreadcrumbSeparator
+  BreadcrumbSeparator,
+  type BreadcrumbProps
 } from "@/components/ui/breadcrumb"
 
 interface DynamicBreadcrumbProps {
   /** Whether to show the home link at the start of the breadcrumb
-   *  @default false
-   */
+   *  @default false */
   displayHome?: boolean
   /** Whether to make the links active or not
-   *  @default true
-   */
+   *  @default false */
   activeLinks?: boolean
   /** Additional CSS classes to apply to the breadcrumb container */
   className?: string
 }
 
-/** A dynamic breadcrumb component that generates navigation based on the current URL path */
-export function DynamicBreadcrumb({
+function DynamicBreadcrumb({
   displayHome = false,
-  activeLinks = true,
+  activeLinks = false,
   className,
   ...props
 }: DynamicBreadcrumbProps & BreadcrumbProps) {
@@ -91,4 +88,5 @@ export function DynamicBreadcrumb({
   )
 }
 
+export { DynamicBreadcrumb }
 export type { DynamicBreadcrumbProps }

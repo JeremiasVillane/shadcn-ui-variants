@@ -106,6 +106,19 @@
       "dependencies": ["@radix-ui/react-slot"]
     },
     {
+      "name": "dynamic-breadcrumb",
+      "type": "registry:ui",
+      "title": "Dynamic Breadcrumb",
+      "description": "A dynamic breadcrumb component that generates navigation based on the current URL path.",
+      "files": [
+        {
+          "path": "components/ui/dynamic-breadcrumb.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "registryDependencies": ["breadcrumb"]
+    },
+    {
       "name": "input",
       "type": "registry:ui",
       "title": "Input",
