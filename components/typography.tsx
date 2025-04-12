@@ -58,7 +58,7 @@ export const Paragraph: React.FC<ComponentProps<"p">> = ({
 }) => (
   <p
     className={cn(
-      "text-pretty text-base leading-normal text-foreground/80",
+      "text-pretty text-base leading-normal text-foreground",
       className
     )}
     {...props}

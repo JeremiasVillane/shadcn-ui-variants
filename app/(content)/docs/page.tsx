@@ -1,5 +1,11 @@
+import { List, ListItem } from "@/components/ui/list"
 import { Separator } from "@/components/ui/separator"
-import { MainHeading, SubHeading } from "@/components/typography"
+import {
+  DescriptionText,
+  MainHeading,
+  Paragraph,
+  SubHeading
+} from "@/components/typography"
 
 export default function DocsPage() {
   return (
@@ -7,91 +13,101 @@ export default function DocsPage() {
       <div className="mx-auto max-w-3xl space-y-6">
         <div>
           <MainHeading>Documentation</MainHeading>
-          <p className="text-muted-foreground">
+          <DescriptionText className="text-muted-foreground">
             Learn how to use and customize shadcn/ui variants.
-          </p>
+          </DescriptionText>
         </div>
 
         <Separator />
 
         <section className="space-y-4">
           <SubHeading id="intro">Introduction</SubHeading>
-          <p>
-            Shadcn Variants is a collection of custom variations for shadcn/ui
-            components. This site provides interactive playgrounds to test
-            different component variations and copy the code to use in your own
-            projects.
-          </p>
-        </section>
-
-        <section className="space-y-4">
-          <SubHeading id="start">Getting Started</SubHeading>
-          <p>
-            To use the custom variants in your project, you'll need to have
-            shadcn/ui installed. If you haven't already, follow the official
-            installation guide at{" "}
+          <Paragraph>
+            Shadcn Variants is a curated collection of custom variations for{" "}
             <a
-              href="https://ui.shadcn.com/docs/installation"
+              href="https://ui.shadcn.com/"
               target="_blank"
               rel="noreferrer"
               className="text-primary underline underline-offset-4"
             >
-              ui.shadcn.com/docs/installation
-            </a>
-            .
-          </p>
-          <p>
-            Once you have shadcn/ui set up, you can add the custom variants by
-            modifying the component files or by using the provided className
-            approach.
-          </p>
+              shadcn/ui
+            </a>{" "}
+            components alongside original components using the same design
+            guidelines from sahscn/ui. This project aims to provide developers
+            with a set of ready-to-use, visually appealing, and easily
+            customizable component variants that extend the base shadcn/ui
+            library. Each component showcase includes an interactive playground,
+            allowing you to experiment with different configurations and preview
+            the resulting code. You can also explore the component source code
+            and documentation to understand how the variants are implemented.
+          </Paragraph>
         </section>
 
         <section className="space-y-4">
-          <SubHeading id="using">Using the Variants</SubHeading>
-          <p>There are two ways to use the custom variants:</p>
-          <ol className="list-decimal space-y-2 pl-6">
-            <li>
-              <strong>Modify the component file:</strong> Add the custom
-              variants to the component's variant definition. This allows you to
-              use them with the variant prop.
-            </li>
-            <li>
-              <strong>Use className directly:</strong> Apply the custom styles
-              directly using the className prop without modifying the component
-              file.
-            </li>
-          </ol>
-          <p>Each component page provides code examples for both approaches.</p>
+          <SubHeading id="using">Using the Components</SubHeading>
+          <p>
+            There are three main methods to integrate these components into your
+            project:
+          </p>
+
+          <List variant="numbered">
+            <ListItem>
+              <strong>Using the Custom CLI Command:</strong> Run the dedicated
+              CLI command to automatically install and configure the components.
+            </ListItem>
+            <ListItem>
+              <strong>Copying and Pasting the Code:</strong> Follow the steps to
+              manually copy the provided code snippets into your project.
+            </ListItem>
+            <ListItem>
+              <strong>Downloading as a File:</strong> Download the component as
+              a file and add it to your project.
+            </ListItem>
+          </List>
+
+          <Paragraph>
+            Detailed instructions and examples are available on each component
+            page to guide you through the integration process.
+          </Paragraph>
         </section>
 
         <section className="space-y-4">
-          <SubHeading id="playground">Playground</SubHeading>
-          <p>The playground section on each component page allows you to:</p>
-          <ul className="list-disc space-y-2 pl-6">
-            <li>Customize component properties in real-time</li>
-            <li>See the rendered component update as you change settings</li>
-            <li>Copy the generated code for use in your project</li>
-          </ul>
-          <p>
-            Use the playground to experiment with different combinations of
-            props and styles before implementing them in your project.
-          </p>
+          <SubHeading id="playground">Interactive Playground</SubHeading>
+          <Paragraph>
+            Explore the capabilities of each variant through our interactive
+            playground, where you can:
+          </Paragraph>
+
+          <List variant="triangle">
+            <ListItem>Dynamically adjust component properties</ListItem>
+            <ListItem>
+              Observe real-time updates reflecting your changes
+            </ListItem>
+            <ListItem>
+              Generate and copy the corresponding code snippets
+            </ListItem>
+          </List>
         </section>
 
         <section className="space-y-4">
           <SubHeading id="contributing">Contributing</SubHeading>
-          <p>
-            We welcome contributions to Shadcn Variants! If you have created a
-            custom variant that you'd like to share, please submit a pull
-            request to our GitHub repository.
-          </p>
-          <p>Make sure your contribution includes:</p>
-          <ul className="list-disc space-y-2 pl-6">
-            <li>The component code with your custom variant</li>
-            <li>A brief description of the variant</li>
-            <li>Example usage</li>
-          </ul>
+          <Paragraph>
+            We encourage community contributions to expand the Shadcn Variants
+            collection! If you've developed a unique custom variant, we invite
+            you to submit a pull request to our GitHub repository.
+          </Paragraph>
+
+          <p>Please ensure your submission includes:</p>
+
+          <List variant="check">
+            <ListItem>
+              The complete component code, incorporating your custom variant
+            </ListItem>
+            <ListItem>
+              A concise description of the variant's purpose and aesthetics
+            </ListItem>
+            <ListItem>Illustrative examples demonstrating its usage</ListItem>
+          </List>
         </section>
       </div>
     </main>
