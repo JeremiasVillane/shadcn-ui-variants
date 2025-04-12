@@ -5,11 +5,11 @@ import { cn } from "@/lib/utils"
 
 interface ListItemProps extends React.LiHTMLAttributes<HTMLLIElement> {
   /**
-   * Ícono opcional para mostrar como marcador. Tiene prioridad sobre el icono de List.
+   * Optional icon to display as a marker. It has priority over the List icon.
    */
   icon?: React.ReactNode
   /**
-   * Contenido del elemento de la lista.
+   * Contents of the list item.
    */
   children: React.ReactNode
 }
@@ -60,6 +60,7 @@ const listVariants = cva("text-base text-foreground my-2", {
       dash: "list-none [&>li]:relative [&>li]:pl-6 [&>li]:before:absolute [&>li]:before:left-0 [&>li]:before:top-0 [&>li]:before:content-['-'] [&>li]:before:text-foreground/80",
       check:
         "list-none [&>li]:relative [&>li]:pl-6 [&>li]:before:absolute [&>li]:before:left-0 [&>li]:before:top-0 [&>li]:before:content-['✓'] [&>li]:before:text-primary",
+      x: "list-none [&>li]:relative [&>li]:pl-6 [&>li]:before:absolute [&>li]:before:left-0 [&>li]:before:top-0 [&>li]:before:content-['✗'] [&>li]:before:text-primary",
       none: "list-none p-0"
     },
     spacing: {
@@ -81,18 +82,18 @@ interface ListProps
   extends React.HTMLAttributes<HTMLUListElement | HTMLOListElement>,
     VariantProps<typeof listVariants> {
   /**
-   * Ícono opcional para usar como marcador para TODOS los elementos ListItem hijos.
-   * Un ListItem hijo puede anular este icono definiendo su propio prop 'icon'.
+   * Optional icon to use as a marker for ALL child ListItems.
+   * A child ListItem can override this icon by defining its own ‘icon’ prop.
    */
   icon?: React.ReactNode
+  /** @default "default" */
+  // prettier-ignore
+  variant?: "default" | "numbered" | "arrow" | "bullet" | "bullet-outline" | "triangle" | "square" | "dash" | "check" | "x" | "none"
+  /** @default "default" */
+  spacing?: "default" | "tight" | "relaxed" | "loose" | "none"
   /**
-   * Indica si la lista está anidada dentro de otro elemento de lista.
-   * Ajusta el margen vertical.
-   * @default false */
-  nested?: boolean
-  /**
-   * Los elementos hijos de la lista. **Se espera que sean componentes `<ListItem>`.**
-   * Otros tipos de hijos serán filtrados.
+   * Child elements of the list. **Expected to be `<ListItem>` components.**
+   * Other types of children will be filtered out.
    */
   children?: React.ReactNode
 }

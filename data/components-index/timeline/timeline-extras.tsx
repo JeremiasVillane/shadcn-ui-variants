@@ -70,27 +70,14 @@ export async function TimelineExtras() {
         </header>
 
         <div className="space-y-6 pb-3 pt-4">
-          <article className="relative">
-            <CodeBlock
-              className="border pb-3"
-              language="tsx"
-              code={importCode}
-            />
-            <div className="absolute right-2 top-2 flex">
-              <CopyToClipboardButton content={importCode} />
-            </div>
-          </article>
-
-          <article className="relative">
-            <CodeBlock
-              className="border pb-3"
-              language="tsx"
-              code={implementationCode}
-            />
-            <div className="absolute right-2 top-2 flex">
-              <CopyToClipboardButton content={implementationCode} />
-            </div>
-          </article>
+          {[importCode, implementationCode].map((code, index) => (
+            <article key={index} className="relative">
+              <CodeBlock className="border pb-3" language="tsx" code={code} />
+              <div className="absolute right-2 top-2 flex">
+                <CopyToClipboardButton content={code} />
+              </div>
+            </article>
+          ))}
         </div>
       </section>
 

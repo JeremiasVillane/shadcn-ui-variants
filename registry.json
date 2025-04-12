@@ -131,6 +131,18 @@
       ]
     },
     {
+      "name": "list",
+      "type": "registry:ui",
+      "title": "List",
+      "description": "Displays a list of items with various styles and layouts.",
+      "files": [
+        {
+          "path": "components/ui/list.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "rating-stars-input",
       "type": "registry:ui",
       "title": "Rating Stars Input",
