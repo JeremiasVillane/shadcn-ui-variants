@@ -102,7 +102,7 @@ export async function ListExtras() {
           {
             id: "example5",
             title: "Different variants and custom styles",
-            code: example4Code,
+            code: example5Code,
             name: "list-example-5",
             Component: ListExample5
           }
