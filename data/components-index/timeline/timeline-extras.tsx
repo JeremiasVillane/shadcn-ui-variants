@@ -245,28 +245,28 @@ export async function TimelineExtras() {
             id: "example1",
             title: "Default layout (right) with custom styles",
             code: example1Code,
-            name: "timeline-example1",
+            name: "timeline-example-1",
             Component: TimelineExample1
           },
           {
             id: "example2",
             title: "Left layout",
             code: example2Code,
-            name: "timeline-example2",
+            name: "timeline-example-2",
             Component: TimelineExample2
           },
           {
             id: "example3",
             title: "Alternate layout with icons and opposite content",
             code: example3Code,
-            name: "timeline-example3",
+            name: "timeline-example-3",
             Component: TimelineExample3
           },
           {
             id: "example4",
             title: "Complex body content and custom node",
             code: example4Code,
-            name: "timeline-example4",
+            name: "timeline-example-4",
             Component: TimelineExample4
           }
         ].map((example) => (

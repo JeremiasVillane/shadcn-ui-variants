@@ -99,7 +99,7 @@ function formatType(type: string): React.ReactNode {
       </>
     )
 
-    return unionParts.length > 3 ? (
+    return (
       <span className="space-x-1">
         <span>enum</span>
         <Popover>
@@ -114,8 +114,6 @@ function formatType(type: string): React.ReactNode {
           </PopoverContent>
         </Popover>
       </span>
-    ) : (
-      <>{enumType}</>
     )
   }
 

@@ -63,6 +63,28 @@ const buttonVariants = cva(
   }
 )
 
+const groupSegmentVariants = cva("relative focus-visible:z-10 rounded-none", {
+  variants: {
+    isFirst: { true: "rounded-l-md" },
+    isLast: { true: "rounded-r-md" },
+    isOutlineGroup: { true: "", false: "" }
+  },
+  compoundVariants: [
+    // Add divider ONLY if NOT outline AND NOT the first segment
+    {
+      isFirst: false,
+      isOutlineGroup: false,
+      className: "border-l border-border"
+    },
+    // Add negative margin overlap ONLY IF outline AND NOT the first segment
+    {
+      isFirst: false,
+      isOutlineGroup: true,
+      className: "-ml-px"
+    }
+  ]
+})
+
 const animationClasses = {
   none: "",
   translateXRight: "transition-transform group-hover:translate-x-0.5",
@@ -164,66 +186,82 @@ const Button = React.forwardRef<
       })
 
     if (isGroup) {
-      const renderInset = (
-        inset: React.ReactElement<BaseButtonProps>,
-        position: "left" | "right"
-      ) => {
-        const {
-          asChild: insetAsChild,
-          className: insetClass,
-          ...insetProps
-        } = inset?.props || {}
-        const Comp: React.ElementType = insetAsChild ? Slot : "button"
+      const isOutline = variant === "outline"
+      const hasCenter = centerChildren.length > 0
 
-        return React.createElement(Comp, {
-          type: "button",
-          ...insetProps,
-          ...(!asChild && { disabled: isDisabled || insetProps.disabled }),
-          className: cn(
-            buttonVariants({ variant, size }),
-            "relative border-0 rounded-none focus-visible:z-10",
-            position === "left" ? "rounded-s-md" : "rounded-e-md",
-            insetClass
-          )
-        })
+      const renderSegment = (
+        segmentProps: BaseButtonProps & { className?: string },
+        segmentConfig: {
+          isFirst: boolean
+          isLast: boolean
+          isOutlineGroup: boolean
+          content: React.ReactNode
+        }
+      ) => {
+        const { isFirst, isLast, isOutlineGroup, content } = segmentConfig
+        const {
+          asChild: segmentAsChild,
+          disabled: segmentDisabled,
+          ...restSegmentProps
+        } = segmentProps
+        const Comp = segmentAsChild ? Slot : "button"
+        const finalDisabled = segmentDisabled ?? isDisabled
+
+        return React.createElement(
+          Comp,
+          {
+            type: "button",
+            ...restSegmentProps,
+            ...(!segmentAsChild && { disabled: finalDisabled }),
+            className: cn(
+              buttonVariants({ variant, size }),
+              groupSegmentVariants({ isFirst, isLast, isOutlineGroup }),
+              restSegmentProps.className
+            )
+          },
+          content
+        )
       }
 
       return (
         <div
           className={cn(
-            "inline-flex items-stretch divide-x divide-border overflow-hidden rounded-md shadow-sm",
+            "inline-flex items-stretch overflow-hidden rounded-md shadow-sm",
             className
           )}
           ref={ref as React.Ref<HTMLDivElement>}
           role="group"
         >
-          {leftInset && renderInset(leftInset, "left")}
-
-          {centerChildren.length > 0 &&
-            React.createElement(
-              asChild ? Slot : "button",
-              {
-                type: "button",
-                ...props,
-                ...(!asChild && { disabled: isDisabled }),
-                className: cn(
-                  buttonVariants({ variant, size }),
-                  "relative border-0 rounded-none focus-visible:z-10",
-                  !leftInset && "rounded-s-md",
-                  !rightInset && "rounded-e-md"
-                )
-              },
-              <>
-                {isLoading && (
-                  <Loader2 className="size-4 shrink-0 animate-spin" />
-                )}
-                {!isLoading && renderIcon(iconLeft, "left")}
-                <Slottable>{centerChildren}</Slottable>
-                {renderIcon(iconRight, "right")}
-              </>
-            )}
-
-          {rightInset && renderInset(rightInset, "right")}
+          {leftInset &&
+            renderSegment(leftInset.props, {
+              isFirst: true,
+              isLast: !hasCenter && !rightInset,
+              isOutlineGroup: isOutline,
+              content: leftInset.props.children
+            })}
+          {hasCenter &&
+            renderSegment(props, {
+              isFirst: !leftInset,
+              isLast: !rightInset,
+              isOutlineGroup: isOutline,
+              content: (
+                <>
+                  {isLoading && (
+                    <Loader2 className="size-4 shrink-0 animate-spin" />
+                  )}
+                  {!isLoading && renderIcon(iconLeft, "left")}
+                  <Slottable>{centerChildren}</Slottable>
+                  {renderIcon(iconRight, "right")}
+                </>
+              )
+            })}
+          {rightInset &&
+            renderSegment(rightInset.props, {
+              isFirst: !leftInset && !hasCenter,
+              isLast: true,
+              isOutlineGroup: isOutline,
+              content: rightInset.props.children
+            })}
         </div>
       )
     }

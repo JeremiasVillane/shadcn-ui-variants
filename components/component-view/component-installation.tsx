@@ -38,7 +38,7 @@ export default async function ComponentInstallation({
 
   return (
     <section className="flex flex-col">
-      <SubHeading id="installation" className="mb-6">
+      <SubHeading id="installation">
         Installation
       </SubHeading>
 

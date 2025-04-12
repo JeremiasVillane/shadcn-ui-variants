@@ -1,4 +1,5 @@
 import { ComponentDetails } from "../site-index"
+import { ButtonExtras } from "./button-extras"
 import { ButtonPlayground, ButtonPlaygroundProps } from "./button-playground"
 import { buttonPlaygroundCode } from "./button-playground-code"
 
@@ -13,5 +14,6 @@ export const button: ComponentDetails<ButtonPlaygroundProps> = {
     ]
   },
   PlaygroundComponent: ButtonPlayground,
-  playgroundCode: buttonPlaygroundCode
+  playgroundCode: buttonPlaygroundCode,
+  ExtrasComponent: ButtonExtras
 }

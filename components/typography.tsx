@@ -51,3 +51,29 @@ export const DescriptionTextSmall: React.FC<ComponentProps<"p">> = ({
     {...props}
   />
 )
+
+export const Paragraph: React.FC<ComponentProps<"p">> = ({
+  className,
+  ...props
+}) => (
+  <p
+    className={cn(
+      "text-pretty text-base leading-normal text-foreground/80",
+      className
+    )}
+    {...props}
+  />
+)
+
+export const WordBadge: React.FC<ComponentProps<"span">> = ({
+  className,
+  ...props
+}) => (
+  <span
+    className={cn(
+      "mx-0.5 inline-flex items-center rounded-sm bg-muted px-1.5 font-mono text-[13px] font-medium text-foreground/80 shadow",
+      className
+    )}
+    {...props}
+  />
+)
