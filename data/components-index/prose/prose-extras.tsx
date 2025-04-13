@@ -27,7 +27,7 @@ import {
 } from "./examples"
 
 export async function ProseExtras() {
-  const [example1Code, example2Code, example3Code, example4Code, example5Code] =
+  const [example1Code, example2Code, example3Code, example4Code] =
     await Promise.all(
       [1, 2, 3, 4].map((num) =>
         getFileContent(
