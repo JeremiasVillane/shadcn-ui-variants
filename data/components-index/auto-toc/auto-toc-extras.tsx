@@ -1,54 +1,36 @@
 import { CodeBlock } from "@/components/ui/code-block"
-import { Separator } from "@/components/ui/separator"
-import { SubHeading, SubHeadingSmall } from "@/components/typography"
+import { List, ListItem } from "@/components/ui/list"
+import { H2, H3, P } from "@/components/ui/typography"
 
 export function AutoTOCExtras() {
   return (
-    <div className="flex flex-col gap-9">
-      <section className="space-y-4">
-        <header>
-          <SubHeading id="features">Features</SubHeading>
-        </header>
+    <>
+      <H2 id="features">Features</H2>
 
-        <div className="space-y-4">
-          <p>
-            The Auto-Generating Table of Contents component includes several powerful
-            features:
-          </p>
-          <ul className="list-disc space-y-2 pl-8">
-            <li>Automatically detects headings in your content</li>
-            <li>Creates a hierarchical navigation structure</li>
-            <li>Highlights the currently active section</li>
-            <li>Provides smooth scrolling to sections</li>
-            <li>Fully responsive design with Tailwind CSS</li>
-            <li>Accessible with proper ARIA attributes</li>
-          </ul>
-        </div>
-      </section>
+      <P>
+        The Auto-Generating Table of Contents component includes several
+        powerful features:
+      </P>
+      <List>
+        <ListItem>Automatically detects headings in your content</ListItem>
+        <ListItem>Creates a hierarchical navigation structure</ListItem>
+        <ListItem>Highlights the currently active section</ListItem>
+        <ListItem>Provides smooth scrolling to sections</ListItem>
+        <ListItem>Fully responsive design with Tailwind CSS</ListItem>
+        <ListItem>Accessible with proper ARIA attributes</ListItem>
+      </List>
 
-      <Separator className="my-9" />
+      <H2 id="usage">Usage</H2>
 
-      <section className="space-y-4">
-        <header>
-          <SubHeading id="usage">Usage</SubHeading>
-        </header>
+      <P>Using this component in your React application is straightforward:</P>
 
-        <div className="space-y-6">
-          <p>
-            Using this component in your React application is straightforward:
-          </p>
+      <H3 id="basic-implementation">Basic Implementation</H3>
 
-          <div className="space-y-3">
-            <SubHeadingSmall id="basic-implementation">
-              Basic Implementation
-            </SubHeadingSmall>
-
-            <article className="pt-4">
-              <CodeBlock
-                language="tsx"
-                filename="auto-toc-basic.tsx"
-                className="border pb-3"
-                code={`import { AutoTableOfContents } from "@/components/ui/auto-toc"
+      <CodeBlock
+        language="tsx"
+        filename="auto-toc-basic.tsx"
+        className="border pb-3"
+        code={`import { AutoTableOfContents } from "@/components/ui/auto-toc"
 
 export default function AutoTOCBasic() {
   return (
@@ -61,43 +43,25 @@ export default function AutoTOCBasic() {
     </div>
   )
 }`}
-              />
-            </article>
-          </div>
-        </div>
-      </section>
+      />
 
-      <Separator className="my-9" />
+      <H2 id="accessibility">Accessibility</H2>
 
-      <section className="space-y-4">
-        <header>
-          <SubHeading id="accessibility">Accessibility</SubHeading>
-        </header>
+      <P>This component follows accessibility best practices:</P>
+      <List variant="check">
+        <ListItem>Uses semantic HTML elements</ListItem>
+        <ListItem>Includes proper ARIA attributes</ListItem>
+        <ListItem>Supports keyboard navigation</ListItem>
+        <ListItem>Maintains focus management</ListItem>
+      </List>
 
-        <div className="space-y-4">
-          <p>This component follows accessibility best practices:</p>
-          <ul className="list-disc space-y-2 pl-5">
-            <li>Uses semantic HTML elements</li>
-            <li>Includes proper ARIA attributes</li>
-            <li>Supports keyboard navigation</li>
-            <li>Maintains focus management</li>
-          </ul>
-        </div>
-      </section>
+      <H2 id="browser-support">Browser Support</H2>
 
-      <Separator className="my-9" />
-
-      <section className="space-y-4">
-        <header>
-          <SubHeading id="browser-support">Browser Support</SubHeading>
-        </header>
-
-        <p>
-          This component uses the Intersection Observer API, which is supported
-          in all modern browsers. For older browsers, you may need to include a
-          polyfill.
-        </p>
-      </section>
-    </div>
+      <P>
+        This component uses the Intersection Observer API, which is supported in
+        all modern browsers. For older browsers, you may need to include a
+        polyfill.
+      </P>
+    </>
   )
 }

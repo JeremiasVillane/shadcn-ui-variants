@@ -38,7 +38,7 @@ export async function ComponentBlock({
   const demoCode = !!DemoComponent ? await getFileContent(demoSrc) : null
 
   return (
-    <main className="flex flex-col rounded-md bg-background pb-96">
+    <main className="pb-96">
       {!!PlaygroundComponent && !!playgroundCode && (
         <ComponentPlayground
           {...{
@@ -62,19 +62,9 @@ export async function ComponentBlock({
         />
       )}
 
-      <Separator className="my-9" />
-
       <ComponentInstallation {...{ registryItem, code }} />
 
-      {!!ExtrasComponent && (
-        <>
-          <Separator className="my-9" />
-
-          <ExtrasComponent />
-        </>
-      )}
-
-      <Separator className="my-9" />
+      {!!ExtrasComponent && <ExtrasComponent />}
 
       <ComponentAPI {...{ docs }} />
     </main>

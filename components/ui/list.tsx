@@ -47,6 +47,10 @@ const listVariants = cva("text-base text-foreground my-2", {
     variant: {
       default: "list-disc list-outside [&>li]:pl-1.5 ml-5",
       numbered: "list-decimal list-outside [&>li]:pl-2.5 ml-5",
+      "upper-alpha": "list-[upper-alpha] list-outside [&>li]:pl-2.5 ml-5",
+      "lower-alpha": "list-[lower-alpha] list-outside [&>li]:pl-2.5 ml-5",
+      "upper-roman": "list-[upper-roman] list-outside [&>li]:pl-2.5 ml-5",
+      "lower-roman": "list-[lower-roman] list-outside [&>li]:pl-2.5 ml-5",
       arrow:
         "list-none [&>li]:relative [&>li]:pl-6 [&>li]:before:absolute [&>li]:before:left-0 [&>li]:before:top-0 [&>li]:before:content-['⮞'] [&>li]:before:text-foreground/80",
       bullet:
@@ -88,7 +92,7 @@ interface ListProps
   icon?: React.ReactNode
   /** @default "default" */
   // prettier-ignore
-  variant?: "default" | "numbered" | "arrow" | "bullet" | "bullet-outline" | "triangle" | "square" | "dash" | "check" | "x" | "none"
+  variant?: "default" | "numbered" | "upper-alpha" | "lower-alpha" | "upper-roman" | "lower-roman" | "arrow" | "bullet" | "bullet-outline" | "triangle" | "square" | "dash" | "check" | "x" | "none"
   /** @default "default" */
   spacing?: "default" | "tight" | "relaxed" | "loose" | "none"
   /**
@@ -100,7 +104,17 @@ interface ListProps
 
 const List = React.forwardRef<HTMLUListElement | HTMLOListElement, ListProps>(
   ({ className, variant, spacing, icon, children, ...props }, ref) => {
-    const ListComponent = variant === "numbered" ? "ol" : "ul"
+    const ListComponent =
+      !!variant &&
+      [
+        "numbered",
+        "upper-alpha",
+        "lower-alpha",
+        "upper-roman",
+        "lower-roman"
+      ].includes(variant)
+        ? "ol"
+        : "ul"
     const hasCustomIcon = icon != null
     const effectiveVariant = hasCustomIcon ? "none" : variant
 

@@ -4,16 +4,16 @@ import * as React from "react"
 import { RegistryItem } from "@/types"
 
 import { Card, CardContent } from "@/components/ui/card"
+import { CodeBlock } from "@/components/ui/code-block"
 import { Separator } from "@/components/ui/separator"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { H2, SubLead } from "@/components/ui/typography"
 import {
   CodeBlockWrapper,
   CopyToClipboardButton,
   DownloadFileButton
 } from "@/components/common"
-import { DescriptionTextSmall, SubHeading } from "@/components/typography"
 
-import { CodeBlock } from "../ui/code-block"
 import PlaygroundControls from "./playground-controls"
 
 interface ComponentPlaygroundProps {
@@ -54,11 +54,9 @@ export default function ComponentPlayground({
   )
 
   return (
-    <section>
-      <header className="mb-6">
-        <SubHeading id="playground">Playground</SubHeading>
-        <DescriptionTextSmall>{`Customize the ${title} properties to see different variations.`}</DescriptionTextSmall>
-      </header>
+    <>
+      <H2 id="playground">Playground</H2>
+      <SubLead>{`Customize the ${title} properties to see different variations.`}</SubLead>
 
       <Tabs variant="underlined" defaultValue="preview" className="w-full">
         <TabsList>
@@ -66,7 +64,7 @@ export default function ComponentPlayground({
           <TabsTrigger value="code">Code</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="preview" className="p-4">
+        <TabsContent value="preview" className="pt-4">
           <Card className="relative p-4 pt-9">
             <CardContent className="flex min-h-80 items-center justify-center overflow-auto px-0 md:px-12">
               <PlaygroundComponent {...playgroundState} />
@@ -80,14 +78,14 @@ export default function ComponentPlayground({
             </CardContent>
           </Card>
 
-          <Separator className="mb-6 mt-8 border-muted" />
+          <Separator variant="dashed" className="mt-8" />
 
           <PlaygroundControls
             {...{ playground, playgroundState, updatePlaygroundState }}
           />
         </TabsContent>
 
-        <TabsContent value="code" className="p-4">
+        <TabsContent value="code" className="pt-4">
           <CodeBlockWrapper>
             <CodeBlock
               language="tsx"
@@ -98,6 +96,8 @@ export default function ComponentPlayground({
           </CodeBlockWrapper>
         </TabsContent>
       </Tabs>
-    </section>
+
+      <Separator variant="dashed" className="mt-8" />
+    </>
   )
 }

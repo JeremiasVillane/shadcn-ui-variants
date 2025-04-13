@@ -19,9 +19,9 @@ import {
   TableHeader,
   TableRow
 } from "@/components/ui/table"
+import { H2 } from "@/components/ui/typography"
 
 import { Tooltiper } from "../tooltiper"
-import { SubHeading } from "../typography"
 
 interface ComponentAPIProps {
   docs: ComponentDocResult
@@ -112,13 +112,13 @@ export default function ComponentAPI({ docs }: ComponentAPIProps) {
 
   return (
     !!pageContent && (
-      <section>
-        <SubHeading id="api-reference" className="mb-6">
+      <>
+        <H2 id="api-reference" className="mb-6">
           API Reference
-        </SubHeading>
+        </H2>
 
         {pageContent}
-      </section>
+      </>
     )
   )
 }

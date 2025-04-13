@@ -5,10 +5,7 @@ import { TabsContent } from "@radix-ui/react-tabs"
 
 import { getFileContent } from "@/lib/file-utils"
 import { toWordCase } from "@/lib/string-utils"
-import { CodeBlockWrapper, CommandTabs } from "@/components/common"
-import { SubHeading } from "@/components/typography"
-
-import { CodeBlock } from "../ui/code-block"
+import { CodeBlock } from "@/components/ui/code-block"
 import {
   Stepper,
   StepperConnector,
@@ -18,8 +15,10 @@ import {
   StepperItem,
   StepperLine,
   StepperTitle
-} from "../ui/simple-stepper"
-import { Tabs, TabsList, TabsTrigger } from "../ui/tabs"
+} from "@/components/ui/simple-stepper"
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { H2 } from "@/components/ui/typography"
+import { CodeBlockWrapper, CommandTabs } from "@/components/common"
 
 const commonDependencies = "class-variance-authority tailwind-merge clsx"
 
@@ -37,10 +36,8 @@ export default async function ComponentInstallation({
   let stepCounter = 0
 
   return (
-    <section className="flex flex-col">
-      <SubHeading id="installation">
-        Installation
-      </SubHeading>
+    <>
+      <H2 id="installation">Installation</H2>
 
       <Tabs variant="underlined" defaultValue="cli">
         <TabsList>
@@ -57,12 +54,12 @@ export default async function ComponentInstallation({
               yarn: `npx shadcn@latest add ${publicUrl}/r/${name}.json`,
               bun: `bunx --bun shadcn@latest add ${publicUrl}/r/${name}.json`
             }}
-            className="py-4"
+            className="pb-1 pt-4"
           />
         </TabsContent>
 
         <TabsContent value="manual">
-          <Stepper className="py-6">
+          <Stepper className="pt-6">
             {!!registryDependencies && (
               <StepperItem>
                 <StepperConnector>
@@ -259,6 +256,6 @@ export function cn(...inputs: ClassValue[]) {
           </Stepper>
         </TabsContent>
       </Tabs>
-    </section>
+    </>
   )
 }

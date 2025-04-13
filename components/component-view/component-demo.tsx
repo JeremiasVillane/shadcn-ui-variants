@@ -2,7 +2,7 @@
 
 import { RegistryItem } from "@/types"
 
-import { DescriptionTextSmall, SubHeading } from "@/components/typography"
+import { H2, SubLead } from "@/components/ui/typography"
 
 import { ComponentTabs } from "./component-tabs"
 
@@ -22,8 +22,8 @@ export function ComponentDemo({
   return (
     <section>
       <header className="mb-6">
-        <SubHeading id="demo">Demo</SubHeading>
-        <DescriptionTextSmall>{`See the ${title} component in action.`}</DescriptionTextSmall>
+        <H2 id="demo">Demo</H2>
+        <SubLead>{`See the ${title} component in action.`}</SubLead>
       </header>
 
       <ComponentTabs

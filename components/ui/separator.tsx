@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils"
 interface SeparatorProps
   extends React.ComponentPropsWithoutRef<typeof SeparatorPrimitive.Root> {
   /** @default "default" */
-  variant?: "default" | "dotted" | "dashed"
+  variant?: "default" | "dotted" | "dashed" | "invisible"
 
   /** Optional text to display in the center of the separator. */
   label?: string
@@ -27,7 +27,8 @@ const separatorVariants = cva("shrink-0 bg-border", {
     variant: {
       default: "",
       dotted: "border border-dotted bg-transparent",
-      dashed: "border border-dashed bg-transparent"
+      dashed: "border border-dashed bg-transparent",
+      invisible: "border-0 bg-transparent"
     },
     defaultVariants: {
       variant: "default"
@@ -54,11 +55,11 @@ const Separator = React.forwardRef<
     const isVertical = orientation === "vertical"
 
     const primitiveClasses = cn(
-      separatorVariants({ variant }),
       "relative",
       isVertical
         ? `h-full ${variant === "default" ? "w-[1px]" : "w-px border-l border-t-0 border-b-0 border-r-0"}`
-        : `w-full ${variant === "default" ? "h-[1px]" : "h-px border-t border-l-0 border-r-0 border-b-0"}`
+        : `w-full ${variant === "default" ? "h-[1px]" : "h-px border-t border-l-0 border-r-0 border-b-0"}`,
+      separatorVariants({ variant })
     )
 
     const labelClasses = cn(

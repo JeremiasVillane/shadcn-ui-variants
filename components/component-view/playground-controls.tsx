@@ -12,7 +12,7 @@ import {
   SelectValue
 } from "@/components/ui/select"
 import { Switch } from "@/components/ui/switch"
-import { SubHeadingSmall } from "@/components/typography"
+import { H3 } from "@/components/ui/typography"
 
 interface PlaygroundControlsProps {
   playground: { [x: string]: string | number | boolean | string[] }
@@ -30,8 +30,8 @@ export default function PlaygroundControls({
   updatePlaygroundState
 }: PlaygroundControlsProps) {
   return (
-    <div className="space-y-6">
-      <SubHeadingSmall id="customize">Customize</SubHeadingSmall>
+    <>
+      <H3 id="customize">Customize</H3>
 
       <div className="grid gap-6 sm:grid-cols-2">
         {Object.entries(playground).map(([control, value], index) => {
@@ -98,6 +98,6 @@ export default function PlaygroundControls({
           )
         })}
       </div>
-    </div>
+    </>
   )
 }

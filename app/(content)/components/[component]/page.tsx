@@ -13,8 +13,8 @@ import { generateOgImageUrl } from "@/lib/og"
 import { Badge } from "@/components/ui/badge"
 import { DynamicBreadcrumb } from "@/components/ui/dynamic-breadcrumb"
 import { Separator } from "@/components/ui/separator"
+import { H1, Lead } from "@/components/ui/typography"
 import { ComponentBlock } from "@/components/component-view"
-import { DescriptionText, MainHeading } from "@/components/typography"
 
 export const generateStaticParams = async () => {
   return Object.keys(componentsIndex).map((component) => ({
@@ -89,8 +89,8 @@ export default async function ComponentPage({ params }: ComponentPageProps) {
   return (
     <div>
       <DynamicBreadcrumb activeLinks={false} separatorVariant="chevrons" />
-      <MainHeading>{registryItem.title}</MainHeading>
-      <DescriptionText>{registryItem.description}</DescriptionText>
+      <H1>{registryItem.title}</H1>
+      <Lead>{registryItem.description}</Lead>
 
       {!!registryItem.dependencies &&
         registryItem.dependencies[0].startsWith("@radix-ui") &&
@@ -112,7 +112,7 @@ export default async function ComponentPage({ params }: ComponentPageProps) {
         </div>
       )}
 
-      <Separator className="mb-8 mt-6" />
+      <Separator variant="invisible" className="mb-8" />
 
       <ComponentBlock
         {...{
