@@ -2,7 +2,7 @@
 
 import { RegistryItem } from "@/types"
 
-import { H2, SubLead } from "@/components/ui/typography"
+import { H2, SubLead } from "@/components/ui/prose"
 
 import { ComponentTabs } from "./component-tabs"
 

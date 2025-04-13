@@ -143,6 +143,18 @@
       ]
     },
     {
+      "name": "prose",
+      "type": "registry:ui",
+      "title": "Prose",
+      "description": "A component system that applies typography styles to your content.",
+      "files": [
+        {
+          "path": "components/ui/prose.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "rating-stars-input",
       "type": "registry:ui",
       "title": "Rating Stars Input",

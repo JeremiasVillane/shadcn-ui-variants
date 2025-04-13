@@ -2,7 +2,7 @@ import * as React from "react"
 
 import { getFileContent } from "@/lib/file-utils"
 import { List, ListItem } from "@/components/ui/list"
-import { H2, H3, InlineCode, P, Strong } from "@/components/ui/typography"
+import { H2, H3, InlineCode, P, Strong } from "@/components/ui/prose"
 import { ComponentTabs } from "@/components/component-view/component-tabs"
 
 import {

@@ -13,7 +13,7 @@ import { generateOgImageUrl } from "@/lib/og"
 import { Badge } from "@/components/ui/badge"
 import { DynamicBreadcrumb } from "@/components/ui/dynamic-breadcrumb"
 import { Separator } from "@/components/ui/separator"
-import { H1, Lead } from "@/components/ui/typography"
+import { H1, Lead } from "@/components/ui/prose"
 import { ComponentBlock } from "@/components/component-view"
 
 export const generateStaticParams = async () => {

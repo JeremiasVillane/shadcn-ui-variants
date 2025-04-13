@@ -1,6 +1,6 @@
 import { CodeBlock } from "@/components/ui/code-block"
 import { List, ListItem } from "@/components/ui/list"
-import { H2, H3, P } from "@/components/ui/typography"
+import { H2, H3, P } from "@/components/ui/prose"
 
 export function AutoTOCExtras() {
   return (

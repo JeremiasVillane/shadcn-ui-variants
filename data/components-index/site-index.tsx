@@ -7,6 +7,7 @@ import { button } from "./button"
 import { dynamicBreadcrumb } from "./dynamic-breadcrumb"
 import { input } from "./input"
 import { list } from "./list"
+import { prose } from "./prose"
 import { ratingStarsInput } from "./rating-stars-input"
 import { scrollDownButton } from "./scroll-down-button"
 import { separator } from "./separator"
@@ -34,6 +35,7 @@ export const componentsIndex: ComponentsIndex = {
   "dynamic-breadcrumb": dynamicBreadcrumb,
   input,
   list,
+  prose,
   "rating-stars-input": ratingStarsInput,
   "scroll-down-button": scrollDownButton,
   separator,

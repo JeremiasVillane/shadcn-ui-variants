@@ -66,7 +66,7 @@ export async function ComponentBlock({
 
       {!!ExtrasComponent && <ExtrasComponent />}
 
-      <ComponentAPI {...{ docs }} />
+      <ComponentAPI {...{ docs, name: registryItem.name }} />
     </main>
   )
 }

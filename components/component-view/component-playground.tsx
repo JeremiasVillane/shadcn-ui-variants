@@ -7,7 +7,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { CodeBlock } from "@/components/ui/code-block"
 import { Separator } from "@/components/ui/separator"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { H2, SubLead } from "@/components/ui/typography"
+import { H2, SubLead } from "@/components/ui/prose"
 import {
   CodeBlockWrapper,
   CopyToClipboardButton,

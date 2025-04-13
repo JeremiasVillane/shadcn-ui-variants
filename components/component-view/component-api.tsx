@@ -5,12 +5,14 @@ import { formatType } from "@/helpers/parse-prop-types"
 import { ComponentDocResult } from "@/types"
 import { AlertCircle, InfoIcon } from "lucide-react"
 
+import { toPascalCase } from "@/lib/string-utils"
 import { Card, CardContent } from "@/components/ui/card"
 import {
   Popover,
   PopoverContent,
   PopoverTrigger
 } from "@/components/ui/popover"
+import { H2, InlineCode } from "@/components/ui/prose"
 import {
   Table,
   TableBody,
@@ -19,15 +21,15 @@ import {
   TableHeader,
   TableRow
 } from "@/components/ui/table"
-import { H2 } from "@/components/ui/typography"
 
 import { Tooltiper } from "../tooltiper"
 
 interface ComponentAPIProps {
   docs: ComponentDocResult
+  name: string
 }
 
-export default function ComponentAPI({ docs }: ComponentAPIProps) {
+export default function ComponentAPI({ docs, name }: ComponentAPIProps) {
   let pageContent: React.ReactNode = null
 
   if (docs.error) {
@@ -89,9 +91,7 @@ export default function ComponentAPI({ docs }: ComponentAPIProps) {
                     </div>
                   </TableCell>
                   <TableCell className="leading-7">
-                    <code className="relative rounded-sm bg-muted px-[0.3rem] py-[0.2rem] font-mono">
-                      {formatType(prop.type)}
-                    </code>
+                    <InlineCode>{formatType(prop.type)}</InlineCode>
                   </TableCell>
                   <TableCell>
                     {prop.defaultValue ? (
@@ -114,7 +114,7 @@ export default function ComponentAPI({ docs }: ComponentAPIProps) {
     !!pageContent && (
       <>
         <H2 id="api-reference" className="mb-6">
-          API Reference
+          {toPascalCase(name)} Component Props
         </H2>
 
         {pageContent}

@@ -12,7 +12,7 @@ import {
   SelectValue
 } from "@/components/ui/select"
 import { Switch } from "@/components/ui/switch"
-import { H3 } from "@/components/ui/typography"
+import { H3 } from "@/components/ui/prose"
 
 interface PlaygroundControlsProps {
   playground: { [x: string]: string | number | boolean | string[] }

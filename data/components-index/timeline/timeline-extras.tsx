@@ -10,7 +10,7 @@ import {
   P,
   Small,
   Strong
-} from "@/components/ui/typography"
+} from "@/components/ui/prose"
 import { CopyToClipboardButton } from "@/components/common"
 import { ComponentTabs } from "@/components/component-view/component-tabs"
 

@@ -1,5 +1,5 @@
 import { List, ListItem } from "@/components/ui/list"
-import { A, H1, H2, Lead, P, Strong } from "@/components/ui/typography"
+import { A, H1, H2, Lead, P, Strong } from "@/components/ui/prose"
 
 export default function DocsPage() {
   return (
@@ -10,12 +10,7 @@ export default function DocsPage() {
       <H2 id="intro">Introduction</H2>
       <P>
         Shadcn Variants is a curated collection of custom variations for{" "}
-        <A
-          href="https://ui.shadcn.com/"
-          target="_blank"
-          rel="noreferrer"
-          className="text-primary underline underline-offset-4"
-        >
+        <A href="https://ui.shadcn.com/" target="_blank" rel="noreferrer">
           shadcn/ui
         </A>{" "}
         components alongside original components using the same design

@@ -17,7 +17,7 @@ import {
   StepperTitle
 } from "@/components/ui/simple-stepper"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { H2 } from "@/components/ui/typography"
+import { H2 } from "@/components/ui/prose"
 import { CodeBlockWrapper, CommandTabs } from "@/components/common"
 
 const commonDependencies = "class-variance-authority tailwind-merge clsx"
