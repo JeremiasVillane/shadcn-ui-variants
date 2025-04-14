@@ -12,8 +12,8 @@ import { constructMetadata } from "@/lib/metadata"
 import { generateOgImageUrl } from "@/lib/og"
 import { Badge } from "@/components/ui/badge"
 import { DynamicBreadcrumb } from "@/components/ui/dynamic-breadcrumb"
-import { Separator } from "@/components/ui/separator"
 import { H1, Lead } from "@/components/ui/prose"
+import { Separator } from "@/components/ui/separator"
 import { ComponentBlock } from "@/components/component-view"
 
 export const generateStaticParams = async () => {
@@ -122,7 +122,8 @@ export default async function ComponentPage({ params }: ComponentPageProps) {
           PlaygroundComponent: indexData.PlaygroundComponent,
           playgroundCode: indexData.playgroundCode,
           DemoComponent: indexData.DemoComponent,
-          ExtrasComponent: indexData.ExtrasComponent
+          ExtrasComponent: indexData.ExtrasComponent,
+          ApiReference: indexData.ApiReference
         }}
       />
     </div>

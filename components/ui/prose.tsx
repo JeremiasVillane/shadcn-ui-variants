@@ -26,7 +26,7 @@ const proseStyles = {
   pre: "overflow-x-auto rounded bg-muted p-4 font-normal text-foreground/90",
   code: "rounded-none bg-transparent p-0 font-normal text-foreground/90",
   "inline-code":
-    "relative rounded bg-muted px-[0.3rem] py-[0.050rem] font-mono tracking-wider text-foreground",
+    "relative rounded bg-muted px-[0.3rem] py-[0.050rem] font-mono text-foreground",
   lead: "text-pretty text-muted-foreground",
   "sub-lead": "leading-6 text-muted-foreground",
   large: "font-semibold text-foreground",

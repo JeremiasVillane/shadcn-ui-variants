@@ -136,6 +136,55 @@ const config = {
             transform: "translate(0, 20px)",
             opacity: "0"
           }
+        },
+        "toast-fade-in": {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" }
+        },
+        "toast-slide-down": {
+          "0%": { opacity: "0", transform: "translateY(-100%)" },
+          "100%": { opacity: "1", transform: "translateY(0)" }
+        },
+        "toast-slide-up": {
+          "0%": { opacity: "0", transform: "translateY(100%)" },
+          "100%": { opacity: "1", transform: "translateY(0)" }
+        },
+        "toast-slide-left": {
+          "0%": { opacity: "0", transform: "translateX(100%)" },
+          "100%": { opacity: "1", transform: "translateX(0)" }
+        },
+        "toast-slide-right": {
+          "0%": { opacity: "0", transform: "translateX(-100%)" },
+          "100%": { opacity: "1", transform: "translateX(0)" }
+        },
+        "toast-zoom-in": {
+          "0%": { opacity: "0", transform: "scale(0.8)" },
+          "100%": { opacity: "1", transform: "scale(1)" }
+        },
+        "toast-fade-out": { from: { opacity: "1" }, to: { opacity: "0" } },
+        "toast-slide-out-up": {
+          from: { opacity: "1", transform: "translateY(0)" },
+          to: { opacity: "0", transform: "translateY(-100%)" }
+        },
+        "toast-slide-out-down": {
+          from: { opacity: "1", transform: "translateY(0)" },
+          to: { opacity: "0", transform: "translateY(100%)" }
+        },
+        "toast-slide-out-right": {
+          from: { opacity: "1", transform: "translateX(0)" },
+          to: { opacity: "0", transform: "translateX(100%)" }
+        },
+        "toast-slide-out-left": {
+          from: { opacity: "1", transform: "translateX(0)" },
+          to: { opacity: "0", transform: "translateX(-100%)" }
+        },
+        "toast-zoom-out": {
+          from: { opacity: "1", transform: "scale(1)" },
+          to: { opacity: "0", transform: "scale(0.8)" }
+        },
+        "toast-progress-bar-decrease": {
+          from: { width: "100%" },
+          to: { width: "0%" }
         }
       },
       animation: {
@@ -146,7 +195,20 @@ const config = {
         "fading-arrow": "fading-arrow 1.5s infinite",
         "spinning-arrow": "spinning-arrow 1.5s infinite",
         "multi-arrow": "multi-arrow 2s infinite",
-        "mouse-animated": "mouse-animated 2s infinite"
+        "mouse-animated": "mouse-animated 2s infinite",
+        "toast-fade-in": "toast-fade-in 0.3s ease-out forwards",
+        "toast-slide-down": "toast-slide-down 0.3s ease-out forwards",
+        "toast-slide-up": "toast-slide-up 0.3s ease-out forwards",
+        "toast-slide-left": "toast-slide-left 0.3s ease-out forwards",
+        "toast-slide-right": "toast-slide-right 0.3s ease-out forwards",
+        "toast-zoom-in": "toast-zoom-in 0.3s ease-out forwards",
+        "toast-fade-out": "toast-fade-out 0.3s ease-in forwards",
+        "toast-slide-out-up": "toast-slide-out-up 0.3s ease-in forwards",
+        "toast-slide-out-down": "toast-slide-out-down 0.3s ease-in forwards",
+        "toast-slide-out-right": "toast-slide-out-right 0.3s ease-in forwards",
+        "toast-slide-out-left": "toast-slide-out-left 0.3s ease-in forwards",
+        "toast-zoom-out": "toast-zoom-out 0.3s ease-in forwards",
+        "toast-progress-bar": "toast-progress-bar-decrease linear forwards"
       }
     }
   },

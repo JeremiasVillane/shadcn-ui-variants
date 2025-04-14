@@ -19,6 +19,7 @@ interface ComponentBlockProps {
   playgroundCode?: (...args: any[]) => string
   DemoComponent?: () => React.JSX.Element
   ExtrasComponent?: () => React.JSX.Element | Promise<React.JSX.Element>
+  ApiReference?: () => React.JSX.Element
   children?: React.ReactNode
 }
 
@@ -29,7 +30,8 @@ export async function ComponentBlock({
   PlaygroundComponent,
   playgroundCode,
   DemoComponent,
-  ExtrasComponent
+  ExtrasComponent,
+  ApiReference
 }: ComponentBlockProps) {
   const src = `components/ui/${registryItem.name}.tsx`
   const code = await getFileContent(src)
@@ -66,7 +68,11 @@ export async function ComponentBlock({
 
       {!!ExtrasComponent && <ExtrasComponent />}
 
-      <ComponentAPI {...{ docs, name: registryItem.name }} />
+      {!!ApiReference ? (
+        <ApiReference />
+      ) : (
+        <ComponentAPI {...{ docs, name: registryItem.name }} />
+      )}
     </main>
   )
 }

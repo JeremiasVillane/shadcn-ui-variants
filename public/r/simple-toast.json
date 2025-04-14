@@ -1,0 +1,166 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "simple-toast",
+  "type": "registry:ui",
+  "title": "Simple Toast",
+  "description": "Displays ephemeral notifications (toasts) to inform users about events or actions of the application.",
+  "registryDependencies": [
+    "button"
+  ],
+  "files": [
+    {
+      "path": "components/ui/simple-toast.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport {\n  CheckCircle,\n  InfoIcon,\n  LucideProps,\n  TriangleAlert,\n  XCircle,\n  XIcon\n} from \"lucide-react\"\n\nimport { cn } from \"@/lib/utils\"\nimport { Button, buttonVariants } from \"@/components/ui/button\"\n\nconst EXIT_ANIMATION_DURATION = 150\n\nconst ENTER_ANIMATION_TYPES = [\n  \"fade-in\",\n  \"slide-down\",\n  \"slide-up\",\n  \"slide-left\",\n  \"slide-right\",\n  \"zoom-in\"\n] as const\n\nconst EXIT_ANIMATION_TYPES = [\n  \"fade-out\",\n  \"slide-out-up\",\n  \"slide-out-down\",\n  \"slide-out-right\",\n  \"slide-out-left\",\n  \"zoom-out\"\n] as const\n\ntype ToastEnterAnimationType = (typeof ENTER_ANIMATION_TYPES)[number]\ntype ToastExitAnimationType = (typeof EXIT_ANIMATION_TYPES)[number]\n\ntype ToastType = \"info\" | \"success\" | \"warning\" | \"error\"\n\ntype ToastPosition =\n  | \"top-left\"\n  | \"top-right\"\n  | \"top-center\"\n  | \"bottom-left\"\n  | \"bottom-right\"\n  | \"bottom-center\"\n\ninterface ToastAction {\n  label: React.ReactNode\n  onClick: (event: React.MouseEvent<HTMLButtonElement>) => void\n}\n\ninterface ToastProps\n  extends Omit<React.HTMLAttributes<HTMLDivElement>, \"title\"> {\n  id: string\n  type?: ToastType\n  title: React.ReactNode\n  description?: React.ReactNode\n  /** Duration in ms. `Infinity` to disable auto-close. */\n  duration?: number\n  position?: ToastPosition\n  /** @default \"fade-in\" */\n  enterAnimationType?: ToastEnterAnimationType\n  /** @default \"fade-out\" */\n  exitAnimationType?: ToastExitAnimationType\n  /** Custom icon that replaces the default icon of the type. */\n  customIcon?: React.ReactNode\n  /** Primary Action (Button with 'default' variant). */\n  primaryAction?: ToastAction\n  /** Secondary Action (Button with 'outline' variant). */\n  secondaryAction?: ToastAction\n  /** Callback on discard (manual, per action or per time). */\n  onDismiss?: (toast: ToastProps) => void\n  /** Specific callback when closing automatically by time. */\n  onAutoClose?: (toast: ToastProps) => void\n  /** Displays an 'X' button to close manually. */\n  showCloseButton?: boolean\n  /** Displays a progress bar indicating the remaining time. */\n  showProgressBar?: boolean\n  isExiting?: boolean\n}\n\ninterface ToasterProps extends React.HTMLAttributes<HTMLDivElement> {\n  defaultDuration?: number\n  defaultPosition?: ToastPosition\n  defaultEnterAnimationType?: ToastEnterAnimationType\n  defaultExitAnimationType?: ToastExitAnimationType\n  defaultShowCloseButton?: boolean\n  defaultShowProgressBar?: boolean\n  gap?: number\n}\n\ntype ToastOptions = Omit<ToastProps, \"id\" | \"isExiting\">\n\ninterface ToastState {\n  toasts: ToastProps[]\n}\nlet memoryState: ToastState = { toasts: [] }\nconst listeners: Array<(state: ToastState) => void> = []\n\nconst setState = (newState: Partial<ToastState>) => {\n  memoryState = { ...memoryState, ...newState }\n  listeners.forEach((listener) => listener(memoryState))\n}\n\nconst toast = (options: ToastOptions) => {\n  const id = Date.now().toString()\n  // `duration: 0` is treated as Infinity for self-closing logic.\n  const duration = options.duration === 0 ? Infinity : options.duration\n  const newToast: ToastProps = { ...options, id, duration, isExiting: false }\n\n  setState({ toasts: [...memoryState.toasts, newToast] })\n  return id\n}\nconst dismiss = (id: string) => {\n  const toastToDismiss = memoryState.toasts.find((t) => t.id === id)\n\n  if (!toastToDismiss || toastToDismiss.isExiting) return\n\n  if (toastToDismiss.onDismiss) {\n    toastToDismiss.onDismiss({ ...toastToDismiss, isExiting: true })\n  }\n\n  setState({\n    toasts: memoryState.toasts.map((t) =>\n      t.id === id ? { ...t, isExiting: true } : t\n    )\n  })\n\n  setTimeout(() => {\n    setState({\n      toasts: memoryState.toasts.filter((t) => t.id !== id)\n    })\n  }, EXIT_ANIMATION_DURATION)\n\n  return toastToDismiss\n}\n\nconst useToast = () => {\n  const [state, setStateReact] = React.useState<ToastState>(memoryState)\n  React.useEffect(() => {\n    listeners.push(setStateReact)\n    return () => {\n      const index = listeners.indexOf(setStateReact)\n      if (index > -1) listeners.splice(index, 1)\n    }\n  }, [])\n  return { ...state, toast, dismiss }\n}\n\nconst enterAnimationClasses: Record<ToastEnterAnimationType, string> = {\n  \"fade-in\": \"animate-toast-fade-in\",\n  \"slide-down\": \"animate-toast-slide-down\",\n  \"slide-up\": \"animate-toast-slide-up\",\n  \"slide-left\": \"animate-toast-slide-left\",\n  \"slide-right\": \"animate-toast-slide-right\",\n  \"zoom-in\": \"animate-toast-zoom-in\"\n}\n\nconst exitAnimationClasses: Record<ToastExitAnimationType, string> = {\n  \"fade-out\": \"animate-toast-fade-out\",\n  \"slide-out-up\": \"animate-toast-slide-out-up\",\n  \"slide-out-down\": \"animate-toast-slide-out-down\",\n  \"slide-out-right\": \"animate-toast-slide-out-right\",\n  \"slide-out-left\": \"animate-toast-slide-out-left\",\n  \"zoom-out\": \"animate-toast-zoom-out\"\n}\n\nconst colorVariants: Record<ToastType, string> = {\n  success: \"emerald-500\",\n  error: \"destructive\",\n  info: \"primary\",\n  warning: \"amber-500\"\n}\n\nconst iconProps: LucideProps = {\n  size: 16,\n  \"aria-hidden\": true,\n  className: \"mt-0.5 shrink-0\"\n}\nconst iconVariants: Record<ToastType, React.ReactNode> = {\n  success: (\n    <CheckCircle\n      {...iconProps}\n      className={cn(iconProps.className, `text-${colorVariants.success}`)}\n    />\n  ),\n  error: (\n    <XCircle\n      {...iconProps}\n      className={cn(iconProps.className, `text-${colorVariants.error}`)}\n    />\n  ),\n  info: (\n    <InfoIcon\n      {...iconProps}\n      className={cn(iconProps.className, `text-${colorVariants.info}`)}\n    />\n  ),\n  warning: (\n    <TriangleAlert\n      {...iconProps}\n      className={cn(iconProps.className, `text-${colorVariants.warning}`)}\n    />\n  )\n}\n\nconst ToastPrimitive = React.forwardRef<\n  HTMLDivElement,\n  ToastProps & {\n    effectiveDuration: number | null\n    resolvedEnterAnimationType: ToastEnterAnimationType\n    resolvedExitAnimationType: ToastExitAnimationType\n  }\n>(\n  (\n    {\n      id,\n      type = \"info\",\n      title,\n      description,\n      className,\n      style,\n      resolvedEnterAnimationType,\n      resolvedExitAnimationType,\n      customIcon,\n      primaryAction,\n      secondaryAction,\n      showCloseButton = false,\n      showProgressBar = false,\n      effectiveDuration,\n      isExiting,\n      // *** destructured to avoid passing them to the div\n      enterAnimationType,\n      exitAnimationType,\n      onDismiss,\n      onAutoClose,\n      // *** //\n      ...rest\n    },\n    ref\n  ) => {\n    const iconToRender = customIcon ?? iconVariants[type]\n    const enterAnimationClass =\n      enterAnimationClasses[resolvedEnterAnimationType]\n    const exitAnimationClass = exitAnimationClasses[resolvedExitAnimationType]\n    const animationClass = isExiting ? exitAnimationClass : enterAnimationClass\n\n    const shouldShowProgressBar =\n      showProgressBar &&\n      effectiveDuration !== null &&\n      effectiveDuration !== Infinity &&\n      !isExiting\n\n    return (\n      <div\n        ref={ref}\n        className={cn(\n          \"pointer-events-auto relative w-full max-w-[400px] overflow-hidden rounded-md border bg-background p-4 shadow-lg\",\n          animationClass,\n          className\n        )}\n        style={style}\n        data-state={isExiting ? \"exiting\" : \"visible\"}\n        {...rest}\n      >\n        <div className=\"flex items-start gap-3\">\n          {iconToRender}\n          <div className=\"flex-1 space-y-3 pr-3\">\n            <div className=\"space-y-1\">\n              {typeof title === \"string\" ? (\n                <p className=\"text-sm font-medium\">{title}</p>\n              ) : (\n                title\n              )}\n              {description &&\n                (typeof description === \"string\" ? (\n                  <p className=\"text-sm text-muted-foreground\">{description}</p>\n                ) : (\n                  <div className=\"text-sm text-muted-foreground\">\n                    {description}\n                  </div>\n                ))}\n            </div>\n\n            {(primaryAction || secondaryAction) && (\n              <div className=\"mt-2 flex flex-row-reverse justify-start gap-2\">\n                {primaryAction && (\n                  <Button\n                    size=\"sm\"\n                    onClick={(e) => {\n                      primaryAction.onClick(e)\n                      dismiss(id)\n                    }}\n                  >\n                    {primaryAction.label}\n                  </Button>\n                )}\n                {secondaryAction && (\n                  <Button\n                    variant=\"outline\"\n                    size=\"sm\"\n                    onClick={(e) => {\n                      secondaryAction.onClick(e)\n                      dismiss(id)\n                    }}\n                  >\n                    {secondaryAction.label}\n                  </Button>\n                )}\n              </div>\n            )}\n          </div>\n\n          {showCloseButton && (\n            <button\n              type=\"button\"\n              onClick={() => dismiss(id)}\n              className={cn(\n                buttonVariants({ variant: \"ghost\", size: \"icon\" }),\n                \"absolute right-1 top-1 h-7 w-7 rounded-full p-1 text-foreground/50 opacity-80 hover:text-foreground hover:opacity-100 focus:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring\"\n              )}\n              aria-label=\"Close\"\n            >\n              <XIcon className=\"h-4 w-4\" />\n            </button>\n          )}\n        </div>\n\n        {shouldShowProgressBar && (\n          <div className=\"absolute bottom-0 left-0 h-1 w-full overflow-hidden bg-muted\">\n            <div\n              className={cn(\n                \"animate-toast-progress-bar h-full\",\n                `bg-${colorVariants[type]}`\n              )}\n              style={{ animationDuration: `${effectiveDuration}ms` }}\n            ></div>\n          </div>\n        )}\n      </div>\n    )\n  }\n)\nToastPrimitive.displayName = \"ToastPrimitive\"\n\nconst Toaster: React.FC<ToasterProps> = ({\n  defaultDuration = 5000,\n  defaultPosition = \"bottom-right\",\n  defaultEnterAnimationType = \"fade-in\",\n  defaultExitAnimationType = \"fade-out\",\n  defaultShowCloseButton = false,\n  defaultShowProgressBar = false,\n  gap = 16,\n  className,\n  ...props\n}) => {\n  const { toasts } = useToast()\n  const [positions, setPositions] = React.useState<\n    Record<ToastPosition, ToastProps[]>\n  >({\n    \"top-left\": [],\n    \"top-right\": [],\n    \"top-center\": [],\n    \"bottom-left\": [],\n    \"bottom-right\": [],\n    \"bottom-center\": []\n  })\n\n  React.useEffect(() => {\n    const newPositions: Record<ToastPosition, ToastProps[]> = {\n      \"top-left\": [],\n      \"top-right\": [],\n      \"top-center\": [],\n      \"bottom-left\": [],\n      \"bottom-right\": [],\n      \"bottom-center\": []\n    }\n    toasts.forEach((toast) => {\n      const position = toast.position || defaultPosition\n      newPositions[position].push(toast)\n    })\n    setPositions(newPositions)\n  }, [toasts, defaultPosition])\n\n  React.useEffect(() => {\n    const timers = toasts\n      .filter((toast) => !toast.isExiting)\n      .map((toast) => {\n        const effectiveDuration =\n          toast.duration === Infinity\n            ? null\n            : (toast.duration ?? defaultDuration)\n\n        if (effectiveDuration !== null) {\n          const timerId = setTimeout(() => {\n            dismiss(toast.id)\n            if (toast.onAutoClose) {\n              toast.onAutoClose(toast)\n            }\n          }, effectiveDuration)\n          return timerId\n        }\n        return null\n      })\n    return () => {\n      timers.forEach((timerId) => {\n        if (timerId) clearTimeout(timerId)\n      })\n    }\n  }, [toasts, defaultDuration])\n\n  const positionClasses: Record<ToastPosition, string> = {\n    \"top-left\": \"top-0 left-0\",\n    \"top-right\": \"top-0 right-0\",\n    \"top-center\": \"top-0 left-1/2 -translate-x-1/2\",\n    \"bottom-left\": \"bottom-0 left-0\",\n    \"bottom-right\": \"bottom-0 right-0\",\n    \"bottom-center\": \"bottom-0 left-1/2 -translate-x-1/2\"\n  }\n\n  return (\n    <>\n      {Object.entries(positions)\n        .filter(([, toastsInPosition]) => toastsInPosition.length > 0)\n        .map(([pos, toastsInPosition]) => (\n          <div\n            key={pos}\n            className={cn(\n              \"pointer-events-none fixed z-[100] m-4 flex flex-col\",\n              positionClasses[pos as ToastPosition],\n              className\n            )}\n            style={{ gap: `${gap}px` }}\n            {...props}\n          >\n            {toastsInPosition.map((toastProps) => {\n              const effectiveDuration =\n                toastProps.duration === Infinity\n                  ? null\n                  : (toastProps.duration ?? defaultDuration)\n\n              const resolvedEnterAnimationType =\n                toastProps.enterAnimationType ?? defaultEnterAnimationType\n              let resolvedExitAnimationType: ToastExitAnimationType\n\n              if (toastProps.exitAnimationType) {\n                resolvedExitAnimationType = toastProps.exitAnimationType\n              } else {\n                const enterIndex = ENTER_ANIMATION_TYPES.indexOf(\n                  resolvedEnterAnimationType\n                )\n                if (enterIndex !== -1) {\n                  resolvedExitAnimationType = EXIT_ANIMATION_TYPES[enterIndex]\n                } else {\n                  resolvedExitAnimationType = defaultExitAnimationType\n                }\n              }\n\n              return (\n                <ToastPrimitive\n                  key={toastProps.id}\n                  {...toastProps}\n                  resolvedEnterAnimationType={resolvedEnterAnimationType}\n                  resolvedExitAnimationType={resolvedExitAnimationType}\n                  showCloseButton={\n                    toastProps.showCloseButton ?? defaultShowCloseButton\n                  }\n                  showProgressBar={\n                    toastProps.showProgressBar ?? defaultShowProgressBar\n                  }\n                  effectiveDuration={effectiveDuration}\n                />\n              )\n            })}\n          </div>\n        ))}\n    </>\n  )\n}\nToaster.displayName = \"Toaster\"\n\nexport { ToastPrimitive, Toaster, toast, dismiss, useToast }\nexport type {\n  ToastType,\n  ToastPosition,\n  ToastEnterAnimationType,\n  ToastExitAnimationType,\n  ToastProps,\n  ToasterProps,\n  ToastOptions,\n  ToastAction\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "tailwind": {
+    "config": {
+      "theme": {
+        "extend": {
+          "keyframes": {
+            "toast-fade-in": {
+              "0%": {
+                "opacity": "0"
+              },
+              "100%": {
+                "opacity": "1"
+              }
+            },
+            "toast-slide-down": {
+              "0%": {
+                "opacity": "0",
+                "transform": "translateY(-100%)"
+              },
+              "100%": {
+                "opacity": "1",
+                "transform": "translateY(0)"
+              }
+            },
+            "toast-slide-up": {
+              "0%": {
+                "opacity": "0",
+                "transform": "translateY(100%)"
+              },
+              "100%": {
+                "opacity": "1",
+                "transform": "translateY(0)"
+              }
+            },
+            "toast-slide-left": {
+              "0%": {
+                "opacity": "0",
+                "transform": "translateX(100%)"
+              },
+              "100%": {
+                "opacity": "1",
+                "transform": "translateX(0)"
+              }
+            },
+            "toast-slide-right": {
+              "0%": {
+                "opacity": "0",
+                "transform": "translateX(-100%)"
+              },
+              "100%": {
+                "opacity": "1",
+                "transform": "translateX(0)"
+              }
+            },
+            "toast-zoom-in": {
+              "0%": {
+                "opacity": "0",
+                "transform": "scale(0.8)"
+              },
+              "100%": {
+                "opacity": "1",
+                "transform": "scale(1)"
+              }
+            },
+            "toast-fade-out": {
+              "from": {
+                "opacity": "1"
+              },
+              "to": {
+                "opacity": "0"
+              }
+            },
+            "toast-slide-out-up": {
+              "from": {
+                "opacity": "1",
+                "transform": "translateY(0)"
+              },
+              "to": {
+                "opacity": "0",
+                "transform": "translateY(-100%)"
+              }
+            },
+            "toast-slide-out-down": {
+              "from": {
+                "opacity": "1",
+                "transform": "translateY(0)"
+              },
+              "to": {
+                "opacity": "0",
+                "transform": "translateY(100%)"
+              }
+            },
+            "toast-slide-out-right": {
+              "from": {
+                "opacity": "1",
+                "transform": "translateX(0)"
+              },
+              "to": {
+                "opacity": "0",
+                "transform": "translateX(100%)"
+              }
+            },
+            "toast-slide-out-left": {
+              "from": {
+                "opacity": "1",
+                "transform": "translateX(0)"
+              },
+              "to": {
+                "opacity": "0",
+                "transform": "translateX(-100%)"
+              }
+            },
+            "toast-zoom-out": {
+              "from": {
+                "opacity": "1",
+                "transform": "scale(1)"
+              },
+              "to": {
+                "opacity": "0",
+                "transform": "scale(0.8)"
+              }
+            },
+            "toast-progress-bar-decrease": {
+              "from": {
+                "width": "100%"
+              },
+              "to": {
+                "width": "0%"
+              }
+            }
+          },
+          "animation": {
+            "toast-fade-in": "toast-fade-in 0.3s ease-out forwards",
+            "toast-slide-down": "toast-slide-down 0.3s ease-out forwards",
+            "toast-slide-up": "toast-slide-up 0.3s ease-out forwards",
+            "toast-slide-left": "toast-slide-left 0.3s ease-out forwards",
+            "toast-slide-right": "toast-slide-right 0.3s ease-out forwards",
+            "toast-zoom-in": "toast-zoom-in 0.3s ease-out forwards",
+            "toast-fade-out": "toast-fade-out 0.3s ease-in forwards",
+            "toast-slide-out-up": "toast-slide-out-up 0.3s ease-in forwards",
+            "toast-slide-out-down": "toast-slide-out-down 0.3s ease-in forwards",
+            "toast-slide-out-right": "toast-slide-out-right 0.3s ease-in forwards",
+            "toast-slide-out-left": "toast-slide-out-left 0.3s ease-in forwards",
+            "toast-zoom-out": "toast-zoom-out 0.3s ease-in forwards",
+            "toast-progress-bar": "toast-progress-bar-decrease linear forwards"
+          }
+        }
+      }
+    }
+  }
+}

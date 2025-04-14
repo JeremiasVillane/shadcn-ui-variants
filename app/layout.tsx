@@ -13,6 +13,7 @@ import { publicUrl } from "@/env.mjs"
 import { RegistryItem } from "@/types"
 
 import { cn } from "@/lib/utils"
+import { Toaster } from "@/components/ui/simple-toast"
 
 const geist = Geist({
   weight: ["400", "500", "600", "700", "800", "900"],
@@ -104,6 +105,7 @@ export default async function RootLayout({
             <div className="flex-1">{children}</div>
             <SiteFooter />
           </div>
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

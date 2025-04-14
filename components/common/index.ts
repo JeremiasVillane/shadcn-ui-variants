@@ -1,3 +1,4 @@
+export * from "./api-reference-table"
 export * from "./code-block-wrapper"
 export * from "./command-tabs"
 export * from "./copy-to-clipboard-button"

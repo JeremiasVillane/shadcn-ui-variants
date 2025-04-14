@@ -4,6 +4,7 @@ import * as React from "react"
 
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { H3 } from "@/components/ui/prose"
 import {
   Select,
   SelectContent,
@@ -12,7 +13,6 @@ import {
   SelectValue
 } from "@/components/ui/select"
 import { Switch } from "@/components/ui/switch"
-import { H3 } from "@/components/ui/prose"
 
 interface PlaygroundControlsProps {
   playground: { [x: string]: string | number | boolean | string[] }
@@ -91,6 +91,7 @@ export default function PlaygroundControls({
                       })
                     }
                     autoComplete="off"
+                    max={10000}
                   />
                 </div>
               )}

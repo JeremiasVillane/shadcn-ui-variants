@@ -11,6 +11,7 @@ import { prose } from "./prose"
 import { ratingStarsInput } from "./rating-stars-input"
 import { scrollDownButton } from "./scroll-down-button"
 import { separator } from "./separator"
+import { simpleToast } from "./simple-toast"
 import { slider } from "./slider"
 import { tabs } from "./tabs"
 import { timeline } from "./timeline"
@@ -21,6 +22,7 @@ export interface ComponentDetails<T = any> {
   playgroundCode?: (args: T) => string
   DemoComponent?: () => React.JSX.Element
   ExtrasComponent?: () => React.JSX.Element | Promise<React.JSX.Element>
+  ApiReference?: () => React.JSX.Element 
 }
 
 type ComponentsIndex = Record<string, ComponentDetails>
@@ -39,6 +41,7 @@ export const componentsIndex: ComponentsIndex = {
   "rating-stars-input": ratingStarsInput,
   "scroll-down-button": scrollDownButton,
   separator,
+  "simple-toast": simpleToast,
   slider,
   timeline,
   tabs

@@ -95,9 +95,7 @@ export default function ComponentAPI({ docs, name }: ComponentAPIProps) {
                   </TableCell>
                   <TableCell>
                     {prop.defaultValue ? (
-                      <code className="relative rounded-sm bg-muted px-[0.3rem] py-[0.2rem] font-mono">
-                        {prop.defaultValue}
-                      </code>
+                      <InlineCode>{prop.defaultValue}</InlineCode>
                     ) : (
                       <span className="text-muted-foreground">—</span>
                     )}
