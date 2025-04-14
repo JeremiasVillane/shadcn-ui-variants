@@ -2,7 +2,7 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import { getComponentDocumentation } from "@/actions"
 import { componentsIndex } from "@/data/components-index"
-import { publicUrl } from "@/env.mjs"
+import { env, publicUrl } from "@/env.mjs"
 import { createPlayground } from "@/helpers/create-playground"
 import registry from "@/registry.json"
 import { RegistryItem } from "@/types"
@@ -78,7 +78,8 @@ export default async function ComponentPage({ params }: ComponentPageProps) {
   )! as RegistryItem
 
   const docs = await getComponentDocumentation(
-    `components/ui/${nameParams}.tsx`
+    `components/ui/${nameParams}.tsx`,
+    env.API_KEY
   )
   const playground = { ...createPlayground(docs), ...indexData.playground }
 

@@ -3,15 +3,23 @@
 import fs from "fs"
 import path from "path"
 import { unstable_cache } from "next/cache"
+import { env } from "@/env.mjs"
 import { ComponentDocResult } from "@/types"
 
 import { parseComponentFile } from "@/lib/jsdoc-utils"
 
 export async function getComponentDocumentation(
-  componentPath: string | null | undefined
+  componentPath: string | null | undefined,
+  apiKey: string
 ): Promise<ComponentDocResult> {
   if (!componentPath) {
     return { error: "Component path is required" }
+  }
+
+  if (apiKey !== env.API_KEY) {
+    return {
+      error: "Unauthorized"
+    }
   }
 
   const cachedDoc = unstable_cache(
