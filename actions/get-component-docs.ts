@@ -3,9 +3,9 @@
 import { unstable_cache } from "next/cache"
 import allDocs from "@/.registry-docs/component-docs.json"
 import { env } from "@/env.mjs"
-import { ComponentDocResult, ParsedDocType } from "@/types"
+import { ComponentDoc, ComponentDocResult } from "@/types"
 
-const componentDocsData: Record<string, ParsedDocType> = allDocs
+const componentDocsData: Record<string, ComponentDoc> = allDocs
 
 export async function getComponentDocumentation(
   componentPath: string | null | undefined,
