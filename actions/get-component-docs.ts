@@ -26,7 +26,7 @@ export async function getComponentDocumentation(
     async () => {
       try {
         const rootDir = process.cwd()
-        const absolutePath = path.join(rootDir, componentPath)
+        const absolutePath = path.join("/", componentPath)
 
         // if (!fs.existsSync(absolutePath)) {
         //   return { error: `Component file not found: ${componentPath}` }
