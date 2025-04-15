@@ -42,7 +42,7 @@ export async function getComponentDocumentation(
         return { data: componentDoc }
       } catch (error) {
         console.error("Error processing component documentation:", error)
-        return { error: "Failed to process component documentation" }
+        return { error: `Failed to process component documentation: ${JSON.stringify(error, null, 2)}` }
       }
     },
     [componentPath],
