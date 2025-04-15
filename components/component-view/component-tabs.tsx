@@ -7,8 +7,8 @@ import {
   CopyToClipboardButton,
   DownloadFileButton
 } from "../common"
-import { Card, CardContent } from "../ui/card"
-import { CodeBlock } from "../ui/code-block"
+import { Card, CardContent } from "../local/ui/card"
+import { CodeBlock } from "../local/ui/code-block"
 
 interface ComponentTabsProps {
   code: string

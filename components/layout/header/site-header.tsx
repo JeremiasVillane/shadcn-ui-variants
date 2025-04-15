@@ -5,13 +5,13 @@ import { RegistryItem } from "@/types"
 import { GalleryVerticalEnd, Menu } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
-import { HoverBorderGradient } from "@/components/ui/hover-border-gradient"
+import { HoverBorderGradient } from "@/components/local/ui/hover-border-gradient"
 import {
   Sheet,
   SheetContent,
   SheetTitle,
   SheetTrigger
-} from "@/components/ui/sheet"
+} from "@/components/local/ui/sheet"
 import { ThemeToggle } from "@/components/theme-toggle"
 
 import MainNav from "./main-nav"

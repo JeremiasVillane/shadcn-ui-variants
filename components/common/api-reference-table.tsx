@@ -5,7 +5,7 @@ import {
   Popover,
   PopoverContent,
   PopoverTrigger
-} from "@/components/ui/popover"
+} from "@/components/local/ui/popover"
 import { InlineCode } from "@/components/ui/prose"
 import {
   Table,
@@ -14,7 +14,7 @@ import {
   TableHead,
   TableHeader,
   TableRow
-} from "@/components/ui/table"
+} from "@/components/local/ui/table"
 
 interface ApiReferenceTableProps {
   data: { name: string; type: string; default?: string; description?: string }[]

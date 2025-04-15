@@ -4,7 +4,7 @@ import {
   TooltipContentProps,
   TooltipProvider,
   TooltipTrigger
-} from "@/components/ui/tooltip"
+} from "@/components/local/ui/tooltip"
 
 export function Tooltiper({
   content,

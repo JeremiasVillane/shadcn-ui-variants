@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/tabs"
 
 import { CopyToClipboardButton } from "./copy-to-clipboard-button"
-import { CodeBlock } from "../ui/code-block"
+import { CodeBlock } from "../local/ui/code-block"
 
 export type CommandMapType = {
   pnpm: string

@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation"
 import { RegistryItem } from "@/types"
 
 import { cn } from "@/lib/utils"
-import { NavigationMenuLink } from "@/components/ui/navigation-menu"
+import { NavigationMenuLink } from "@/components/local/ui/navigation-menu"
 
 interface ComponentNavCardProps {
   component: RegistryItem

@@ -1,4 +1,4 @@
-import { CodeBlock } from "@/components/ui/code-block"
+import { CodeBlock } from "@/components/local/ui/code-block"
 import { List, ListItem } from "@/components/ui/list"
 import { H2, H3, P } from "@/components/ui/prose"
 

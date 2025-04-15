@@ -7,7 +7,7 @@ import {
   Popover,
   PopoverContent,
   PopoverTrigger
-} from "@/components/ui/popover"
+} from "@/components/local/ui/popover"
 import { H2, H3, InlineCode, Muted, P, Strong } from "@/components/ui/prose"
 import {
   Table,
@@ -16,7 +16,7 @@ import {
   TableHead,
   TableHeader,
   TableRow
-} from "@/components/ui/table"
+} from "@/components/local/ui/table"
 import { ComponentTabs } from "@/components/component-view/component-tabs"
 
 import {

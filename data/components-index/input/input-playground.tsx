@@ -3,7 +3,7 @@
 import { ArrowRightIcon, AtSignIcon, MailIcon, SearchIcon } from "lucide-react"
 
 import { Input, InputProps } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+import { Label } from "@/components/local/ui/label"
 
 export interface InputPlaygroundProps {
   startIcon: string

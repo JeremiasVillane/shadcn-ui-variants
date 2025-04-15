@@ -3,7 +3,7 @@
 import * as React from "react"
 
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+import { Label } from "@/components/local/ui/label"
 import { H3 } from "@/components/ui/prose"
 import {
   Select,
@@ -11,8 +11,8 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue
-} from "@/components/ui/select"
-import { Switch } from "@/components/ui/switch"
+} from "@/components/local/ui/select"
+import { Switch } from "@/components/local/ui/switch"
 
 interface PlaygroundControlsProps {
   playground: { [x: string]: string | number | boolean | string[] }

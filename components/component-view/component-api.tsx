@@ -6,12 +6,12 @@ import { ComponentDocResult } from "@/types"
 import { AlertCircle, InfoIcon } from "lucide-react"
 
 import { toPascalCase } from "@/lib/string-utils"
-import { Card, CardContent } from "@/components/ui/card"
+import { Card, CardContent } from "@/components/local/ui/card"
 import {
   Popover,
   PopoverContent,
   PopoverTrigger
-} from "@/components/ui/popover"
+} from "@/components/local/ui/popover"
 import { H2, InlineCode } from "@/components/ui/prose"
 import {
   Table,
@@ -20,7 +20,7 @@ import {
   TableHead,
   TableHeader,
   TableRow
-} from "@/components/ui/table"
+} from "@/components/local/ui/table"
 
 import { Tooltiper } from "../tooltiper"
 

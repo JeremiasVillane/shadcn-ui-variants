@@ -5,7 +5,7 @@ import { TabsContent } from "@radix-ui/react-tabs"
 
 import { getFileContent } from "@/lib/file-utils"
 import { toWordCase } from "@/lib/string-utils"
-import { CodeBlock } from "@/components/ui/code-block"
+import { CodeBlock } from "@/components/local/ui/code-block"
 import {
   Stepper,
   StepperConnector,

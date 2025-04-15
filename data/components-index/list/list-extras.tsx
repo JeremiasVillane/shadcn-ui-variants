@@ -1,7 +1,7 @@
 import * as React from "react"
 
 import { getFileContent } from "@/lib/file-utils"
-import { CodeBlock } from "@/components/ui/code-block"
+import { CodeBlock } from "@/components/local/ui/code-block"
 import { H2, H3, InlineCode, P } from "@/components/ui/prose"
 import { CopyToClipboardButton } from "@/components/common"
 import { ComponentTabs } from "@/components/component-view/component-tabs"

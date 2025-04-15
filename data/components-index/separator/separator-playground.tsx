@@ -8,9 +8,9 @@ import {
   CardDescription,
   CardHeader,
   CardTitle
-} from "@/components/ui/card"
+} from "@/components/local/ui/card"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+import { Label } from "@/components/local/ui/label"
 import { Separator, type SeparatorProps } from "@/components/ui/separator"
 
 export interface SeparatorPlaygroundProps {

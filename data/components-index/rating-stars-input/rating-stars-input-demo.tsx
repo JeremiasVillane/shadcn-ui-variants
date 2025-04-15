@@ -11,7 +11,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle
-} from "@/components/ui/card"
+} from "@/components/local/ui/card"
 import { RatingStarsInput } from "@/components/ui/rating-stars-input"
 
 export function RatingStarsInputDemo() {

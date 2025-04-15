@@ -8,7 +8,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle
-} from "@/components/ui/card"
+} from "@/components/local/ui/card"
 import { List, ListItem } from "@/components/ui/list"
 
 export function ListExample4() {

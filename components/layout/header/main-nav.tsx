@@ -10,7 +10,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle
-} from "@/components/ui/navigation-menu"
+} from "@/components/local/ui/navigation-menu"
 
 import ComponentNavCard from "./component-nav-card"
 

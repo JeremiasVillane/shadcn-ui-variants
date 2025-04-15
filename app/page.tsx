@@ -7,13 +7,13 @@ import {
   Paintbrush
 } from "lucide-react"
 
-import { BlurFade } from "@/components/ui/blur-fade"
-import { BlurIn } from "@/components/ui/blur-in"
+import { BlurFade } from "@/components/local/ui/blur-fade"
+import { BlurIn } from "@/components/local/ui/blur-in"
 import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
-import { DotBackground } from "@/components/ui/dot-background"
+import { Card } from "@/components/local/ui/card"
+import { DotBackground } from "@/components/local/ui/dot-background"
 import { ScrollDownButton } from "@/components/ui/scroll-down-button"
-import { WordFadeIn } from "@/components/ui/word-fade-in"
+import { WordFadeIn } from "@/components/local/ui/word-fade-in"
 
 export const metadata: Metadata = {
   title: "Home",
