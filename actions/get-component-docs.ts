@@ -27,10 +27,10 @@ export async function getComponentDocumentation(
       try {
         const rootDir = process.cwd()
         const absolutePath = path.join(rootDir, componentPath)
-console.log("absolutePath:", absolutePath)
-        // if (!fs.existsSync(absolutePath)) {
-        //   return { error: `Component file not found: ${componentPath}` }
-        // }
+
+        if (!fs.existsSync(absolutePath)) {
+          return { error: `Component file not found: ${componentPath}` }
+        }
 
         const fileContent = fs.readFileSync(absolutePath, "utf-8")
 
@@ -42,7 +42,7 @@ console.log("absolutePath:", absolutePath)
         return { data: componentDoc }
       } catch (error) {
         console.error("Error processing component documentation:", error)
-        return { error: `Failed to process component documentation: ${JSON.stringify(error, null, 2)}` }
+        return { error: "Failed to process component documentation" }
       }
     },
     [componentPath],
