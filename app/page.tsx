@@ -7,12 +7,12 @@ import {
   Paintbrush
 } from "lucide-react"
 
+import { Button } from "@/components/ui/button"
+import { ScrollDownButton } from "@/components/ui/scroll-down-button"
 import { BlurFade } from "@/components/local/ui/blur-fade"
 import { BlurIn } from "@/components/local/ui/blur-in"
-import { Button } from "@/components/ui/button"
 import { Card } from "@/components/local/ui/card"
 import { DotBackground } from "@/components/local/ui/dot-background"
-import { ScrollDownButton } from "@/components/ui/scroll-down-button"
 import { WordFadeIn } from "@/components/local/ui/word-fade-in"
 
 export const metadata: Metadata = {
@@ -23,7 +23,8 @@ export const metadata: Metadata = {
 
 const cardStyle =
   "flex w-full h-full cursor-default flex-col items-center justify-center overflow-hidden p-20 shadow-lg hover:border-foreground/20 transition-colors ease-in-out gap-2"
-const titleStyle = "flex flex-col items-center justify-center whitespace-nowrap"
+const titleStyle =
+  "flex flex-col items-center justify-center whitespace-nowrap text-2xl font-medium"
 const subtitleStyle = "pb-2 leading-tight text-pretty py-2 md:py-0"
 const descriptionStyle = "text-sm text-muted-foreground hidden md:flex"
 
@@ -49,7 +50,7 @@ export default function Home() {
               <BlurIn
                 duration={0.5}
                 word="Beautiful components built upon shadcn/ui with interactive playgrounds."
-                className="mx-auto max-w-[700px] text-base text-pretty text-muted-foreground md:text-xl"
+                className="mx-auto max-w-[700px] text-pretty text-base text-muted-foreground md:text-xl"
               />
             </div>
 
@@ -143,7 +144,7 @@ export default function Home() {
                       <h3 className="leading-tight">New components</h3>
                     </div>
                     <p className={subtitleStyle}>
-                      Original components and variants
+                      Original components with variants
                     </p>
                   </header>
 
