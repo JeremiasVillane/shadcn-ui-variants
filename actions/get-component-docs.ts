@@ -46,7 +46,7 @@ export async function getComponentDocumentation(
       }
     },
     [componentPath],
-    { revalidate: 1, tags: ["docs"] }
+    { revalidate: 60 * 60 * 24, tags: ["docs"] }
   )
 
   return await cachedDoc()
