@@ -3,12 +3,13 @@ import { InfoIcon } from "lucide-react"
 
 import { getFileContent } from "@/lib/file-utils"
 import { List, ListItem } from "@/components/ui/list"
+import { H2, H3, InlineCode, Muted, P, Strong } from "@/components/ui/prose"
+import { ComponentTabs } from "@/components/component-view/component-tabs"
 import {
   Popover,
   PopoverContent,
   PopoverTrigger
 } from "@/components/local/ui/popover"
-import { H2, H3, InlineCode, Muted, P, Strong } from "@/components/ui/prose"
 import {
   Table,
   TableBody,
@@ -17,7 +18,6 @@ import {
   TableHeader,
   TableRow
 } from "@/components/local/ui/table"
-import { ComponentTabs } from "@/components/component-view/component-tabs"
 
 import {
   CustomHtmlStyling,
@@ -51,7 +51,8 @@ export async function ProseExtras() {
         <ListItem>
           Wrapping with <InlineCode>{"<Prose>"}</InlineCode>: You can wrap
           standard HTML elements (like <InlineCode>{"<h1>"}</InlineCode>,{" "}
-          <InlineCode>{"<p>"}</InlineCode>, {"<blockquote>"}) within the{" "}
+          <InlineCode>{"<p>"}</InlineCode>,{" "}
+          <InlineCode>{"<blockquote>"}</InlineCode>) within the{" "}
           <InlineCode>{"<Prose>"}</InlineCode> component. It automatically
           detects these elements and applies predefined base styles (
           <InlineCode>proseStyles</InlineCode>) and typographic scale styles (
@@ -149,7 +150,7 @@ export async function ProseExtras() {
               element's default tag name. It tells{" "}
               <InlineCode>{"<Prose>"}</InlineCode> which key from{" "}
               <InlineCode>proseStyles</InlineCode> and{" "}
-              <InlineCode>proseScale</InlineCode> to use for that specific
+              <InlineCode>proseSizes</InlineCode> to use for that specific
               element.
             </>
           ),

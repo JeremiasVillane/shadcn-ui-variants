@@ -38,12 +38,12 @@ const proseStyles = {
   li: ""
 } as const
 
-type ProseScale = Record<
+type ProseSizes = Record<
   keyof typeof proseStyles,
   Record<NonNullable<ProseProps["scale"]>, string>
 >
 
-const proseScale: ProseScale = {
+const proseSizes: ProseSizes = {
   h1: {
     default: "text-4xl lg:text-5xl mb-4",
     sm: "text-3xl lg:text-4xl mb-3",
@@ -169,13 +169,13 @@ const Prose = React.forwardRef<HTMLDivElement, ProseProps>(
       if (isHtmlElement && styleKey) {
         propsToPass.className = cn(
           proseStyles[styleKey],
-          proseScale[styleKey]?.[scale],
+          proseSizes[styleKey]?.[scale],
           childProps.className
         )
       } else if (!isHtmlElement && styleKey) {
         propsToPass.className = cn(
           proseStyles[styleKey],
-          proseScale[styleKey]?.[scale],
+          proseSizes[styleKey]?.[scale],
           childProps.className
         )
       } else if (!isHtmlElement) {
@@ -204,7 +204,7 @@ const H1 = React.forwardRef<
 >(({ scale = "default", className, ...props }, ref) => {
   return (
     <h1
-      className={cn(proseStyles["h1"], proseScale["h1"]?.[scale], className)}
+      className={cn(proseStyles["h1"], proseSizes["h1"]?.[scale], className)}
       ref={ref}
       {...props}
     />
@@ -220,7 +220,7 @@ const H2 = React.forwardRef<
 >(({ scale = "default", className, ...props }, ref) => {
   return (
     <h2
-      className={cn(proseStyles["h2"], proseScale["h2"]?.[scale], className)}
+      className={cn(proseStyles["h2"], proseSizes["h2"]?.[scale], className)}
       ref={ref}
       {...props}
     />
@@ -236,7 +236,7 @@ const H3 = React.forwardRef<
 >(({ scale = "default", className, ...props }, ref) => {
   return (
     <h3
-      className={cn(proseStyles["h3"], proseScale["h3"]?.[scale], className)}
+      className={cn(proseStyles["h3"], proseSizes["h3"]?.[scale], className)}
       ref={ref}
       {...props}
     />
@@ -252,7 +252,7 @@ const H4 = React.forwardRef<
 >(({ scale = "default", className, ...props }, ref) => {
   return (
     <h4
-      className={cn(proseStyles["h4"], proseScale["h4"]?.[scale], className)}
+      className={cn(proseStyles["h4"], proseSizes["h4"]?.[scale], className)}
       ref={ref}
       {...props}
     />
@@ -268,7 +268,7 @@ const P = React.forwardRef<
 >(({ scale = "default", className, ...props }, ref) => {
   return (
     <p
-      className={cn(proseStyles["p"], proseScale["p"]?.[scale], className)}
+      className={cn(proseStyles["p"], proseSizes["p"]?.[scale], className)}
       ref={ref}
       {...props}
     />
@@ -294,7 +294,7 @@ const Blockquote = React.forwardRef<
     <blockquote
       className={cn(
         proseStyles["blockquote"],
-        proseScale["blockquote"]?.[scale],
+        proseSizes["blockquote"]?.[scale],
         className
       )}
       ref={ref}
@@ -315,7 +315,7 @@ const Code = React.forwardRef<
       <code
         className={cn(
           proseStyles["code"],
-          proseScale["code"]?.[scale],
+          proseSizes["code"]?.[scale],
           className
         )}
         ref={ref}
@@ -338,7 +338,7 @@ const InlineCode = React.forwardRef<
     <code
       className={cn(
         proseStyles["inline-code"],
-        proseScale["inline-code"]?.[scale],
+        proseSizes["inline-code"]?.[scale],
         className
       )}
       ref={ref}
@@ -358,7 +358,7 @@ const Lead = React.forwardRef<
     <p
       className={cn(
         proseStyles["lead"],
-        proseScale["lead"]?.[scale],
+        proseSizes["lead"]?.[scale],
         className
       )}
       ref={ref}
@@ -378,7 +378,7 @@ const SubLead = React.forwardRef<
     <p
       className={cn(
         proseStyles["sub-lead"],
-        proseScale["sub-lead"]?.[scale],
+        proseSizes["sub-lead"]?.[scale],
         className
       )}
       ref={ref}
@@ -398,7 +398,7 @@ const Large = React.forwardRef<
     <div
       className={cn(
         proseStyles["large"],
-        proseScale["large"]?.[scale],
+        proseSizes["large"]?.[scale],
         className
       )}
       ref={ref}
@@ -418,7 +418,7 @@ const Small = React.forwardRef<
     <small
       className={cn(
         proseStyles["small"],
-        proseScale["small"]?.[scale],
+        proseSizes["small"]?.[scale],
         className
       )}
       ref={ref}
@@ -438,7 +438,7 @@ const Muted = React.forwardRef<
     <p
       className={cn(
         proseStyles["muted"],
-        proseScale["muted"]?.[scale],
+        proseSizes["muted"]?.[scale],
         className
       )}
       ref={ref}
@@ -469,7 +469,7 @@ const Ul = React.forwardRef<
 >(({ scale = "default", className, ...props }, ref) => {
   return (
     <ul
-      className={cn(proseStyles["ul"], proseScale["ul"]?.[scale], className)}
+      className={cn(proseStyles["ul"], proseSizes["ul"]?.[scale], className)}
       ref={ref}
       {...props}
     />
@@ -485,7 +485,7 @@ const Ol = React.forwardRef<
 >(({ scale = "default", className, ...props }, ref) => {
   return (
     <ol
-      className={cn(proseStyles["ol"], proseScale["ol"]?.[scale], className)}
+      className={cn(proseStyles["ol"], proseSizes["ol"]?.[scale], className)}
       ref={ref}
       {...props}
     />
@@ -501,7 +501,7 @@ const Li = React.forwardRef<
 >(({ scale = "default", className, ...props }, ref) => {
   return (
     <li
-      className={cn(proseStyles["li"], proseScale["li"]?.[scale], className)}
+      className={cn(proseStyles["li"], proseSizes["li"]?.[scale], className)}
       ref={ref}
       {...props}
     />

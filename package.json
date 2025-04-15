@@ -11,7 +11,7 @@
     "build": "npm run build:docs && next build",
     "start": "next start",
     "lint": "next lint",
-    "registry:build": "shadcn build",
+    "build:registry": "shadcn build",
     "build:docs": "tsx ./scripts/generate-docs.ts",
     "watch:docs": "chokidar \"components/ui/**/*.{ts,tsx}\" -c \"npm run build:docs\""
   },
