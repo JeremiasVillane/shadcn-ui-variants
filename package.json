@@ -7,11 +7,13 @@
   },
   "private": true,
   "scripts": {
-    "dev": "next dev -p 4000",
-    "build": "next build",
+    "dev": "npm run build:docs && concurrently \"npm:watch:docs\" \"next dev -p 4000\"",
+    "build": "npm run build:docs && next build",
     "start": "next start",
     "lint": "next lint",
-    "registry:build": "shadcn build"
+    "registry:build": "shadcn build",
+    "build:docs": "tsx ./scripts/generate-docs.ts",
+    "watch:docs": "chokidar \"components/ui/**/*.{ts,tsx}\" -c \"npm run build:docs\""
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.2",
@@ -55,14 +57,19 @@
     "@types/node": "^22",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "chokidar-cli": "^3.0.0",
+    "concurrently": "^9.1.2",
+    "glob": "^11.0.1",
     "postcss": "^8",
     "prettier": "^3.5.3",
     "prettier-plugin-tailwindcss": "^0.6.11",
     "tailwindcss": "^3.4.17",
+    "tsx": "^4.19.3",
     "typescript": "^5"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
+      "esbuild",
       "msw",
       "sharp"
     ]

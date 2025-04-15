@@ -67,6 +67,35 @@ export type ComponentDocResult =
   | { data?: undefined; error: string }
 
 /**
+ * Represents the parsed documentation type for a component.
+ * It includes an array of prop definitions for the component.
+ *
+ * @type {ParsedDocType}
+ * @property {ParsedDocType[]} props - An array of parsed prop definitions for the component.
+ * @example
+ * const parsedDoc: ParsedDocType = {
+ *   props: [
+ *    {
+ *     name: "propName",
+ *     type: "string",
+ *     required: true,
+ *     defaultValue: "default",
+ *     description: "Description of the prop"
+ *    }
+ *   ]
+ * }
+ **/
+export type ParsedDocType = {
+  props: {
+    name: string
+    type: string
+    required: boolean
+    defaultValue?: string
+    description: string
+  }[]
+}
+
+/**
  * Represents the type for items defined in the registry based on the provided JSON schema.
  */
 export interface RegistryItem {
