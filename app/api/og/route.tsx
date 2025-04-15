@@ -1,21 +1,10 @@
 // Code from https://github.com/akash3444/shadcn-ui-blocks
 // Inspired by https://github.com/shadcn-ui/taxonomy/blob/main/app/api/og/route.tsx
 
-import { promises as fs } from "fs"
-import path from "path"
 import { ImageResponse } from "@vercel/og"
 import { z } from "zod"
 
-export const runtime = "edge";
-
-const fontPath = path.join(
-  process.cwd(),
-  "public",
-  "assets",
-  "fonts",
-  "DMSans-SemiBold.ttf"
-)
-const dmSansSemibold = fs.readFile(fontPath)
+export const runtime = "edge"
 
 const ogImageSchema = z.object({
   heading: z.string(),
@@ -23,9 +12,12 @@ const ogImageSchema = z.object({
   mode: z.enum(["light", "dark"]).default("dark")
 })
 
+const dmSansSemibold = fetch(
+  new URL("../../../public/assets/fonts/DMSans-SemiBold.ttf", import.meta.url)
+).then((res) => res.arrayBuffer())
+
 export async function GET(req: Request) {
   try {
-    console.log("HERE...")
     const fontSemibold = await dmSansSemibold
 
     const url = new URL(req.url)
