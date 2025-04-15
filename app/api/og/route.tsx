@@ -13,7 +13,7 @@ const ogImageSchema = z.object({
 })
 
 const dmSansSemibold = fetch(
-  new URL("../../../public/assets/fonts/DMSans-SemiBold.ttf", import.meta.url)
+  new URL("../../../public/assets/DMSans-SemiBold.ttf", import.meta.url)
 ).then((res) => res.arrayBuffer())
 
 export async function GET(req: Request) {
