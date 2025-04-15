@@ -28,9 +28,9 @@ export async function getComponentDocumentation(
         const rootDir = process.cwd()
         const absolutePath = path.join(rootDir, componentPath)
 
-        if (!fs.existsSync(absolutePath)) {
-          return { error: `Component file not found: ${componentPath}` }
-        }
+        // if (!fs.existsSync(absolutePath)) {
+        //   return { error: `Component file not found: ${componentPath}` }
+        // }
 
         const fileContent = fs.readFileSync(absolutePath, "utf-8")
 
