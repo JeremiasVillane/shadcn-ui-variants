@@ -19,7 +19,7 @@ import { Button } from "@/components/ui/button"
 
 export function ButtonPlayground() {
   return (
-    <Button iconLeft={<MailIcon />} iconRight={<ArrowRightIcon />}${variant !== "default" ? ` variant="${variant}"` : ""}${size !== "default" ? ` size="${size}"` : ""}${isAnimated ? ` iconAnimation="${iconAnimation}"` : ""}${isAnimated && iconAnimationTarget !== "none" ? ` iconAnimationTarget="${iconAnimationTarget}"` : ""}${isLoading ? " isLoading" : ""}${disabled ? " disabled" : ""}>
+    <Button iconLeft={<MailIcon className="opacity-60" />} iconRight={<ArrowRightIcon className="opacity-80" />}${variant !== "default" ? ` variant="${variant}"` : ""}${size !== "default" ? ` size="${size}"` : ""}${isAnimated ? ` iconAnimation="${iconAnimation}"` : ""}${isAnimated && iconAnimationTarget !== "none" ? ` iconAnimationTarget="${iconAnimationTarget}"` : ""}${isLoading ? " isLoading" : ""}${disabled ? " disabled" : ""}>
       Click me!
     </Button>
   )

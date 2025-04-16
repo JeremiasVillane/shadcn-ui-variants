@@ -179,7 +179,7 @@ const Button = React.forwardRef<
       icon &&
       React.cloneElement(icon, {
         className: cn(
-          "shrink-0 opacity-60",
+          "shrink-0",
           icon.props.className,
           shouldAnimate(side) && animationClass
         )

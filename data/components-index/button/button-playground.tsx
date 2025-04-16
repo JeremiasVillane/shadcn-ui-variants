@@ -21,8 +21,8 @@ export function ButtonPlayground({
         iconAnimation,
         iconAnimationTarget,
         disabled,
-        iconLeft: <MailIcon />,
-        iconRight: <ArrowRightIcon />
+        iconLeft: <MailIcon className="opacity-60" />,
+        iconRight: <ArrowRightIcon className="opacity-80" />
       }}
     >
       Click me!
