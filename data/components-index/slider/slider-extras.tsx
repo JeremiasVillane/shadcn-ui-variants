@@ -36,7 +36,7 @@ export async function SliderExtras() {
         },
         {
           id: "example3",
-          title: "Controlled with interactive icons and output",
+          title: "Controlled with output and interactive icons",
           code: example3Code,
           name: "slider-example-3",
           Component: SliderExample3
