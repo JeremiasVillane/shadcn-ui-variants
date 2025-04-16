@@ -34,6 +34,14 @@ interface SliderProps
    */
   endLabel?: React.ReactNode
   /**
+   * Icon to display before the slider track.
+   */
+  startIcon?: React.ReactNode // New prop
+  /**
+   * Icon to display after the slider track, before the input field if present.
+   */
+  endIcon?: React.ReactNode // New prop
+  /**
    * If true, shows tooltip ticks below the slider.
    * @default false
    */
@@ -80,6 +88,8 @@ const Slider = React.forwardRef<
       withInput = false,
       startLabel,
       endLabel,
+      startIcon,
+      endIcon,
       showTooltip = false,
       showTicks = false,
       numberOfTicks: numberOfTicksProp,
@@ -343,18 +353,13 @@ const Slider = React.forwardRef<
           </div>
         )}
 
-        <div
-          className={cn(
-            "flex",
-            showLabels ? "items-center" : "items-start",
-            withInput ? "gap-4" : "gap-0"
-          )}
-        >
+        <div className={cn("flex items-center gap-3")}>
+          {startIcon && <span className="mb-1 flex-shrink-0">{startIcon}</span>}
+
           <div
             ref={sliderAndTicksContainerRef}
             className={cn(
-              "relative w-full",
-              withInput ? "flex-grow" : "",
+              "relative w-full flex-grow",
               showTicks ? "pb-6" : "pb-1"
             )}
           >
@@ -449,6 +454,8 @@ const Slider = React.forwardRef<
               </div>
             )}
           </div>
+
+          {endIcon && <span className="mb-1 flex-shrink-0">{endIcon}</span>}
 
           {withInput &&
             displayValue.map((_, index) => (
