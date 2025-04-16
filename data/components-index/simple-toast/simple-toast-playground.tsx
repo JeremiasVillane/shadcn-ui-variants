@@ -1,7 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { toast, ToastProps } from "@/components/ui/simple-toast"
+import { toast, type ToastProps } from "@/components/ui/simple-toast"
 
 export function SimpleToastPlayground({
   type,

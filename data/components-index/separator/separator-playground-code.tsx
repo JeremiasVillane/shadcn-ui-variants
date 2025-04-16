@@ -1,18 +1,16 @@
 "use client"
 
-import { SeparatorPlaygroundProps } from "./separator-playground"
+import type { SeparatorProps } from "@/components/ui/separator"
 
 export const separatorPlaygroundCode = ({
   variant,
   label,
   chip,
   orientation
-}: SeparatorPlaygroundProps) => {
+}: SeparatorProps) => {
   const isVertical = orientation === "vertical"
 
-  const code = `"use client"
-
-import { Button } from "@/components/ui/button"
+  const code = `import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
@@ -56,7 +54,7 @@ export function SeparatorPlayground() {
               </Button>
             </div>
 
-            <Separator${variant !== "default" ? ` variant="${variant}"` : ""}${orientation !== "horizontal" ? ` orientation="vertical"` : ""}${label.length > 0 ? ` label="${label}"` : ""}${chip ? " chip" : ""} />
+            <Separator${variant !== "default" ? ` variant="${variant}"` : ""}${orientation !== "horizontal" ? ` orientation="vertical"` : ""}${!!label && label.length > 0 ? ` label="${label}"` : ""}${chip ? " chip" : ""} />
 
             <div
             className="flex ${isVertical ? "flex-1 items-center justify-center" : "items-center justify-center"}">

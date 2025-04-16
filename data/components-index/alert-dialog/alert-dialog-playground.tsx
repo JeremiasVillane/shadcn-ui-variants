@@ -1,13 +1,6 @@
 "use client"
 
 import {
-  CircleDollarSign,
-  CircleFadingArrowUp,
-  CircleHelp,
-  CircleUserRound
-} from "lucide-react"
-
-import {
   AlertDialog,
   AlertDialogAction,
   AlertDialogCancel,
@@ -21,38 +14,18 @@ import {
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
 
-export interface AlertDialogPlaygroundProps {
-  variant: AlertDialogProps["variant"]
-  styleVariant: AlertDialogProps["styleVariant"]
-  withIcon: boolean
-  customIcon: string
-  separatedHeader: boolean
-  separatedFooter: boolean
-}
-
 export default function AlertDialogPlayground({
   variant,
   styleVariant,
   withIcon,
-  customIcon,
   separatedHeader,
   separatedFooter
-}: AlertDialogPlaygroundProps) {
-  const customIcons: Record<string, React.ReactElement> = {
-    "<CircleUserRound />": <CircleUserRound />,
-    "<CircleDollarSign />": <CircleDollarSign />,
-    "<CircleHelp />": <CircleHelp />,
-    "<CircleFadingArrowUp />": <CircleFadingArrowUp />
-  }
-
+}: AlertDialogProps) {
   return (
     <AlertDialog
       variant={variant}
       styleVariant={styleVariant}
       withIcon={withIcon}
-      {...(customIcon !== "none"
-        ? { customIcon: customIcons[customIcon] }
-        : {})}
       separatedHeader={separatedHeader}
       separatedFooter={separatedFooter}
     >

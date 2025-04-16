@@ -1,11 +1,11 @@
 "use client"
 
-import { DynamicBreadcrumbPlaygroundProps } from "./dynamic-breadcrumb-playground"
+import type { DynamicBreadcrumbProps } from "@/components/ui/dynamic-breadcrumb"
 
 export const dynamicBreadcrumbCode = ({
   displayHome,
   activeLinks
-}: DynamicBreadcrumbPlaygroundProps) => {
+}: DynamicBreadcrumbProps) => {
   const code = `import { DynamicBreadcrumb } from "@/components/ui/dynamic-breadcrumb"
 
 export function DynamicBreadcrumbPlayground() {

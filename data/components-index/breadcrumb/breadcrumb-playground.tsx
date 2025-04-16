@@ -10,15 +10,10 @@ import {
   type BreadcrumbProps
 } from "@/components/ui/breadcrumb"
 
-export interface BreadcrumbPlaygroundProps {
-  variant: BreadcrumbProps["variant"]
-  separatorVariant: BreadcrumbProps["separatorVariant"]
-}
-
 export function BreadcrumbPlayground({
   variant,
   separatorVariant
-}: BreadcrumbPlaygroundProps) {
+}: BreadcrumbProps) {
   return (
     <Breadcrumb variant={variant} separatorVariant={separatorVariant}>
       <BreadcrumbList>

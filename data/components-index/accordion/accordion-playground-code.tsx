@@ -1,16 +1,14 @@
 "use client"
 
-import { AccordionPlaygroundProps } from "./accordion-playground"
+import type { AccordionProps } from "@/components/ui/accordion"
 
 export const accordionPlaygroundCode = ({
   variant,
   styleVariant,
   type,
   collapsible
-}: AccordionPlaygroundProps) => {
-  let code = `"use client"
-  
-  import {
+}: AccordionProps) => {
+  let code = `import {
     Accordion,
     AccordionContent,
     AccordionItem,

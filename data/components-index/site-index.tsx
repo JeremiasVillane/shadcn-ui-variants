@@ -17,12 +17,12 @@ import { tabs } from "./tabs"
 import { timeline } from "./timeline"
 
 export interface ComponentDetails<T = any> {
-  playground?: Record<string, string[] | string | number | boolean>
+  playground?: Partial<T>
   PlaygroundComponent?: (args: T) => React.JSX.Element
   playgroundCode?: (args: T) => string
   DemoComponent?: () => React.JSX.Element
   ExtrasComponent?: () => React.JSX.Element | Promise<React.JSX.Element>
-  ApiReference?: () => React.JSX.Element 
+  ApiReference?: () => React.JSX.Element
 }
 
 type ComponentsIndex = Record<string, ComponentDetails>

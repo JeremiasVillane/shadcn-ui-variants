@@ -1,17 +1,11 @@
+import { type AlertProps } from "@/components/ui/alert"
+
 import { ComponentDetails } from "../site-index"
-import { AlertPlayground, type AlertPlaygroundProps } from "./alert-playground"
+import { AlertPlayground } from "./alert-playground"
 import { alertPlaygroundCode } from "./alert-playground-code"
 
-export const alert: ComponentDetails<AlertPlaygroundProps> = {
-  playground: {
-    customIcon: [
-      "none",
-      "<CircleUserRound />",
-      "<CircleDollarSign />",
-      "<CircleHelp />",
-      "<CircleFadingArrowUp />"
-    ]
-  },
+export const alert: ComponentDetails<AlertProps> = {
+  playground: { customIcon: undefined },
   PlaygroundComponent: AlertPlayground,
   playgroundCode: alertPlaygroundCode
 }

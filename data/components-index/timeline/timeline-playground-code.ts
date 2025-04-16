@@ -1,6 +1,6 @@
 "use client"
 
-import { TimelineProps } from "@/components/ui/timeline"
+import type { TimelineProps } from "@/components/ui/timeline"
 
 export const timelinePlaygroundCode = ({ position }: TimelineProps) => {
   const code = `import {

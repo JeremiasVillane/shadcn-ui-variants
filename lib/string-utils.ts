@@ -82,11 +82,6 @@ export function toCamelCase(input: string) {
     .join("")
 }
 
-/** Convert React JSX string (<Compoent />) to name (Component) */
-export function jsxStringToName(jsxName: string) {
-  return jsxName.match(/<([^>]+) \/>/)![1]
-}
-
 /** Convert kebab-case or snake_case to PascalCase */
 export function toPascalCase(input: string): string {
   return input

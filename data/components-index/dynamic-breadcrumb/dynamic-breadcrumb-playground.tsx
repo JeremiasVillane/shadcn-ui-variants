@@ -1,16 +1,14 @@
 "use client"
 
-import { DynamicBreadcrumb } from "@/components/ui/dynamic-breadcrumb"
-
-export interface DynamicBreadcrumbPlaygroundProps {
-  displayHome: boolean
-  activeLinks: boolean
-}
+import {
+  DynamicBreadcrumb,
+  type DynamicBreadcrumbProps
+} from "@/components/ui/dynamic-breadcrumb"
 
 export function DynamicBreadcrumbPlayground({
   displayHome,
   activeLinks
-}: DynamicBreadcrumbPlaygroundProps) {
+}: DynamicBreadcrumbProps) {
   return (
     <div>
       <DynamicBreadcrumb {...{ displayHome, activeLinks }} />

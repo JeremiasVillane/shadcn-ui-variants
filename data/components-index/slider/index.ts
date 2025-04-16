@@ -1,8 +1,10 @@
+import { type SliderProps } from "@/components/ui/slider"
+
 import { ComponentDetails } from "../site-index"
-import { SliderPlayground, SliderPlaygroundProps } from "./slider-playground"
+import { SliderPlayground } from "./slider-playground"
 import { sliderPlaygroundCode } from "./slider-playground-code"
 
-export const slider: ComponentDetails<SliderPlaygroundProps> = {
+export const slider: ComponentDetails<SliderProps> = {
   PlaygroundComponent: SliderPlayground,
   playgroundCode: sliderPlaygroundCode
 }

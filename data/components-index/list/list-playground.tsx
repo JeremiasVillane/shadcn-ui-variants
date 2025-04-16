@@ -1,6 +1,6 @@
 "use client"
 
-import { List, ListItem, ListProps } from "@/components/ui/list"
+import { List, ListItem, type ListProps } from "@/components/ui/list"
 
 export function ListPlayground({ variant, spacing }: ListProps) {
   return (

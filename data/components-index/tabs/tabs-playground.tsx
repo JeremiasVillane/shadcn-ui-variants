@@ -1,7 +1,5 @@
 "use client"
 
-import React from "react"
-
 import {
   Tabs,
   TabsContent,
@@ -10,11 +8,7 @@ import {
   type TabsProps
 } from "@/components/ui/tabs"
 
-export interface TabsPlaygroundProps {
-  variant: TabsProps["variant"]
-}
-
-export const TabsPlayground = ({ variant }: TabsPlaygroundProps) => {
+export const TabsPlayground = ({ variant }: TabsProps) => {
   return (
     <Tabs variant={variant} defaultValue="tab1Title" className="w-full">
       <TabsList>

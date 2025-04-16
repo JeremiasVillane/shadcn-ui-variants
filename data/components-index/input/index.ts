@@ -1,14 +1,16 @@
+import { type InputProps } from "@/components/ui/input"
+
 import { ComponentDetails } from "../site-index"
-import { InputPlayground, InputPlaygroundProps } from "./input-playground"
+import { InputPlayground } from "./input-playground"
 import { inputPlaygroundCode } from "./input-playground-code"
 
-export const input: ComponentDetails<InputPlaygroundProps> = {
+export const input: ComponentDetails<InputProps> = {
   playground: {
-    startIcon: ["none", "<SearchIcon />", "<AtSignIcon />"],
-    endIcon: ["<ArrowRightIcon />", "none"],
-    startAddon: ["https://", "€", "none"],
-    endAddon: ["none", "<MailIcon />", "gmail.com"],
-    maxLength: 33,
+    startIcon: undefined,
+    endIcon: undefined,
+    startAddon: undefined,
+    endAddon: undefined,
+    maxLength: 33
   },
   PlaygroundComponent: InputPlayground,
   playgroundCode: inputPlaygroundCode

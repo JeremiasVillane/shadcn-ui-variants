@@ -2,17 +2,6 @@
 
 import { Slider, type SliderProps } from "@/components/ui/slider"
 
-export interface SliderPlaygroundProps {
-  variant: SliderProps["variant"]
-  withOutput: boolean
-  withInput: boolean
-  startLabel: string
-  endLabel: string
-  showTooltip: boolean
-  showTicks: boolean
-  numberOfTicks: number
-}
-
 export function SliderPlayground({
   variant,
   withOutput,
@@ -22,7 +11,7 @@ export function SliderPlayground({
   showTooltip,
   showTicks,
   numberOfTicks
-}: SliderPlaygroundProps) {
+}: SliderProps) {
   return (
     <div className="w-full py-12">
       <Slider

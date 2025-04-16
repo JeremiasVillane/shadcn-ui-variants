@@ -1,6 +1,6 @@
 "use client"
 
-import { ToastProps } from "@/components/ui/simple-toast"
+import type { ToastProps } from "@/components/ui/simple-toast"
 
 export const simpleToastPlaygroundCode = ({
   type,

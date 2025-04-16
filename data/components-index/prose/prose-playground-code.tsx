@@ -1,6 +1,6 @@
 "use client"
 
-import { ProseProps } from "@/components/ui/prose"
+import type { ProseProps } from "@/components/ui/prose"
 
 export const prosePlaygroundCode = ({ scale }: ProseProps) => {
   const code = `import { InlineCode, Prose } from "@/components/ui/prose"

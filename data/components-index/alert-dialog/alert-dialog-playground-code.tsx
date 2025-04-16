@@ -1,25 +1,15 @@
 "use client"
 
-import { jsxStringToName } from "@/lib/string-utils"
-
-import { AlertDialogPlaygroundProps } from "./alert-dialog-playground"
+import type { AlertDialogProps } from "@/components/ui/alert-dialog"
 
 export const alertDialogPlaygroundCode = ({
   variant,
   styleVariant,
   withIcon,
-  customIcon,
   separatedHeader,
   separatedFooter
-}: AlertDialogPlaygroundProps) => {
-  const code = `"use client"
-${
-  withIcon && !!customIcon && customIcon !== "none"
-    ? `import { ${jsxStringToName(customIcon)} } from "lucide-react"
-`
-    : ""
-}
-import {
+}: AlertDialogProps) => {
+  const code = `import {
   AlertDialog,
   AlertDialogAction,
   AlertDialogCancel,
@@ -35,7 +25,7 @@ import { Button } from "@/components/ui/button"
 
 export default function AlertDialogPlayground() {
   return (
-    <AlertDialog${variant !== "default" ? ` variant="${variant}"` : ""}${styleVariant !== "left" ? ` styleVariant="${styleVariant}"` : ""}${withIcon ? " withIcon={true}" : ""}${withIcon && !!customIcon && customIcon !== "none" ? ` customIcon={<${jsxStringToName(customIcon)} />}` : ""}${separatedHeader ? " separatedHeader={true}" : ""}${separatedFooter ? " separatedFooter={true}" : ""}>
+    <AlertDialog${variant !== "default" ? ` variant="${variant}"` : ""}${styleVariant !== "left" ? ` styleVariant="${styleVariant}"` : ""}${withIcon ? " withIcon={true}" : ""}${separatedHeader ? " separatedHeader={true}" : ""}${separatedFooter ? " separatedFooter={true}" : ""}>
       <AlertDialogTrigger asChild>
         <Button>Show Dialog</Button>
       </AlertDialogTrigger>

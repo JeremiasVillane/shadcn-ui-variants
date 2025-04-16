@@ -2,6 +2,8 @@
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Separator, type SeparatorProps } from "@/components/ui/separator"
 import {
   Card,
   CardContent,
@@ -9,23 +11,14 @@ import {
   CardHeader,
   CardTitle
 } from "@/components/local/ui/card"
-import { Input } from "@/components/ui/input"
 import { Label } from "@/components/local/ui/label"
-import { Separator, type SeparatorProps } from "@/components/ui/separator"
-
-export interface SeparatorPlaygroundProps {
-  variant: SeparatorProps["variant"]
-  label: string
-  chip: boolean
-  orientation: SeparatorProps["orientation"]
-}
 
 export function SeparatorPlayground({
   variant,
   label,
   chip,
   orientation
-}: SeparatorPlaygroundProps) {
+}: SeparatorProps) {
   const isVertical = orientation === "vertical"
 
   return (

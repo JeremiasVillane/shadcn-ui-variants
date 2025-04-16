@@ -2,22 +2,15 @@
 
 import {
   ScrollDownButton,
-  ScrollDownButtonProps
+  type ScrollDownButtonProps
 } from "@/components/ui/scroll-down-button"
-
-export interface ScrollDownButtonPlaygroundProps {
-  variant: ScrollDownButtonProps["variant"]
-  targetId: ScrollDownButtonProps["targetId"]
-  text: ScrollDownButtonProps["text"]
-  offset: ScrollDownButtonProps["offset"]
-}
 
 export function ScrollDownButtonPlayground({
   variant,
   targetId,
   text,
   offset
-}: ScrollDownButtonPlaygroundProps) {
+}: ScrollDownButtonProps) {
   return (
     <div className="flex h-full flex-col items-center justify-center">
       <section className="flex flex-col items-center">

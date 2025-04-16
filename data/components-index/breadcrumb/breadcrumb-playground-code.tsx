@@ -1,14 +1,12 @@
 "use client"
 
-import { BreadcrumbPlaygroundProps } from "./breadcrumb-playground"
+import type { BreadcrumbProps } from "@/components/ui/breadcrumb"
 
 export const breadcrumbPlaygroundCode = ({
   variant,
   separatorVariant
-}: BreadcrumbPlaygroundProps) => {
-  const code = `"use client"
-
-import {
+}: BreadcrumbProps) => {
+  const code = `import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,

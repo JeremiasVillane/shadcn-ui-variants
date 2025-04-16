@@ -1,56 +1,26 @@
 "use client"
 
-import { ArrowRightIcon, AtSignIcon, MailIcon, SearchIcon } from "lucide-react"
+import { ArrowRightIcon } from "lucide-react"
 
-import { Input, InputProps } from "@/components/ui/input"
+import { Input, type InputProps } from "@/components/ui/input"
 import { Label } from "@/components/local/ui/label"
 
-export interface InputPlaygroundProps {
-  startIcon: string
-  endIcon: string
-  startInline: string
-  endInline: string
-  startAddon: string
-  endAddon: string
-  maxLength: number
-  showMaxLength: InputProps["showMaxLength"]
-}
-
 export function InputPlayground({
-  startIcon,
-  endIcon,
-  startInline,
-  endInline,
-  startAddon,
-  endAddon,
   maxLength,
-  showMaxLength
-}: InputPlaygroundProps) {
-  const startIcons: Record<string, React.ReactElement> = {
-    "<SearchIcon />": <SearchIcon />,
-    "<AtSignIcon />": <AtSignIcon />
-  }
-
-  const endIcons: Record<string, React.ReactElement> = {
-    "<ArrowRightIcon />": <ArrowRightIcon />,
-  }
-
+  showMaxLength,
+  startInline,
+  endInline
+}: InputProps) {
   return (
     <div className="space-y-1.5">
       <Label htmlFor="inputId">Advanced input:</Label>
       <Input
         id="inputId"
         placeholder="Enter your information..."
-        {...(startIcon !== "none" ? { startIcon: startIcons[startIcon] } : {})}
-        {...(endIcon !== "none" ? { endIcon: endIcons[endIcon] } : {})}
+        endIcon={<ArrowRightIcon />}
         startInline={startInline}
         endInline={endInline}
-        {...(startAddon !== "none" ? { startAddon } : {})}
-        {...(endAddon === "<MailIcon />"
-          ? { endAddon: <MailIcon size={18} /> }
-          : endAddon === "none"
-            ? {}
-            : { endAddon })}
+        startAddon="http://"
         showMaxLength={showMaxLength}
         maxLength={maxLength}
         autoComplete="off"

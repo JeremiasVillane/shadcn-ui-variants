@@ -1,18 +1,12 @@
+import { type ButtonProps } from "@/components/ui/button"
+
 import { ComponentDetails } from "../site-index"
 import { ButtonExtras } from "./button-extras"
-import { ButtonPlayground, ButtonPlaygroundProps } from "./button-playground"
+import { ButtonPlayground } from "./button-playground"
 import { buttonPlaygroundCode } from "./button-playground-code"
 
-export const button: ComponentDetails<ButtonPlaygroundProps> = {
-  playground: {
-    iconLeft: ["<MailIcon />", "<PrinterIcon />", "<ArrowLeftIcon />", "none"],
-    iconRight: [
-      "<ArrowRightIcon />",
-      "<PlusIcon />",
-      "<SparklesIcon />",
-      "none"
-    ]
-  },
+export const button: ComponentDetails<ButtonProps> = {
+  playground: { iconLeft: undefined, iconRight: undefined },
   PlaygroundComponent: ButtonPlayground,
   playgroundCode: buttonPlaygroundCode,
   ExtrasComponent: ButtonExtras

@@ -1,13 +1,13 @@
 "use client"
 
-import { ScrollDownButtonPlaygroundProps } from "./scroll-down-button-playground"
+import type { ScrollDownButtonProps } from "@/components/ui/scroll-down-button"
 
 export const scrollDownButtonPlaygroundCode = ({
   variant,
   targetId,
   text,
   offset
-}: ScrollDownButtonPlaygroundProps) => {
+}: ScrollDownButtonProps) => {
   const code = `import { ScrollDownButton } from "@/components/ui/scroll-down-button"
 export function ScrollDownButtonPlayground() {
   return (

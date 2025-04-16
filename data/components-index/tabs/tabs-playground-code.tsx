@@ -1,13 +1,9 @@
 "use client"
 
-import { TabsPlaygroundProps } from "./tabs-playground"
+import type { TabsProps } from "@/components/ui/tabs"
 
-export const tabsPlaygroundCode = ({ variant }: TabsPlaygroundProps) => {
-  const code = `"use client"
-
-import React from "react"
-
-import {
+export const tabsPlaygroundCode = ({ variant }: TabsProps) => {
+  const code = `import {
   Tabs,
   TabsContent,
   TabsList,

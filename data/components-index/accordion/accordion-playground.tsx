@@ -23,19 +23,12 @@ const items = [
   }
 ]
 
-export interface AccordionPlaygroundProps {
-  variant: AccordionProps["variant"]
-  styleVariant: AccordionProps["styleVariant"]
-  type: "single" | "multiple"
-  collapsible: boolean
-}
-
 export function AccordionPlayground({
   variant,
   styleVariant,
   type,
   collapsible
-}: AccordionPlaygroundProps) {
+}: AccordionProps) {
   return type === "single" ? (
     <Accordion
       type="single"

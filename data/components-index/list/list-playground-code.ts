@@ -1,6 +1,6 @@
 "use client"
 
-import { ListProps } from "@/components/ui/list"
+import type { ListProps } from "@/components/ui/list"
 
 export const listPlaygroundCode = ({ variant, spacing }: ListProps) => {
   const code = `import { List, ListItem } from "@/components/ui/list"

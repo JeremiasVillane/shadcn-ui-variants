@@ -1,6 +1,6 @@
 "use client"
 
-import { InlineCode, Prose, ProseProps } from "@/components/ui/prose"
+import { InlineCode, Prose, type ProseProps } from "@/components/ui/prose"
 
 export function ProsePlayground({ scale }: ProseProps) {
   return (
