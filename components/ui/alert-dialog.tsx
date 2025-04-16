@@ -281,10 +281,10 @@ const AlertDialogHeader = React.forwardRef<
         {withIcon && bodyIcon && (
           <div
             className={cn(
-              "mx-auto flex items-center justify-center rounded-full",
+              "flex items-center justify-center rounded-full",
               styleVariant === "left"
-                ? "mb-1 size-9 sm:mx-0 [&>svg]:size-5"
-                : "mb-2 size-14 [&>svg]:size-7",
+                ? "mb-1 size-9 [&>svg]:size-5"
+                : "mx-auto mb-2 size-14 [&>svg]:size-7",
               variant === "default" ? "bg-muted" : "",
               variant === "success" ? "bg-green-600/10" : "",
               variant === "destructive" ? "bg-destructive/10" : "",
