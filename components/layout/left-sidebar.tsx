@@ -5,7 +5,6 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { contentIndex } from "@/data/content-index"
 
-import { toWordCase } from "@/lib/string-utils"
 import { Separator } from "@/components/ui/separator"
 
 export function LeftSidebar() {

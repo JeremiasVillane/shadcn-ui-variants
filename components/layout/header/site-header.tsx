@@ -48,7 +48,7 @@ export function SiteHeader({ registryItems }: SiteHeaderProps) {
                 <Link
                   href="https://github.com/JeremiasVillane/shadcn-ui-variants"
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                   className="font-medium text-foreground/80"
                 >
                   <span className="hidden lg:flex">Star on GitHub</span>

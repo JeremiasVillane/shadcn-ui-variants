@@ -11,7 +11,7 @@ export function SiteFooter() {
             <Link
               href="https://nextjs.org"
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               className="font-medium underline underline-offset-4"
             >
               Next.js
@@ -20,7 +20,7 @@ export function SiteFooter() {
             <Link
               href="https://ui.shadcn.com"
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               className="font-medium underline underline-offset-4"
             >
               shadcn/ui
@@ -30,7 +30,7 @@ export function SiteFooter() {
           <Link
             href="https://github.com/JeremiasVillane"
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             className="font-semibold underline underline-offset-4"
           >
             Jeremias Villane

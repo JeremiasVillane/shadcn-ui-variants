@@ -10,7 +10,11 @@ export default function DocsPage() {
       <H2 id="intro">Introduction</H2>
       <P>
         Shadcn Variants is a curated collection of custom variations for{" "}
-        <A href="https://ui.shadcn.com/" target="_blank" rel="noreferrer">
+        <A
+          href="https://ui.shadcn.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           shadcn/ui
         </A>{" "}
         components alongside original components using the same design
