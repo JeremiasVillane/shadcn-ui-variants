@@ -361,6 +361,7 @@
       "type": "registry:ui",
       "title": "Slider",
       "description": "A versatile slider component with a variety of styles and advanced behaviours.",
+      "author": "Styles inspired by Origin UI",
       "files": [
         {
           "path": "components/ui/slider.tsx",

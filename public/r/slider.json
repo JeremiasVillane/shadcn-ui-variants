@@ -3,6 +3,7 @@
   "name": "slider",
   "type": "registry:ui",
   "title": "Slider",
+  "author": "Styles inspired by Origin UI",
   "description": "A versatile slider component with a variety of styles and advanced behaviours.",
   "dependencies": [
     "@radix-ui/react-slider"
