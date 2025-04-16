@@ -122,7 +122,14 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                 {React.cloneElement(
                   startIcon as React.ReactElement<HTMLElement | SVGElement>,
                   {
-                    className: "size-4"
+                    className: cn(
+                      "size-4",
+                      (
+                        startIcon?.props as React.HTMLProps<
+                          HTMLElement | SVGElement
+                        >
+                      )?.className
+                    )
                   }
                 )}
               </div>
@@ -163,7 +170,14 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                 {React.cloneElement(
                   endIcon as React.ReactElement<HTMLElement | SVGElement>,
                   {
-                    className: "size-4"
+                    className: cn(
+                      "size-4",
+                      (
+                        endIcon?.props as React.HTMLProps<
+                          HTMLElement | SVGElement
+                        >
+                      )?.className
+                    )
                   }
                 )}
               </div>
