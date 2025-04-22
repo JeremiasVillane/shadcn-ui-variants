@@ -5,7 +5,7 @@ import { SeparatorPlayground } from "./separator-playground"
 import { separatorPlaygroundCode } from "./separator-playground-code"
 
 export const separator: ComponentDetails<SeparatorProps> = {
-  playground: { label: "OR" },
+  playground: { label: "OR", labelClassName: undefined },
   PlaygroundComponent: SeparatorPlayground,
   playgroundCode: separatorPlaygroundCode
 }
