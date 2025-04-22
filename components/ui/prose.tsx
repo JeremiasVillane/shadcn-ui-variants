@@ -80,7 +80,7 @@ const proseSizes: ProseSizes = {
     default: "text-base before:text-6xl my-6 py-4 pl-16 pr-5 before:top-3",
     sm: "text-base before:text-5xl my-5 py-3 pl-14 pr-4 before:top-3",
     xs: "text-sm before:text-4xl my-4 py-3 pl-12 pr-3 before:top-3",
-    lg: "text-lg before:text-7xl my-7 py-5 pl-20 pr-6 before:top-4"
+    lg: "text-lg before:text-7xl my-7 py-5 pl-20 pr-6 before:top-3.5"
   },
   pre: {
     default: "my-6 text-sm",
