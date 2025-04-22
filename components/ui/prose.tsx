@@ -22,7 +22,8 @@ const proseStyles = {
   h4: "scroll-m-20 font-semibold tracking-tight text-foreground",
   p: "text-pretty leading-7 tracking-wide text-foreground/90",
   a: "font-medium text-primary underline underline-offset-4 hover:text-primary/90",
-  blockquote: "border-l-4 border-border pl-6 italic text-muted-foreground",
+  blockquote:
+    "relative rounded-sm border-l-8 border-l-muted-foreground bg-muted font-sans italic leading-relaxed before:absolute before:left-3 before:font-serif before:text-muted-foreground before:content-['“'] text-pretty",
   pre: "overflow-x-auto rounded bg-muted p-4 font-normal text-foreground/90",
   code: "rounded-none bg-transparent p-0 font-normal text-foreground/90",
   "inline-code":
@@ -76,10 +77,10 @@ const proseSizes: ProseSizes = {
   },
   a: { default: "", sm: "", xs: "", lg: "" },
   blockquote: {
-    default: "text-base my-6",
-    sm: "text-base my-5",
-    xs: "text-sm my-4",
-    lg: "text-lg my-7"
+    default: "text-base before:text-6xl my-6 py-4 pl-16 pr-5 before:top-3",
+    sm: "text-base before:text-5xl my-5 py-3 pl-14 pr-4 before:top-3",
+    xs: "text-sm before:text-4xl my-4 py-3 pl-12 pr-3 before:top-3",
+    lg: "text-lg before:text-7xl my-7 py-5 pl-20 pr-6 before:top-4"
   },
   pre: {
     default: "my-6 text-sm",
