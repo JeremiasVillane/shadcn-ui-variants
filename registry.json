@@ -93,6 +93,18 @@
       ]
     },
     {
+      "name": "bubble-menu",
+      "type": "registry:ui",
+      "title": "Bubble Menu",
+      "description": "A circular menu that expands with child elements positioned around a central button.",
+      "files": [
+        {
+          "path": "components/ui/bubble-menu.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "button",
       "type": "registry:ui",
       "title": "Button",

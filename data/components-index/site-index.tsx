@@ -3,6 +3,7 @@ import { alert } from "./alert"
 import { alertDialog } from "./alert-dialog"
 import { autoTOC } from "./auto-toc"
 import { breadcrumb } from "./breadcrumb"
+import { bubbleMenu } from "./bubble-menu"
 import { button } from "./button"
 import { dynamicBreadcrumb } from "./dynamic-breadcrumb"
 import { input } from "./input"
@@ -33,6 +34,7 @@ export const componentsIndex: ComponentsIndex = {
   "alert-dialog": alertDialog,
   "auto-toc": autoTOC,
   breadcrumb,
+  "bubble-menu": bubbleMenu,
   button,
   "dynamic-breadcrumb": dynamicBreadcrumb,
   input,
