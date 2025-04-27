@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils"
 interface CheckboxProps {
   /** @default "default" */
   // prettier-ignore
-  variant?: "default" | "appear" | "flip" | "impulse" | "fill"
+  variant?: "default" | "appear" | "flip" | "impulse" | "fill" | "draw"
 }
 
 const checkboxVariants = cva(
@@ -27,7 +27,11 @@ const checkboxVariants = cva(
         ],
         flip: "flex items-center justify-center overflow-hidden",
         impulse: "flex items-center justify-center overflow-hidden",
-        fill: "relative overflow-hidden"
+        fill: "relative overflow-hidden",
+        draw: [
+          "transition-colors duration-100",
+          "data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
+        ]
       }
     },
     defaultVariants: {
@@ -46,7 +50,14 @@ const checkIconVariants = cva("h-4 w-4", {
       ],
       flip: "data-[state=checked]:animate-check-flip data-[state=unchecked]:animate-check-unflip bg-primary text-primary-foreground",
       impulse: "animate-check-impulse bg-primary text-primary-foreground",
-      fill: "data-[state=checked]:animate-check-fill data-[state=unchecked]:animate-check-unfill"
+      fill: "data-[state=checked]:animate-check-fill data-[state=unchecked]:animate-check-unfill",
+      draw: [
+        "stroke-[2] [stroke-linecap:round] [stroke-linejoin:round]",
+        "[stroke-dasharray:24] [stroke-dashoffset:-24]",
+        "group-data-[state=checked]:animate-check-draw",
+        "group-data-[state=unchecked]:animate-check-erase",
+        "transition-[stroke-dashoffset] duration-300 ease-out"
+      ]
     }
   },
   defaultVariants: {
@@ -60,7 +71,7 @@ const Checkbox = React.forwardRef<
 >(({ className, variant = "default", ...props }, ref) => (
   <CheckboxPrimitive.Root
     ref={ref}
-    className={cn(checkboxVariants({ variant, className }))}
+    className={cn("group", checkboxVariants({ variant, className }))}
     {...props}
   >
     <CheckboxPrimitive.Indicator asChild>

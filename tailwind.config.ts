@@ -250,6 +250,14 @@ const config = {
             top: "-52px",
             left: "-52px"
           }
+        },
+        "check-draw": {
+          "0%": { "stroke-dashoffset": "-24" },
+          "100%": { "stroke-dashoffset": "0" }
+        },
+        "check-erase": {
+          "0%": { "stroke-dashoffset": "0" },
+          "100%": { "stroke-dashoffset": "-24" }
         }
       },
       animation: {
@@ -279,7 +287,9 @@ const config = {
         "check-unflip": "check-unflip 0.1s",
         "check-impulse": "check-impulse 0.3s",
         "check-fill": "check-fill 0.2s ease-in",
-        "check-unfill": "check-unfill 0.3s ease-out"
+        "check-unfill": "check-unfill 0.3s ease-out",
+        "check-draw": "check-draw 0.3s ease-out forwards",
+        "check-erase": "check-erase 0.2s ease-in forwards"
       }
     }
   },
