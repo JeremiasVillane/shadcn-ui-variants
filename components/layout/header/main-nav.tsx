@@ -39,7 +39,7 @@ export default function MainNav({ registryItems }: MainNavProps) {
             Components
           </NavigationMenuTrigger>
           <NavigationMenuContent>
-            <ul className="grid w-[400px] gap-3 p-4 md:grid-cols-2 xl:w-[600px]">
+            <ul className="grid w-[400px] gap-3 p-4 md:grid-cols-3 xl:w-[600px]">
               {registryItems?.map(
                 (component) =>
                   component && (

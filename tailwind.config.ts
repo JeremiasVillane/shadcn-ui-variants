@@ -185,6 +185,71 @@ const config = {
         "toast-progress-bar-decrease": {
           from: { width: "100%" },
           to: { width: "0%" }
+        },
+        "check-appear": {
+          "0%": {
+            height: "0",
+            transform: "translateY(-100%)"
+          },
+          "100%": {
+            height: "100%",
+            transform: "translateY(0)"
+          }
+        },
+        "check-flip": {
+          "0%": {
+            transform: "rotateY(90deg)"
+          },
+          "100%": {
+            transform: "rotateY(0)"
+          }
+        },
+        "check-unflip": {
+          "0%": {
+            transform: "rotateY(0)"
+          },
+          "100%": {
+            transform: "rotateY(90deg)"
+          }
+        },
+        "check-impulse": {
+          "0%": {
+            opacity: "0",
+            transform: "scale(0)",
+            transition: "all 0.5s cubic-bezier(0.25, 0.1, 0.25, 1.5)"
+          },
+          "100%": {
+            opacity: "1",
+            transform: "scale(1.3)"
+          }
+        },
+        "check-fill": {
+          "0%": {
+            position: "absolute",
+            transform: "rotateZ(45deg)",
+            top: "-52px",
+            left: "-52px"
+          },
+          "100%": {
+            position: "absolute",
+            transform: "rotateZ(-90deg)",
+            top: "-10px",
+            left: "-10px"
+          }
+        },
+        "check-unfill": {
+          "0%": {
+            position: "absolute",
+            transform: "rotateZ(-90deg)",
+            top: "-10px",
+            left: "-10px"
+          },
+          "100%": {
+            position: "absolute",
+            transform: "rotateZ(45deg)",
+            top: "-52px",
+            left: "-52px"
+          }
         }
       },
       animation: {
@@ -208,7 +273,13 @@ const config = {
         "toast-slide-out-right": "toast-slide-out-right 0.3s ease-in forwards",
         "toast-slide-out-left": "toast-slide-out-left 0.3s ease-in forwards",
         "toast-zoom-out": "toast-zoom-out 0.3s ease-in forwards",
-        "toast-progress-bar": "toast-progress-bar-decrease linear forwards"
+        "toast-progress-bar": "toast-progress-bar-decrease linear forwards",
+        "check-appear": "check-appear 0.2s ease-out forwards",
+        "check-flip": "check-flip 0.3s ease-out",
+        "check-unflip": "check-unflip 0.1s",
+        "check-impulse": "check-impulse 0.3s",
+        "check-fill": "check-fill 0.2s ease-in",
+        "check-unfill": "check-unfill 0.3s ease-out"
       }
     }
   },

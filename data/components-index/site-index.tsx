@@ -5,6 +5,7 @@ import { autoTOC } from "./auto-toc"
 import { breadcrumb } from "./breadcrumb"
 import { bubbleMenu } from "./bubble-menu"
 import { button } from "./button"
+import { checkbox } from "./checkbox"
 import { dynamicBreadcrumb } from "./dynamic-breadcrumb"
 import { input } from "./input"
 import { list } from "./list"
@@ -36,6 +37,7 @@ export const componentsIndex: ComponentsIndex = {
   breadcrumb,
   "bubble-menu": bubbleMenu,
   button,
+  checkbox,
   "dynamic-breadcrumb": dynamicBreadcrumb,
   input,
   list,
