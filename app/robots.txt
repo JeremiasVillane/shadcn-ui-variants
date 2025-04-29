@@ -1,0 +1,5 @@
+User-Agent: *
+Allow: /
+Disallow: /private/
+
+Sitemap: http://shadcn-ui-variants.vercel.app/sitemap.xml
