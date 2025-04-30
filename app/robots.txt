@@ -2,4 +2,4 @@ User-Agent: *
 Allow: /
 Disallow: /private/
 
-Sitemap: http://shadcn-ui-variants.vercel.app/sitemap.xml
+Sitemap: https://shadcn-ui-variants.vercel.app/sitemap.xml

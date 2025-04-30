@@ -1,7 +1,6 @@
 import { ComponentDoc, RegistryItem } from "@/types"
 
 import { getFileContent } from "@/lib/file-utils"
-import { Separator } from "@/components//ui/separator"
 
 import ComponentAPI from "./component-api"
 import { ComponentDemo } from "./component-demo"
