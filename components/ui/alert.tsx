@@ -124,11 +124,11 @@ const alertVariants = cva(
 )
 
 const variantIcons = {
-  default: <InfoIcon className="size-4" />,
-  destructive: <CircleX className="size-4" />,
-  success: <CheckCircle2 className="size-4" />,
-  warning: <CircleAlert className="size-4" />,
-  info: <InfoIcon className="size-4" />
+  default: <InfoIcon className="size-[1.1rem]" />,
+  destructive: <CircleX className="size-[1.1rem]" />,
+  success: <CheckCircle2 className="size-[1.1rem]" />,
+  warning: <CircleAlert className="size-[1.1rem]" />,
+  info: <InfoIcon className="size-[1.1rem]" />
 }
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
@@ -149,13 +149,9 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
       role="alert"
       className={cn(
         alertVariants({ variant, styleVariant }),
-        styleVariant === "bootstrap"
-          ? withIcon
-            ? "flex items-baseline gap-2 pl-10 [&>svg]:translate-y-[2px]"
-            : "flex items-baseline gap-2 pl-4"
-          : withIcon
-            ? "[&>svg+div]:translate-y-[-3px] [&>svg~*]:pl-7"
-            : "pl-5",
+        withIcon
+          ? "flex items-baseline gap-2 pl-10 [&>svg]:translate-y-[2.5px]"
+          : "flex items-baseline gap-2 pl-4",
         className
       )}
       {...props}
