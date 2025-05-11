@@ -150,7 +150,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
       className={cn(
         alertVariants({ variant, styleVariant }),
         withIcon
-          ? "flex items-baseline gap-2 pl-10 [&>svg]:translate-y-[2.5px]"
+          ? "relative flex items-baseline gap-2 pl-10 [&>svg]:absolute [&>svg]:top-1/2 [&>svg]:-translate-y-1/2"
           : "flex items-baseline gap-2 pl-4",
         className
       )}
