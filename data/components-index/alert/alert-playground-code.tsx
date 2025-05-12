@@ -15,7 +15,7 @@ export const alertPlaygroundCode = ({
 
 export function AlertPlayground() {
   return (
-    <Alert${variant !== "default" ? ` variant="${variant}"` : ""}${styleVariant !== "outline" ? ` styleVariant="${styleVariant}"` : ""}${withIcon ? ` withIcon={true}` : ""}>
+    <Alert${variant !== "default" ? ` variant="${variant}"` : ""}${styleVariant !== "outline" ? ` styleVariant="${styleVariant}"` : ""}${withIcon ? ` withIcon` : ""}>
       <AlertTitle>Pay attention!</AlertTitle>
       <AlertDescription>The world is around you.</AlertDescription>
     </Alert>
