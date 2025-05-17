@@ -94,8 +94,8 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         className={cn(
           "flex select-none items-center bg-background text-sm text-muted-foreground",
           side === "start"
-            ? "order-after-icon pl-2"
-            : "order-before-counter pr-2"
+            ? "pl-3" // after icon
+            : "pr-2" // before counter
         )}
       >
         {content}
@@ -111,14 +111,14 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           )}
         >
           {startAddon && (
-            <div className="flex select-none items-center border-r border-input bg-accent px-3 text-foreground/80">
+            <div className="flex select-none items-center border-r border-input bg-muted/60 px-3 text-foreground/80">
               {startAddon}
             </div>
           )}
 
           <div className="relative flex flex-1 items-center">
             {startIcon && (
-              <div className="pl-3 text-muted-foreground/80">
+              <div className="pl-2 text-muted-foreground/80">
                 {React.cloneElement(
                   startIcon as React.ReactElement<HTMLElement | SVGElement>,
                   {
@@ -143,7 +143,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                 "w-full min-w-0 flex-1 bg-transparent py-2 text-sm",
                 "placeholder:text-muted-foreground focus-visible:outline-none",
                 "file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:opacity-50",
-                startIcon ? "pl-2" : "pl-3",
+                startIcon ? "pl-2" : startInline ? "pl-1" : "pl-3",
                 endIcon || endInline || showMaxLength === "inside"
                   ? "pr-2"
                   : "pr-3",
@@ -166,7 +166,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             )}
 
             {endIcon && (
-              <div className="pr-3 text-muted-foreground/80">
+              <div className="pr-2 text-muted-foreground/80">
                 {React.cloneElement(
                   endIcon as React.ReactElement<HTMLElement | SVGElement>,
                   {
