@@ -129,9 +129,6 @@ export default function FlexTableBasic() {
         code={`<FlexTable
   data={data}
   sortable
-  formatter={(val, _, key) =>
-    key === "price" ? \`$\${val}\` : val
-  }
 />`}
       />
 
@@ -154,11 +151,6 @@ export default function FlexTableBasic() {
         code={`<FlexTable
   data={data}
   filterBy={(row) => row.status === "active"}
-  formatter={(val, _, key) =>
-    key === "date"
-      ? new Date(val).toLocaleDateString()
-      : val
-  }
 />`}
         className="pb-4"
       />
@@ -167,6 +159,34 @@ export default function FlexTableBasic() {
         <ListItem>
           Rows where <InlineCode>filterBy</InlineCode> returns{" "}
           <InlineCode>false</InlineCode> are excluded from the table entirely.
+        </ListItem>
+      </List>
+
+      <H3 id="formatting">Formatting</H3>
+
+      <P>
+        Use the <InlineCode>formatter</InlineCode> prop to transform cell values
+        dynamically. This is useful also for applying custom logic to individual
+        cells.
+      </P>
+
+      <CodeBlock
+        language="tsx"
+        code={`<FlexTable
+  data={data}
+  formatter={(val, _, key) =>
+    key === "date"
+  ? new Date(val).toLocaleDateString()
+  : val
+  }
+/>`}
+        className="pb-4"
+      />
+
+      <List variant="bullet-outline">
+        <ListItem>
+          The formatter function receives the cell value, the entire row data,
+          and the column key, allowing for context-aware formatting.
         </ListItem>
       </List>
 
