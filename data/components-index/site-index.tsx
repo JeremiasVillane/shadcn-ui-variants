@@ -7,6 +7,7 @@ import { bubbleMenu } from "./bubble-menu"
 import { button } from "./button"
 import { checkbox } from "./checkbox"
 import { dynamicBreadcrumb } from "./dynamic-breadcrumb"
+import { flexTable } from "./flex-table"
 import { input } from "./input"
 import { list } from "./list"
 import { prose } from "./prose"
@@ -39,6 +40,7 @@ export const componentsIndex: ComponentsIndex = {
   button,
   checkbox,
   "dynamic-breadcrumb": dynamicBreadcrumb,
+  "flex-table": flexTable,
   input,
   list,
   prose,

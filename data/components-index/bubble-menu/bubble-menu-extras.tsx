@@ -13,7 +13,7 @@ import {
 } from "./examples"
 
 export async function BubbleMenuExtras() {
-  const [example1Code, example2Code, example3Code, example4Code] =
+  const [example1Code, example2Code, example3Code] =
     await Promise.all(
       [1, 2, 3].map((num) =>
         getFileContent(

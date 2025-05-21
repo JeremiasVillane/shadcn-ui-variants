@@ -112,7 +112,7 @@ export default function ComponentAPI({ docs, name }: ComponentAPIProps) {
     !!pageContent && (
       <>
         <H2 id="api-reference" className="mb-6">
-          {toPascalCase(name)} Component Props
+          {toPascalCase(name)} Props
         </H2>
 
         {pageContent}

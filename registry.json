@@ -237,6 +237,18 @@
       "registryDependencies": ["breadcrumb"]
     },
     {
+      "name": "flex-table",
+      "type": "registry:ui",
+      "title": "Flex Table",
+      "description": "A lightweight, responsive 'pseudo-table' component that can render content either vertically or horizontally.",
+      "files": [
+        {
+          "path": "components/ui/flex-table.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "input",
       "type": "registry:ui",
       "title": "Input",
