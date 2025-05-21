@@ -174,10 +174,10 @@ export default function FlexTableBasic() {
         language="tsx"
         code={`<FlexTable
   data={data}
-  formatter={(val, _, key) =>
+  formatter={(val, rowIndex, key) =>
     key === "date"
-  ? new Date(val).toLocaleDateString()
-  : val
+      ? new Date(val).toLocaleDateString()
+      : val
   }
 />`}
         className="pb-4"
@@ -185,8 +185,8 @@ export default function FlexTableBasic() {
 
       <List variant="bullet-outline">
         <ListItem>
-          The formatter function receives the cell value, the entire row data,
-          and the column key, allowing for context-aware formatting.
+          The formatter function receives the cell value, the row index, and the
+          column key (column name), allowing for context-aware formatting.
         </ListItem>
       </List>
 
