@@ -320,7 +320,7 @@ export default function FlexTableBasic() {
       <List>
         <ListItem>
           <Strong>Vertical orientation</Strong> renders using{" "}
-          <InlineCode>flex</InlineCode> with rows and columns.
+          <InlineCode>grid</InlineCode> with rows and columns.
         </ListItem>
         <ListItem>
           <Strong>Horizontal orientation</Strong> uses CSS{" "}
