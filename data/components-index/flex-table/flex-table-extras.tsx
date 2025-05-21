@@ -2,7 +2,7 @@ import React from "react"
 
 import { getFileContent } from "@/lib/file-utils"
 import { List, ListItem } from "@/components/ui/list"
-import { Code, H2, H3, InlineCode, P, Strong } from "@/components/ui/prose"
+import { H2, H3, InlineCode, P, Strong } from "@/components/ui/prose"
 import { ComponentTabs } from "@/components/component-view/component-tabs"
 import { CodeBlock } from "@/components/local/ui/code-block"
 
@@ -111,7 +111,7 @@ const data = [
 ];
 
 export default function FlexTableBasic() {
-  return (<FlexTable data={data} />)
+  return <FlexTable data={data} />
 }`}
       />
 

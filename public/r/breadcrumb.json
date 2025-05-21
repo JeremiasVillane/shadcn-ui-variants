@@ -4,6 +4,9 @@
   "type": "registry:ui",
   "title": "Breadcrumb",
   "description": "Breadcrumb component with variants, different styles and separators.",
+  "registryDependencies": [
+    "https://shadcn-ui-variants.vercel.app/r/badge.json"
+  ],
   "files": [
     {
       "path": "components/ui/breadcrumb.tsx",

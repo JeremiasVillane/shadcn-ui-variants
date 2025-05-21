@@ -5,7 +5,7 @@
   "title": "Simple Toast",
   "description": "Displays ephemeral notifications (toasts) to inform users about events or actions of the application.",
   "registryDependencies": [
-    "button"
+    "https://shadcn-ui-variants.vercel.app/r/button.json"
   ],
   "files": [
     {

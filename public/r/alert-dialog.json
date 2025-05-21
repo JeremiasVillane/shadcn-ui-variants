@@ -8,7 +8,7 @@
     "@radix-ui/react-alert-dialog"
   ],
   "registryDependencies": [
-    "button"
+    "https://shadcn-ui-variants.vercel.app/r/button.json"
   ],
   "files": [
     {

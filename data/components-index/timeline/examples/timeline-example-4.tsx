@@ -1,6 +1,7 @@
 "use client"
 
 import { cn } from "@/lib/utils"
+import { Badge } from "@/components/ui/badge"
 import {
   Timeline,
   TimelineBody,
@@ -11,20 +12,6 @@ import {
   TimelineNode,
   TimelineSeparator
 } from "@/components/ui/timeline"
-
-const Badge = ({
-  className,
-  children
-}: {
-  className?: string
-  children: React.ReactNode
-}) => (
-  <span
-    className={cn("rounded-full px-2 py-0.5 text-xs font-semibold", className)}
-  >
-    {children}
-  </span>
-)
 
 export function TimelineExample4() {
   const updates = [
@@ -77,7 +64,9 @@ export function TimelineExample4() {
               <TimelineHeader className="pt-1">{update.title}</TimelineHeader>
               <TimelineBody className="w-64">
                 <p className="mb-2">{update.description}</p>
-                <Badge className={update.badgeColor}>{update.badge}</Badge>
+                <Badge size="xs" className={update.badgeColor}>
+                  {update.badge}
+                </Badge>
               </TimelineBody>
             </TimelineContent>
           </TimelineItem>

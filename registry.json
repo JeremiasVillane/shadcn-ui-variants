@@ -62,7 +62,9 @@
         }
       ],
       "dependencies": ["@radix-ui/react-alert-dialog"],
-      "registryDependencies": ["button"]
+      "registryDependencies": [
+        "https://shadcn-ui-variants.vercel.app/r/button.json"
+      ]
     },
     {
       "name": "auto-toc",
@@ -81,6 +83,18 @@
       ]
     },
     {
+      "name": "badge",
+      "type": "registry:ui",
+      "title": "Badge",
+      "description": "The Badge component is a versatile, customizable element used to highlight and categorize content. It's perfect for displaying status, labels, counts, or tags in your application.",
+      "files": [
+        {
+          "path": "components/ui/badge.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "breadcrumb",
       "type": "registry:ui",
       "title": "Breadcrumb",
@@ -90,6 +104,9 @@
           "path": "components/ui/breadcrumb.tsx",
           "type": "registry:ui"
         }
+      ],
+      "registryDependencies": [
+        "https://shadcn-ui-variants.vercel.app/r/badge.json"
       ]
     },
     {
@@ -234,7 +251,9 @@
           "type": "registry:ui"
         }
       ],
-      "registryDependencies": ["breadcrumb"]
+      "registryDependencies": [
+        "https://shadcn-ui-variants.vercel.app/r/breadcrumb.json"
+      ]
     },
     {
       "name": "flex-table",
@@ -407,7 +426,9 @@
           "type": "registry:ui"
         }
       ],
-      "registryDependencies": ["button"],
+      "registryDependencies": [
+        "https://shadcn-ui-variants.vercel.app/r/button.json"
+      ],
       "tailwind": {
         "config": {
           "theme": {

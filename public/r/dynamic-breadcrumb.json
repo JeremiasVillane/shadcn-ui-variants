@@ -5,7 +5,7 @@
   "title": "Dynamic Breadcrumb",
   "description": "A dynamic breadcrumb component that generates navigation based on the current URL path.",
   "registryDependencies": [
-    "breadcrumb"
+    "https://shadcn-ui-variants.vercel.app/r/breadcrumb.json"
   ],
   "files": [
     {

@@ -5,7 +5,7 @@ import { TabsContent } from "@radix-ui/react-tabs"
 
 import { getFileContent } from "@/lib/file-utils"
 import { toWordCase } from "@/lib/string-utils"
-import { CodeBlock } from "@/components/local/ui/code-block"
+import { H2 } from "@/components/ui/prose"
 import {
   Stepper,
   StepperConnector,
@@ -17,8 +17,8 @@ import {
   StepperTitle
 } from "@/components/ui/simple-stepper"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { H2 } from "@/components/ui/prose"
 import { CodeBlockWrapper, CommandTabs } from "@/components/common"
+import { CodeBlock } from "@/components/local/ui/code-block"
 
 const commonDependencies = "class-variance-authority tailwind-merge clsx"
 
@@ -74,19 +74,25 @@ export default async function ComponentInstallation({
 
                   <StepperDescription>
                     <ol className="pt-3">
-                      {registryDependencies.map((dep, idx) => (
-                        <li
-                          key={idx}
-                          className="ms-9 list-disc text-foreground/80"
-                        >
-                          <Link
-                            href={`/components/${dep}`}
-                            className="transition-color text-base font-medium underline underline-offset-4 ease-in-out hover:text-foreground/70"
+                      {registryDependencies.map((depUrl, idx) => {
+                        const match = depUrl.match(/\/([^\/?#]+)\.[^\/?#]+$/)
+                        const depName = match ? match[1] : null
+                        if (!depName) return null
+
+                        return (
+                          <li
+                            key={idx}
+                            className="ms-9 list-disc text-foreground/80"
                           >
-                            {toWordCase(dep)}
-                          </Link>
-                        </li>
-                      ))}
+                            <Link
+                              href={depUrl}
+                              className="transition-color text-base font-medium underline underline-offset-4 ease-in-out hover:text-foreground/70"
+                            >
+                              {toWordCase(depName)}
+                            </Link>
+                          </li>
+                        )
+                      })}
                     </ol>
                   </StepperDescription>
                 </StepperContent>

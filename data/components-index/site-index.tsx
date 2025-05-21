@@ -2,6 +2,7 @@ import { accordion } from "./accordion"
 import { alert } from "./alert"
 import { alertDialog } from "./alert-dialog"
 import { autoTOC } from "./auto-toc"
+import { badge } from "./badge"
 import { breadcrumb } from "./breadcrumb"
 import { bubbleMenu } from "./bubble-menu"
 import { button } from "./button"
@@ -35,6 +36,7 @@ export const componentsIndex: ComponentsIndex = {
   alert,
   "alert-dialog": alertDialog,
   "auto-toc": autoTOC,
+  badge,
   breadcrumb,
   "bubble-menu": bubbleMenu,
   button,

@@ -101,7 +101,7 @@ export default async function ComponentPage({ params }: ComponentPageProps) {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <Badge className="mt-3 flex w-fit items-center justify-center gap-1 bg-muted text-foreground/80 hover:text-background/80">
+            <Badge className="mt-3 flex w-fit cursor-pointer items-center justify-center gap-1 bg-muted text-foreground/80 hover:text-background/80">
               Official API Reference <ExternalLink className="size-3" />
             </Badge>
           </Link>

@@ -47,26 +47,30 @@ export function TimelineExample3() {
 
   return (
     <div className="w-full overflow-auto">
-      <Timeline position="alternate">
-        {events.map((event, index) => (
-          <TimelineItem key={event.id}>
-            <TimelineOppositeContent className="pt-4">
-              <span className="font-mono text-sm text-muted-foreground">
-                {event.time}
-              </span>
-            </TimelineOppositeContent>
-            <TimelineSeparator>
-              <TimelineNode className="size-7 border-muted bg-background p-1 shadow-none">
-                <event.icon className={event.iconColor} />
-              </TimelineNode>
-              {index < events.length - 1 && <TimelineConnectorLine />}
-            </TimelineSeparator>
-            <TimelineContent>
-              <TimelineHeader className="pt-1.5">{event.title}</TimelineHeader>
-            </TimelineContent>
-          </TimelineItem>
-        ))}
-      </Timeline>
+      <div className="min-w-max">
+        <Timeline position="alternate">
+          {events.map((event, index) => (
+            <TimelineItem key={event.id}>
+              <TimelineOppositeContent className="pt-4">
+                <span className="font-mono text-sm text-muted-foreground">
+                  {event.time}
+                </span>
+              </TimelineOppositeContent>
+              <TimelineSeparator>
+                <TimelineNode className="size-7 border-muted bg-background p-1 shadow-none">
+                  <event.icon className={event.iconColor} />
+                </TimelineNode>
+                {index < events.length - 1 && <TimelineConnectorLine />}
+              </TimelineSeparator>
+              <TimelineContent>
+                <TimelineHeader className="pt-1.5">
+                  {event.title}
+                </TimelineHeader>
+              </TimelineContent>
+            </TimelineItem>
+          ))}
+        </Timeline>
+      </div>
     </div>
   )
 }
