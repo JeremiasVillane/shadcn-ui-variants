@@ -51,22 +51,6 @@
       ]
     },
     {
-      "name": "alert-dialog",
-      "type": "registry:ui",
-      "title": "Alert Dialog",
-      "description": "Extended alert dialog with variants and extra props to handle different scenarios.",
-      "files": [
-        {
-          "path": "components/ui/alert-dialog.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "dependencies": ["@radix-ui/react-alert-dialog"],
-      "registryDependencies": [
-        "https://shadcn-ui-variants.vercel.app/r/button.json"
-      ]
-    },
-    {
       "name": "auto-toc",
       "type": "registry:ui",
       "title": "Auto Table of Contents",
@@ -290,6 +274,26 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "modal",
+      "type": "registry:ui",
+      "title": "Modal",
+      "description": "A flexible, accessible dialog system that can render as either a traditional modal dialog on desktop devices or a bottom drawer on mobile devices.",
+      "files": [
+        {
+          "path": "components/ui/modal.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "hooks/use-media-query.ts",
+          "type": "registry:hook"
+        }
+      ],
+      "registryDependencies": [
+        "https://shadcn-ui-variants.vercel.app/r/button.json"
+      ],
+      "dependencies": ["@radix-ui/react-dialog", "vaul"]
     },
     {
       "name": "prose",

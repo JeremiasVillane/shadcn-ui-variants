@@ -66,7 +66,7 @@ const checkIconVariants = cva("h-4 w-4", {
 })
 
 const Checkbox = React.forwardRef<
-  React.ComponentRef<typeof CheckboxPrimitive.Root>,
+  React.ElementRef<typeof CheckboxPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root> & CheckboxProps
 >(({ className, variant = "default", ...props }, ref) => (
   <CheckboxPrimitive.Root

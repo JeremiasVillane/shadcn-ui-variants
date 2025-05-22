@@ -116,7 +116,7 @@ const Tabs = ({ variant = "default", ...props }: TabsProps) => {
 type TabsListProps = React.ComponentPropsWithoutRef<typeof TabsPrimitive.List>
 
 const TabsList = React.forwardRef<
-  React.ComponentRef<typeof TabsPrimitive.List>,
+  React.ElementRef<typeof TabsPrimitive.List>,
   TabsListProps
 >(({ className, ...props }, ref) => {
   const { variant, positions, activeTab, hoveredTab } =
@@ -163,7 +163,7 @@ type TabsTriggerProps = React.ComponentPropsWithoutRef<
 >
 
 const TabsTrigger = React.forwardRef<
-  React.ComponentRef<typeof TabsPrimitive.Trigger>,
+  React.ElementRef<typeof TabsPrimitive.Trigger>,
   TabsTriggerProps
 >(({ className, value, ...props }, ref) => {
   const { variant, setPositions, setHoveredTab } = React.useContext(TabsContext)
@@ -221,7 +221,7 @@ const TabsTrigger = React.forwardRef<
 TabsTrigger.displayName = TabsPrimitive.Trigger.displayName
 
 const TabsContent = React.forwardRef<
-  React.ComponentRef<typeof TabsPrimitive.Content>,
+  React.ElementRef<typeof TabsPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof TabsPrimitive.Content>
 >(({ className, ...props }, ref) => (
   <TabsPrimitive.Content

@@ -1,6 +1,5 @@
 import { accordion } from "./accordion"
 import { alert } from "./alert"
-import { alertDialog } from "./alert-dialog"
 import { autoTOC } from "./auto-toc"
 import { badge } from "./badge"
 import { breadcrumb } from "./breadcrumb"
@@ -11,6 +10,7 @@ import { dynamicBreadcrumb } from "./dynamic-breadcrumb"
 import { flexTable } from "./flex-table"
 import { input } from "./input"
 import { list } from "./list"
+import { modal } from "./modal"
 import { prose } from "./prose"
 import { ratingStarsInput } from "./rating-stars-input"
 import { scrollDownButton } from "./scroll-down-button"
@@ -34,7 +34,6 @@ type ComponentsIndex = Record<string, ComponentDetails>
 export const componentsIndex: ComponentsIndex = {
   accordion,
   alert,
-  "alert-dialog": alertDialog,
   "auto-toc": autoTOC,
   badge,
   breadcrumb,
@@ -45,6 +44,7 @@ export const componentsIndex: ComponentsIndex = {
   "flex-table": flexTable,
   input,
   list,
+  modal,
   prose,
   "rating-stars-input": ratingStarsInput,
   "scroll-down-button": scrollDownButton,

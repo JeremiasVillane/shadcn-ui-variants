@@ -74,7 +74,7 @@ const sliderRootVariants = cva(
 )
 
 const Slider = React.forwardRef<
-  React.ComponentRef<typeof SliderPrimitive.Root>,
+  React.ElementRef<typeof SliderPrimitive.Root>,
   SliderProps
 >(
   (

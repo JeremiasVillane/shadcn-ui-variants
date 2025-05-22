@@ -197,49 +197,49 @@ export default function FlexTableBasic() {
           id: "example1",
           title: "With custom styles",
           code: example1Code,
-          name: "timeline-example-1",
+          name: "timeflex-tableline-example-1",
           Component: FlexTableExample1
         },
         {
           id: "example2",
           title: "With formatter and horizontal orientation",
           code: example2Code,
-          name: "timeline-example-2",
+          name: "flex-table-example-2",
           Component: FlexTableExample2
         },
         {
           id: "example3",
           title: "With complex data",
           code: example3Code,
-          name: "timeline-example-3",
+          name: "flex-table-example-3",
           Component: FlexTableExample3
         },
         {
           id: "example4",
           title: "With complex generic type",
           code: example4Code,
-          name: "timeline-example-4",
+          name: "flex-table-example-4",
           Component: FlexTableExample4
         },
         {
           id: "example5",
           title: "Empty",
           code: example5Code,
-          name: "timeline-example-5",
+          name: "flex-table-example-5",
           Component: FlexTableExample5
         },
         {
           id: "example6",
           title: "Sortable with excluded columns",
           code: example6Code,
-          name: "timeline-example-6",
+          name: "flex-table-example-6",
           Component: FlexTableExample6
         },
         {
           id: "example7",
           title: "Dynamic filters and Sorting",
           code: example7Code,
-          name: "timeline-example-7",
+          name: "flex-table-example-7",
           Component: FlexTableExample7
         }
       ].map((example) => (
