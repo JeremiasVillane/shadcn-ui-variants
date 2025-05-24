@@ -11,7 +11,32 @@ export const colorPickerPlaygroundCode = ({
   const code = `import { ColorPicker } from "@/components/ui/color-picker"
 
 export function ColorPickerPlayground() {
-  return <ColorPicker defaultColor="#335599"${popoverSide !== "bottom" ? `popoverSide="${popoverSide}"` : ""}${popoverAlign !== "center" ? ` popoverAlign="${popoverAlign}"` : ""}${withAlpha ? " withAlpha" : ""}${(selectorTitle as string).length > 0 ? ` selectorTitle="${selectorTitle}"` : ""} />
+  return (
+    <ColorPicker
+      defaultColor="#335599"
+      className="border-2 border-muted-foreground shadow"${
+        popoverSide !== "bottom"
+          ? `
+      popoverSide="${popoverSide}"`
+          : ""
+      }${
+        popoverAlign !== "center"
+          ? `
+      popoverAlign="${popoverAlign}"`
+          : ""
+      }${
+        withAlpha
+          ? `
+      withAlpha`
+          : ""
+      }${
+        (selectorTitle as string).length > 0
+          ? `
+      selectorTitle="${selectorTitle}"`
+          : ""
+      }
+    />
+  )
 }
 `
 

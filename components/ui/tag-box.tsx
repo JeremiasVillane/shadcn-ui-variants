@@ -420,7 +420,7 @@ function TagBox({
                       type="button"
                       variant="ghost"
                       iconLeft={<Edit2 />}
-                      iconAnimation="translateYUp"
+                      iconAnimation="zoomIn"
                       onClick={(e) => {
                         e.preventDefault()
                         setOpenDialog(true)
@@ -465,7 +465,7 @@ function TagBox({
         ))}
       </div>
 
-      <Modal open={openDialog} onOpenChange={setOpenDialog}>
+      <Modal open={openDialog} onOpenChange={setOpenDialog} separatedFooter>
         <ModalContent>
           <ModalTitle>Manage Tags</ModalTitle>
           <ModalDescription>Edit or delete existing tags</ModalDescription>

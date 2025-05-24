@@ -562,6 +562,7 @@
       "type": "registry:ui",
       "title": "Tag Box",
       "description": "A versatile component for managing and displaying tags with rich customization options.",
+      "author": "Inspired by Fancy Box (mxkaske)",
       "files": [
         {
           "path": "components/ui/tag-box.tsx",
