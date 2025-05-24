@@ -63,6 +63,8 @@ interface ModalProps {
 
 const ModalContext = React.createContext<{
   isDesktop: boolean
+  mobileView: boolean
+  nonResponsiveView: boolean
   separatedHeader: boolean
   separatedFooter: boolean
   variant: ModalProps["variant"]
@@ -71,9 +73,10 @@ const ModalContext = React.createContext<{
   customIcon: React.ReactElement | undefined
   mode: ModalProps["mode"]
   showCloseButton: boolean
-  responsive: boolean
 }>({
   isDesktop: false,
+  mobileView: false,
+  nonResponsiveView: false,
   separatedHeader: false,
   separatedFooter: false,
   variant: "default",
@@ -81,8 +84,7 @@ const ModalContext = React.createContext<{
   align: "left",
   customIcon: undefined,
   mode: "dialog",
-  showCloseButton: false,
-  responsive: true
+  showCloseButton: false
 })
 
 const useModalContext = () => {
@@ -109,13 +111,17 @@ const Modal = ({
   ...props
 }: ModalProps) => {
   const isDesktop = useMediaQuery("(min-width: 768px)")
-  const Modal =
-    responsive && !isDesktop ? DrawerPrimitive.Root : DialogPrimitive.Root
+  const mobileView = responsive && !isDesktop
+  const nonResponsiveView = !responsive && !isDesktop
+
+  const ModalRoot = mobileView ? DrawerPrimitive.Root : DialogPrimitive.Root
 
   return (
     <ModalContext.Provider
       value={{
         isDesktop,
+        mobileView,
+        nonResponsiveView,
         separatedHeader,
         separatedFooter,
         variant,
@@ -123,30 +129,32 @@ const Modal = ({
         align,
         customIcon,
         mode,
-        showCloseButton,
-        responsive
+        showCloseButton
       }}
     >
-      <Modal {...props} {...(responsive && !isDesktop && { autoFocus: true })}>
+      <ModalRoot {...props} {...(mobileView && { autoFocus: true })}>
         {children}
-      </Modal>
+      </ModalRoot>
     </ModalContext.Provider>
   )
 }
 
-const ModalTrigger = ({ className, children, ...props }: ButtonProps) => {
-  const { isDesktop, responsive } = useModalContext()
-  const Trigger =
-    responsive && !isDesktop ? DrawerPrimitive.Trigger : DialogPrimitive.Trigger
+const ModalTrigger = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ className, children, ...props }, ref) => {
+    const { mobileView } = useModalContext()
+    const Trigger = mobileView
+      ? DrawerPrimitive.Trigger
+      : DialogPrimitive.Trigger
 
-  return (
-    <Trigger asChild>
-      <Button className={className} {...props}>
-        {children}
-      </Button>
-    </Trigger>
-  )
-}
+    return (
+      <Trigger asChild>
+        <Button ref={ref} className={className} {...props}>
+          {children}
+        </Button>
+      </Trigger>
+    )
+  }
+)
 ModalTrigger.displayName = "ModalTrigger"
 
 const ModalOverlay = React.forwardRef<
@@ -155,9 +163,8 @@ const ModalOverlay = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay> &
     React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Overlay>
 >(({ className, ...props }, ref) => {
-  const { isDesktop, responsive } = useModalContext()
-  const Overlay =
-    responsive && !isDesktop ? DrawerPrimitive.Overlay : DialogPrimitive.Overlay
+  const { isDesktop, mobileView } = useModalContext()
+  const Overlay = mobileView ? DrawerPrimitive.Overlay : DialogPrimitive.Overlay
 
   return (
     <Overlay
@@ -180,19 +187,17 @@ const ModalContentWrapper = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> &
     React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Content>
 >(({ className, children, ...props }, ref) => {
-  const { isDesktop, responsive, showCloseButton, mode } = useModalContext()
+  const { mobileView, showCloseButton, mode } = useModalContext()
 
-  const Portal =
-    responsive && !isDesktop ? DrawerPrimitive.Portal : DialogPrimitive.Portal
-  const Close =
-    responsive && !isDesktop ? DrawerPrimitive.Close : DialogPrimitive.Close
-  const ContentWrapper =
-    responsive && !isDesktop ? DrawerPrimitive.Content : DialogPrimitive.Content
+  const Portal = mobileView ? DrawerPrimitive.Portal : DialogPrimitive.Portal
+  const Close = mobileView ? DrawerPrimitive.Close : DialogPrimitive.Close
+  const ContentWrapper = mobileView
+    ? DrawerPrimitive.Content
+    : DialogPrimitive.Content
 
-  const wrapperClass =
-    responsive && !isDesktop
-      ? "inset-x-0 bottom-0 mt-24 flex h-auto flex-col rounded-t-[10px]"
-      : "left-[50%] top-[50%] grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 overflow-hidden p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg"
+  const wrapperClass = mobileView
+    ? "inset-x-0 bottom-0 mt-24 flex h-auto flex-col rounded-t-[10px]"
+    : "left-[50%] top-[50%] flex flex-col w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-0 overflow-hidden p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg"
 
   return (
     <Portal>
@@ -207,7 +212,7 @@ const ModalContentWrapper = React.forwardRef<
         )}
         {...props}
       >
-        {responsive && !isDesktop && (
+        {mobileView && (
           <div className="mx-auto mt-4 h-2 w-[100px] rounded-full bg-muted" />
         )}
         {children}
@@ -227,13 +232,13 @@ const ModalContentWrapper = React.forwardRef<
 ModalContentWrapper.displayName = "ModalContentWrapper"
 
 const ModalContent = ({ className, children, ...props }: ModalProps) => {
-  const { isDesktop, mode } = useModalContext()
+  const { isDesktop, nonResponsiveView, mode } = useModalContext()
 
   return (
     <ModalContentWrapper
       className={cn(
         "gap-0",
-        isDesktop && "p-0",
+        (isDesktop || nonResponsiveView) && "p-0",
         "max-h-full max-w-full overflow-hidden md:max-h-[90vh] md:max-w-lg",
         className
       )}
@@ -247,11 +252,10 @@ const ModalContent = ({ className, children, ...props }: ModalProps) => {
 ModalContent.displayName = "ModalContent"
 
 const HeaderWrapper = ({ className, children, ...props }: ModalProps) => {
-  const { isDesktop, responsive } = useModalContext()
-  const headerClass =
-    responsive && !isDesktop
-      ? "grid gap-1.5 p-4 text-center sm:text-left"
-      : "flex flex-col space-y-1.5 text-center sm:text-left bg-background px-4 pb-0 pt-6"
+  const { mobileView } = useModalContext()
+  const headerClass = mobileView
+    ? "grid gap-1.5 p-4 text-center sm:text-left"
+    : "flex flex-col space-y-1.5 text-center sm:text-left bg-background px-4 pb-0 pt-6"
 
   return (
     <div className={cn(headerClass, className)} {...props}>
@@ -261,16 +265,16 @@ const HeaderWrapper = ({ className, children, ...props }: ModalProps) => {
 }
 
 const TitleWrapper = ({ className, children, ...props }: ModalProps) => {
-  const { isDesktop, responsive, align, separatedHeader } = useModalContext()
-  const Title =
-    responsive && !isDesktop ? DrawerPrimitive.Title : DialogPrimitive.Title
+  const { mobileView, nonResponsiveView, align, separatedHeader } =
+    useModalContext()
+  const Title = mobileView ? DrawerPrimitive.Title : DialogPrimitive.Title
 
   return (
     <Title
       className={cn(
         "text-lg font-semibold leading-none tracking-tight",
         align === "center" && !separatedHeader && "text-2xl",
-        !responsive && !isDesktop && "text-2xl",
+        nonResponsiveView && "text-2xl",
         className
       )}
       {...props}
@@ -297,7 +301,7 @@ const ModalTitle = ({
 }: ModalProps & React.ComponentProps<"div">) => {
   const {
     isDesktop,
-    responsive,
+    nonResponsiveView,
     variant,
     separatedHeader,
     withIcon,
@@ -315,7 +319,7 @@ const ModalTitle = ({
         separatedHeader && "mb-4 border-b py-4",
         align === "center" && separatedHeader && "justify-center",
         align === "center" && !separatedHeader && "flex-col [&>svg]:size-9",
-        !responsive && !isDesktop && "flex-col [&>svg]:size-9",
+        nonResponsiveView && "flex-col [&>svg]:size-9",
         className
       )}
     >
@@ -327,23 +331,20 @@ const ModalTitle = ({
 ModalTitle.displayName = "ModalTitle"
 
 const ModalDescription = ({ className, children, ...props }: ModalProps) => {
-  const { isDesktop, responsive, withIcon, align, separatedHeader } =
+  const { mobileView, nonResponsiveView, withIcon, align, separatedHeader } =
     useModalContext()
-  const Description =
-    responsive && !isDesktop
-      ? DrawerPrimitive.Description
-      : DialogPrimitive.Description
+  const Description = mobileView
+    ? DrawerPrimitive.Description
+    : DialogPrimitive.Description
 
   return (
     <Description
       className={cn(
         "text-sm text-muted-foreground",
         "px-6",
-        responsive && !isDesktop && "pb-2",
+        mobileView && "pb-2",
         withIcon && align === "left" && !separatedHeader && "pl-14",
-        align === "center" || (!responsive && !isDesktop)
-          ? "pl-4 text-center"
-          : "",
+        align === "center" || nonResponsiveView ? "pl-4 text-center" : "",
         className
       )}
       {...props}
@@ -359,7 +360,7 @@ const ModalBody = ({ className, children, ...props }: ModalProps) => {
     <div
       className={cn(
         "mx-6 mt-4",
-        "flex max-h-[60vh] flex-grow flex-col overflow-y-auto",
+        "flex min-h-0 flex-1 flex-col overflow-y-auto",
         className
       )}
       {...props}
@@ -394,36 +395,43 @@ const ModalFooter = ({ className, children, ...props }: ModalProps) => {
 }
 ModalFooter.displayName = "ModalFooter"
 
-const ModalAction = ({ className, children, ...props }: ButtonProps) => {
-  const { variant, align } = useModalContext()
-  return (
-    <Button
-      {...{ variant }}
-      {...props}
-      className={cn(align === "center" && "min-w-36", className)}
-    >
-      {children}
-    </Button>
-  )
-}
-
-const ModalClose = ({ className, children, ...props }: ButtonProps) => {
-  const { isDesktop, responsive, align } = useModalContext()
-  const Close =
-    responsive && !isDesktop ? DrawerPrimitive.Close : DialogPrimitive.Close
-
-  return (
-    <Close aria-label="Close" asChild>
+const ModalAction = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ className, children, ...props }, ref) => {
+    const { variant, align } = useModalContext()
+    return (
       <Button
-        variant="outline"
+        ref={ref}
+        {...{ variant }}
         {...props}
         className={cn(align === "center" && "min-w-36", className)}
       >
         {children}
       </Button>
-    </Close>
-  )
-}
+    )
+  }
+)
+ModalAction.displayName = "ModalAction"
+
+const ModalClose = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ className, children, ...props }, ref) => {
+    const { mobileView, align } = useModalContext()
+    const Close = mobileView ? DrawerPrimitive.Close : DialogPrimitive.Close
+
+    return (
+      <Close aria-label="Close" asChild>
+        <Button
+          ref={ref}
+          variant="outline"
+          {...props}
+          className={cn(align === "center" && "min-w-36", className)}
+        >
+          {children}
+        </Button>
+      </Close>
+    )
+  }
+)
+ModalClose.displayName = "ModalClose"
 
 export {
   Modal,

@@ -225,6 +225,25 @@
       }
     },
     {
+      "name": "color-picker",
+      "title": "Color Picker",
+      "type": "registry:ui",
+      "description": "A versatile color picker component that allows users to select colors visually or by entering values in HEX, RGB, or HSL formats.",
+      "files": [
+        {
+          "path": "components/ui/color-picker.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "registryDependencies": [
+        "https://shadcn-ui-variants.vercel.app/r/button.json",
+        "https://shadcn-ui-variants.vercel.app/r/input.json",
+        "popover",
+        "toggle-group"
+      ],
+      "dependencies": ["react-colorful"]
+    },
+    {
       "name": "dynamic-breadcrumb",
       "type": "registry:ui",
       "title": "Dynamic Breadcrumb",
@@ -537,6 +556,28 @@
         }
       ],
       "dependencies": ["@radix-ui/react-tabs"]
+    },
+    {
+      "name": "tag-box",
+      "type": "registry:ui",
+      "title": "Tag Box",
+      "description": "A versatile component for managing and displaying tags with rich customization options.",
+      "files": [
+        {
+          "path": "components/ui/tag-box.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "registryDependencies": [
+        "https://shadcn-ui-variants.vercel.app/r/accordion.json",
+        "https://shadcn-ui-variants.vercel.app/r/badge.json",
+        "https://shadcn-ui-variants.vercel.app/r/button.json",
+        "https://shadcn-ui-variants.vercel.app/r/color-picker.json",
+        "https://shadcn-ui-variants.vercel.app/r/input.json",
+        "https://shadcn-ui-variants.vercel.app/r/modal.json",
+        "https://shadcn-ui-variants.vercel.app/r/separator.json"
+      ],
+      "dependencies": ["@radix-ui/react-popover"]
     },
     {
       "name": "timeline",

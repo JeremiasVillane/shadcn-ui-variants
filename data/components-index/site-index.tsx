@@ -6,6 +6,7 @@ import { breadcrumb } from "./breadcrumb"
 import { bubbleMenu } from "./bubble-menu"
 import { button } from "./button"
 import { checkbox } from "./checkbox"
+import { colorPicker } from "./color-picker"
 import { dynamicBreadcrumb } from "./dynamic-breadcrumb"
 import { flexTable } from "./flex-table"
 import { input } from "./input"
@@ -18,6 +19,7 @@ import { separator } from "./separator"
 import { simpleToast } from "./simple-toast"
 import { slider } from "./slider"
 import { tabs } from "./tabs"
+import { tagBox } from "./tag-box"
 import { timeline } from "./timeline"
 
 export interface ComponentDetails<T = any> {
@@ -40,6 +42,7 @@ export const componentsIndex: ComponentsIndex = {
   "bubble-menu": bubbleMenu,
   button,
   checkbox,
+  "color-picker": colorPicker,
   "dynamic-breadcrumb": dynamicBreadcrumb,
   "flex-table": flexTable,
   input,
@@ -51,6 +54,7 @@ export const componentsIndex: ComponentsIndex = {
   separator,
   "simple-toast": simpleToast,
   slider,
+  "tag-box": tagBox,
   timeline,
   tabs
 }

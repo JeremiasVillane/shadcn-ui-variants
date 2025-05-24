@@ -10,6 +10,7 @@ import { ExternalLink } from "lucide-react"
 
 import { constructMetadata } from "@/lib/metadata"
 import { generateOgImageUrl } from "@/lib/og"
+import { deslugify } from "@/lib/string-utils"
 import { Badge } from "@/components/ui/badge"
 import { DynamicBreadcrumb } from "@/components/ui/dynamic-breadcrumb"
 import { H1, Lead } from "@/components/ui/prose"
@@ -93,19 +94,30 @@ export default async function ComponentPage({ params }: ComponentPageProps) {
       <H1>{registryItem.title}</H1>
       <Lead>{registryItem.description}</Lead>
 
-      {!!registryItem.dependencies &&
-        registryItem.dependencies[0].startsWith("@radix-ui") &&
-        registryItem.name !== "button" && (
-          <Link
-            href={`https://www.radix-ui.com/docs/primitives/components/${registryItem.name}#api-reference`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Badge className="mt-3 flex w-fit cursor-pointer items-center justify-center gap-1 bg-muted text-foreground/80 hover:text-background/80">
-              Official API Reference <ExternalLink className="size-3" />
-            </Badge>
-          </Link>
-        )}
+      {registryItem.dependencies?.map((dep) => {
+        if (dep.startsWith("@radix-ui")) {
+          const depName = dep.split("/").at(-1)?.split("react-").at(-1)
+          const depUrl =
+            registryItem.name === "button"
+              ? "https://www.radix-ui.com/primitives/docs/utilities/slot"
+              : `https://www.radix-ui.com/docs/primitives/components/${depName}#api-reference`
+
+          return (
+            <Link
+              key={dep}
+              href={depUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Badge className="mt-3 flex w-fit cursor-pointer items-center justify-center gap-1 bg-muted text-foreground/80 hover:text-background/80">
+                {deslugify(depName)} API Reference{" "}
+                <ExternalLink className="size-3" />
+              </Badge>
+            </Link>
+          )
+        }
+        return null
+      })}
 
       {!!registryItem.author && (
         <div className="text-right text-xs text-foreground/50">

@@ -17,8 +17,8 @@ export function LeftSidebar() {
   )
 
   return (
-    <aside className="sticky top-14 hidden h-[calc(100vh-3.5rem)] md:block">
-      <div className="h-full py-6 pl-8 pr-6 lg:py-8">
+    <aside className="sticky top-14 hidden h-[calc(100vh-3.5rem)] overflow-hidden md:block">
+      <div className="h-full overflow-auto py-6 pl-8 pr-6 lg:py-8 hide-scrollbar">
         {contentIndex.map((section, index) => (
           <React.Fragment key={section.label}>
             <div className="flex flex-col space-y-2">

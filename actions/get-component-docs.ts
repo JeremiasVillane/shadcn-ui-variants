@@ -45,7 +45,7 @@ export async function getComponentDocumentation(
     },
     ["componentDocData"],
     {
-      revalidate: 60 * 60 * 24,
+      revalidate: 1,
       tags: ["docs", componentPath]
     }
   )

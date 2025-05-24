@@ -20,6 +20,8 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { CodeBlockWrapper, CommandTabs } from "@/components/common"
 import { CodeBlock } from "@/components/local/ui/code-block"
 
+import { List, ListItem } from "../ui/list"
+
 const commonDependencies = "class-variance-authority tailwind-merge clsx"
 
 interface ComponentInstallationProps {
@@ -73,27 +75,29 @@ export default async function ComponentInstallation({
                   </StepperTitle>
 
                   <StepperDescription>
-                    <ol className="pt-3">
-                      {registryDependencies.map((depUrl, idx) => {
+                    <List className="pt-3">
+                      {registryDependencies.map((depValue, idx) => {
+                        let depUrl = depValue
                         const match = depUrl.match(/\/([^\/?#]+)\.[^\/?#]+$/)
-                        const depName = match ? match[1] : null
-                        if (!depName) return null
+                        let depName = match ? match[1] : null
+
+                        if (!depName && !depUrl.startsWith("https://")) {
+                          depName = depValue
+                          depUrl = `https://ui.shadcn.com/docs/components/${depValue}`
+                        } else depName
 
                         return (
-                          <li
-                            key={idx}
-                            className="ms-9 list-disc text-foreground/80"
-                          >
+                          <ListItem key={idx} className="text-foreground/80">
                             <Link
                               href={depUrl}
                               className="transition-color text-base font-medium underline underline-offset-4 ease-in-out hover:text-foreground/70"
                             >
-                              {toWordCase(depName)}
+                              {toWordCase(depName!)}
                             </Link>
-                          </li>
+                          </ListItem>
                         )
                       })}
-                    </ol>
+                    </List>
                   </StepperDescription>
                 </StepperContent>
               </StepperItem>

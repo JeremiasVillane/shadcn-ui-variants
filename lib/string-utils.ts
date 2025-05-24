@@ -94,3 +94,17 @@ export function toPascalCase(input: string): string {
 export function toWordCase(input: string): string {
   return input.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())
 }
+
+const capitalize = (str: string) =>
+  str[0] ? str[0].toUpperCase() + str.slice(1) : ""
+
+export const deslugify = (slug: string | undefined) => {
+  if (!slug) return ""
+  return slug
+    .split("-")
+    .map((part) => capitalize(part))
+    .join(" ")
+    .split("_")
+    .map((part) => capitalize(part))
+    .join(" ")
+}
