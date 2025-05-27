@@ -7,14 +7,19 @@ export const tagBoxPlaygroundCode = ({
   showMaxTags,
   placeholder,
   placeholderWhenFull,
-  withColor
+  withColor,
+  openOnFocus,
+  enableCreate,
+  enableManage,
+  tagsPosition,
+  disabled
 }: TagBoxProps): string => {
   const code = `"use client"
 
 import { useState } from "react"
 
 import { toast } from "@/components/ui/simple-toast"
-import { TagBox, TagBoxProps, TagType } from "@/components/ui/tag-box"
+import { TagBox, TagType } from "@/components/ui/tag-box"
 import {
   Card,
   CardContent,
@@ -22,13 +27,7 @@ import {
   CardTitle
 } from "@/components/local/ui/card"
 
-export function TagBoxPlayground({
-  maxTags,
-  showMaxTags,
-  placeholder,
-  placeholderWhenFull,
-  withColor
-}: TagBoxProps) {
+export function TagBoxPlayground() {
   const [selectedTags, setSelectedTags] = useState<TagType[]>([])
   const [allTags, setAllTags] = useState<TagType[]>([
     { id: "1", name: "Important", color: "#FF5630" },
@@ -108,6 +107,31 @@ export function TagBoxPlayground({
             !withColor
               ? `
           withColor={false}`
+              : ""
+          }${
+            !openOnFocus
+              ? `
+          openOnFocus={false}`
+              : ""
+          }${
+            !enableCreate
+              ? `
+          enableCreate={false}`
+              : ""
+          }${
+            !enableManage
+              ? `
+          enableManage={false}`
+              : ""
+          }${
+            tagsPosition !== "bottom"
+              ? `
+          tagsPosition="${tagsPosition}"`
+              : ""
+          }${
+            disabled
+              ? `
+          disabled`
               : ""
           }
         />

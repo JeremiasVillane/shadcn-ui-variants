@@ -16,7 +16,12 @@ export function TagBoxPlayground({
   showMaxTags,
   placeholder,
   placeholderWhenFull,
-  withColor
+  withColor,
+  openOnFocus,
+  enableCreate,
+  enableManage,
+  tagsPosition,
+  disabled
 }: TagBoxProps) {
   const [selectedTags, setSelectedTags] = useState<TagType[]>([])
   const [allTags, setAllTags] = useState<TagType[]>([
@@ -79,7 +84,12 @@ export function TagBoxPlayground({
             showMaxTags,
             placeholder,
             placeholderWhenFull,
-            withColor
+            withColor,
+            openOnFocus,
+            enableCreate,
+            enableManage,
+            tagsPosition,
+            disabled
           }}
         />
       </CardContent>

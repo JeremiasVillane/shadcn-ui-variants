@@ -116,6 +116,29 @@ interface TagBoxProps
    * Determines if tags should have customizable colors.
    * @default true */
   withColor?: boolean
+
+  /**
+   * Optional flag to automatically open the popover when the input is focused.
+   * @default true */
+  openOnFocus?: boolean
+
+  /** Optional flag to enable the creation of new tags directly from the input.
+   * If false, only existing `userTags` can be selected.
+   * @default true */
+  enableCreate?: boolean
+
+  /** Optional flag to enable the "Manage tags" dialog.
+   * @default true */
+  enableManage?: boolean
+
+  /** Optional prop to control the position of the selected tags relative to the input field.
+   * @default "bottom" */
+  tagsPosition?: "bottom" | "inner" | "top"
+
+  /**
+   * Optional flag to disable the TagBox component.
+   * @default false */
+  disabled?: boolean
 }
 
 const getTagStyle = (color?: string) => {
@@ -126,6 +149,11 @@ const getTagStyle = (color?: string) => {
     color
   }
 }
+
+type PopoverOption =
+  | { type: "tag"; data: TagType; name: string; idPrefix: string }
+  | { type: "create"; name: string; idPrefix: string; data: { name: string } }
+
 function TagBox({
   // Controlled/uncontrolled state
   value: valueProp,
@@ -141,6 +169,10 @@ function TagBox({
   maxTags,
   showMaxTags = false,
   withColor = true,
+  openOnFocus = true,
+  enableCreate = true,
+  enableManage = true,
+  tagsPosition = "bottom",
 
   // UI Text
   placeholder = "Type or select tags...",
@@ -159,7 +191,7 @@ function TagBox({
 
   // Form integration props
   id, // Inherited from div attributes, applied to root
-  name, // For the hidden input
+  name: formName, // For the hidden input
 
   // Disabled state
   disabled: disabledProp,
@@ -171,6 +203,7 @@ function TagBox({
   const [open, setOpen] = React.useState(false)
   const [openDialog, setOpenDialog] = React.useState(false)
   const [inputValue, setInputValue] = React.useState<string>("")
+  const [focusedIndex, setFocusedIndex] = React.useState<number>(-1)
 
   const [internalSelectedTags, setInternalSelectedTags] = React.useState<
     TagType[]
@@ -188,13 +221,14 @@ function TagBox({
   }
 
   React.useEffect(() => {
-    if (open && inputRef.current) {
+    if (open && inputRef.current && focusedIndex === -1) {
+      // Only focus input if no item in list is focused
       const timeoutId = setTimeout(() => {
         inputRef.current?.focus()
-      }, 10)
+      }, 0)
       return () => clearTimeout(timeoutId)
     }
-  }, [open])
+  }, [open, focusedIndex])
 
   React.useEffect(() => {
     const handleScroll = (event: Event) => {
@@ -214,7 +248,7 @@ function TagBox({
     return () => {
       document.removeEventListener("scroll", handleScroll, true)
     }
-  }, [open, setOpen])
+  }, [open])
 
   const addTag = (tagName: string) => {
     if (!!maxTags && maxTags > 0 && currentSelectedTags.length >= maxTags) {
@@ -233,6 +267,7 @@ function TagBox({
 
     if (isAdded) {
       setInputValue("")
+      setOpen(false)
       return
     }
 
@@ -258,31 +293,181 @@ function TagBox({
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value)
-    setOpen(e.target.value.length > 0)
+    const newValue = e.target.value
+    setInputValue(newValue)
+    setOpen(newValue.length > 0)
+  }
+
+  const availableTags = React.useMemo(
+    () =>
+      userTagsProp.filter(
+        (tag) =>
+          !currentSelectedTags.some(
+            (t) => t.name.toLowerCase() === tag.name.toLowerCase()
+          ) && tag.name.toLowerCase().includes(inputValue.toLowerCase())
+      ),
+    [userTagsProp, currentSelectedTags, inputValue]
+  )
+
+  const showCreateOption = React.useMemo(
+    () =>
+      enableCreate &&
+      inputValue.trim() &&
+      !userTagsProp.some(
+        (tag) => tag.name.toLowerCase() === inputValue.trim().toLowerCase()
+      ) &&
+      !currentSelectedTags.some(
+        (tag) => tag.name.toLowerCase() === inputValue.trim().toLowerCase()
+      ),
+    [inputValue, userTagsProp, currentSelectedTags]
+  )
+
+  const popoverOptions = React.useMemo((): PopoverOption[] => {
+    const options: PopoverOption[] = []
+    availableTags.forEach((tag) => {
+      options.push({ type: "tag", data: tag, name: tag.name, idPrefix: "tag" })
+    })
+    if (showCreateOption) {
+      const createName = inputValue.trim()
+      options.push({
+        type: "create",
+        name: createName,
+        data: { name: createName },
+        idPrefix: "create"
+      })
+    }
+    return options
+  }, [availableTags, showCreateOption, inputValue])
+
+  const getOptionId = (optionIndex: number): string | undefined => {
+    if (optionIndex < 0 || optionIndex >= popoverOptions.length)
+      return undefined
+    const option = popoverOptions[optionIndex]
+    const uniquePart =
+      option.type === "tag" ? option.data.id || option.data.name : option.name
+    // Sanitize uniquePart for ID: replace spaces and convert to lowercase
+    const sanitizedUniquePart = uniquePart.replace(/\s+/g, "-").toLowerCase()
+    return `tagbox-${id || "popover"}-option-${option.idPrefix}-${sanitizedUniquePart}-${optionIndex}`
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" && inputValue.trim()) {
+    if (disabledProp) return
+
+    const { key } = e
+
+    if (
+      tagsPosition === "inner" &&
+      e.key === "Backspace" &&
+      inputValue === "" &&
+      currentSelectedTags.length > 0
+    ) {
       e.preventDefault()
-      addTag(inputValue.trim())
+      removeTag(currentSelectedTags[currentSelectedTags.length - 1].name)
+      return
+    }
+
+    if (key === "Escape") {
+      if (open) {
+        e.preventDefault()
+        setOpen(false)
+        inputRef.current?.focus()
+      }
+      return
+    }
+
+    if (key === "Tab" && open) {
+      setOpen(false) // Allow tabbing out, Popover's onOpenChange will reset focusedIndex
+      return
+    }
+
+    const numOptions = popoverOptions.length
+
+    if (key === "ArrowDown" || key === "ArrowUp") {
+      e.preventDefault()
+      if (!open) {
+        if (inputValue.length > 0 && numOptions > 0) {
+          setOpen(true)
+          setFocusedIndex(key === "ArrowDown" ? 0 : numOptions - 1)
+        } else if (inputValue.length === 0 && numOptions > 0) {
+          setOpen(true)
+          setFocusedIndex(key === "ArrowDown" ? 0 : numOptions - 1)
+        }
+      } else {
+        if (numOptions === 0) {
+          setFocusedIndex(-1)
+          return
+        }
+        let nextIndex = focusedIndex
+        if (key === "ArrowDown") {
+          nextIndex = focusedIndex + 1
+          if (nextIndex >= numOptions) nextIndex = 0
+        } else {
+          // ArrowUp
+          nextIndex = focusedIndex - 1
+          if (nextIndex < 0) nextIndex = numOptions - 1
+        }
+        setFocusedIndex(nextIndex)
+      }
+      return
+    }
+
+    if (key === "Enter") {
+      if (open && focusedIndex >= 0 && focusedIndex < numOptions) {
+        e.preventDefault()
+        const selectedOption = popoverOptions[focusedIndex]
+        addTag(selectedOption.name)
+        inputRef.current?.focus()
+      } else if (inputValue.trim()) {
+        e.preventDefault()
+        addTag(inputValue.trim())
+        inputRef.current?.focus()
+      }
+      return
     }
   }
 
-  const availableTags = userTagsProp.filter(
-    (tag) =>
-      !currentSelectedTags.some((t) => t.name === tag.name) &&
-      tag.name.toLowerCase().includes(inputValue.toLowerCase())
-  )
+  React.useEffect(() => {
+    // When input value changes (user is typing), or popover opens/closes with input
+    // reset the focused index so that ArrowDown starts from the top.
+    if (open) {
+      setFocusedIndex(-1)
+    }
+  }, [inputValue, open])
 
-  const showCreateOption =
-    inputValue.trim() &&
-    !userTagsProp.some(
-      (tag) => tag.name.toLowerCase() === inputValue.trim().toLowerCase()
-    ) &&
-    !currentSelectedTags.some(
-      (tag) => tag.name.toLowerCase() === inputValue.trim().toLowerCase()
-    )
+  React.useEffect(() => {
+    if (
+      open &&
+      focusedIndex !== -1 &&
+      popoverContentRef.current &&
+      popoverOptions[focusedIndex]
+    ) {
+      const optionId = getOptionId(focusedIndex)
+      if (optionId) {
+        const focusedElement =
+          popoverContentRef.current.querySelector<HTMLElement>(
+            `#${CSS.escape(optionId)}`
+          )
+        if (focusedElement) {
+          focusedElement.scrollIntoView({
+            behavior: "auto",
+            block: "nearest"
+          })
+        }
+      }
+    }
+  }, [focusedIndex, open, popoverOptions])
+
+  const onPopoverOpenChange = (isOpen: boolean) => {
+    setOpen(isOpen)
+    if (!isOpen) {
+      setFocusedIndex(-1)
+    }
+  }
+
+  const activeDescendantId = React.useMemo(() => {
+    if (focusedIndex === -1 || !open) return undefined
+    return getOptionId(focusedIndex)
+  }, [focusedIndex, open, popoverOptions])
 
   const allTagsForManagement = Array.from(
     new Map(
@@ -295,62 +480,170 @@ function TagBox({
 
   const isInputDisabled =
     (!!maxTags && currentSelectedTags.length >= maxTags) || !!disabledProp
+  const popoverTriggerId = id ? `${id}-trigger` : undefined
+  const popoverContentGeneratedId = id
+    ? `${id}-popover-content`
+    : "tagbox-popover-content"
+
+  const tagList = (
+    <div
+      className={cn(
+        "flex flex-wrap gap-2",
+        tagsPosition === "inner"
+          ? "contents"
+          : tagsPosition === "bottom"
+            ? "mt-2"
+            : "mb-2"
+      )}
+    >
+      {currentSelectedTags.map((tag) => (
+        <Badge
+          key={tag.id || tag.name}
+          shape={shape ?? "pill"}
+          style={withColor && tag.color ? getTagStyle(tag.color) : {}}
+          rightElement={
+            rightElement ?? (
+              <X
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") removeTag(tag.name)
+                }}
+                onClick={() => removeTag(tag.name)}
+                className="transition-colors hover:text-destructive"
+                aria-label={`Remove tag ${tag.name}`}
+              />
+            )
+          }
+          className={tagClassName}
+          variant={variant}
+          size={size}
+          leftElement={leftElement}
+          disabled={disabledProp}
+        >
+          {tag.name}
+        </Badge>
+      ))}
+    </div>
+  )
 
   return (
-    <div {...restDivProps} className={cn("w-full", className)}>
-      {/* Hidden input for form integration */}
-      {!!name && (
+    <div
+      {...restDivProps}
+      className={cn(
+        "flex w-full flex-col",
+        tagsPosition === "top" && "flex-col-reverse",
+        className
+      )}
+    >
+      {!!formName && (
         <input
           type="hidden"
-          name={name}
+          name={formName}
           value={JSON.stringify(
-            currentSelectedTags.map(({ id, name, color }) => ({
-              id,
-              name,
+            currentSelectedTags.map(({ id: tagId, name: tagName, color }) => ({
+              id: tagId,
+              name: tagName,
               ...(withColor && color && { color })
             }))
           )}
         />
       )}
 
-      <PopoverPrimitive.Root open={open} onOpenChange={setOpen}>
-        <PopoverPrimitive.Trigger asChild>
-          <div className="w-full">
-            <Input
-              ref={inputRef}
-              id={id}
-              placeholder={
-                isInputDisabled && placeholderWhenFull !== "Max tags reached"
-                  ? placeholderWhenFull
-                  : isInputDisabled &&
-                      currentSelectedTags.length >= (maxTags || 0)
-                    ? placeholderWhenFull
-                    : placeholder
-              }
-              value={inputValue}
-              onChange={handleInputChange}
-              onKeyDown={handleKeyDown}
-              endInline={
-                showMaxTags && maxTags
-                  ? `${currentSelectedTags.length}/${maxTags}`
-                  : ""
-              }
-              endIcon={
-                <ChevronsUpDown className="size-4 cursor-pointer opacity-50 hover:opacity-80 active:opacity-100" />
-              }
-              className="w-full"
-              disabled={isInputDisabled}
-              aria-autocomplete="list"
-              aria-expanded={open}
-              aria-controls={id ? `${id}-popover` : undefined}
-            />
+      <PopoverPrimitive.Root open={open} onOpenChange={onPopoverOpenChange}>
+        <PopoverPrimitive.Trigger
+          onClick={(e) => {
+            e.preventDefault()
+            !disabledProp && openOnFocus && setOpen(true)
+          }}
+          asChild
+          id={popoverTriggerId}
+        >
+          <div
+            className={cn(
+              "group relative w-full",
+              tagsPosition === "inner"
+                ? "flex h-fit flex-wrap items-center gap-x-1.5 gap-y-1 rounded-md border border-input bg-background py-1 pl-2 text-sm ring-offset-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2"
+                : ""
+            )}
+          >
+            {tagsPosition === "inner" &&
+              currentSelectedTags.length > 0 &&
+              tagList}
+
+            <div
+              className={cn(
+                tagsPosition === "inner"
+                  ? "relative flex-1 self-stretch"
+                  : "relative w-full"
+              )}
+            >
+              <Input
+                ref={inputRef}
+                id={id}
+                placeholder={
+                  disabledProp
+                    ? ""
+                    : !!maxTags && currentSelectedTags.length >= maxTags
+                      ? tagsPosition !== "inner"
+                        ? placeholderWhenFull
+                        : ""
+                      : placeholder
+                }
+                value={inputValue}
+                onChange={handleInputChange}
+                onFocus={() => !disabledProp && openOnFocus && setOpen(true)}
+                onKeyDown={handleKeyDown}
+                endInline={
+                  showMaxTags && maxTags
+                    ? `${currentSelectedTags.length}/${maxTags}`
+                    : ""
+                }
+                endIcon={
+                  <ChevronsUpDown
+                    role="button"
+                    onClick={() => {
+                      !disabledProp && setOpen(true)
+                    }}
+                    className={cn(
+                      "size-4 cursor-default opacity-50",
+                      !disabledProp &&
+                        "cursor-pointer hover:opacity-80 active:opacity-100"
+                    )}
+                    aria-label="Toggle tag selection"
+                  />
+                }
+                className={cn(
+                  tagsPosition === "inner"
+                    ? "h-7 border-0 pl-0.5 focus-within:ring-0"
+                    : "w-full"
+                )}
+                disabled={isInputDisabled}
+                role="combobox"
+                aria-autocomplete="list"
+                aria-expanded={open}
+                aria-controls={open ? popoverContentGeneratedId : undefined}
+                aria-activedescendant={activeDescendantId}
+              />
+            </div>
           </div>
         </PopoverPrimitive.Trigger>
+
+        {!!maxTags &&
+          currentSelectedTags.length >= maxTags &&
+          tagsPosition === "inner" && (
+            <div className="text-sm text-destructive">
+              {placeholderWhenFull}
+            </div>
+          )}
 
         <PopoverPrimitive.Portal>
           <PopoverPrimitive.Content
             ref={popoverContentRef}
-            className="z-50 rounded-md border bg-popover shadow-md outline-none animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95"
+            id={popoverContentGeneratedId}
+            role="listbox"
+            aria-label={id ? `Suggestions for ${id}` : "Tag suggestions"}
+            className="z-50 overflow-hidden rounded-md border bg-popover shadow-md outline-none animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95"
             sideOffset={4}
             align="start"
             side="bottom"
@@ -358,112 +651,92 @@ function TagBox({
             style={{
               width: "var(--radix-popover-trigger-width)"
             }}
-            id={id ? `${id}-popover` : undefined}
-            role="listbox"
           >
-            <div className="flex h-full w-full flex-col overflow-hidden rounded-md bg-popover text-popover-foreground">
+            <div className="rounded-non flex h-full w-full flex-col overflow-hidden bg-popover text-popover-foreground">
               <div className="max-h-[300px] overflow-y-auto overflow-x-hidden">
-                {availableTags.length > 0 || showCreateOption ? (
+                {popoverOptions.length > 0 ? (
                   <section className="max-h-[200px] overflow-auto p-1 text-foreground">
-                    {availableTags.map((tag) => (
-                      <article
-                        key={tag.name}
-                        role="option"
-                        aria-selected="false"
-                        onClick={(e) => {
-                          e.preventDefault()
-                          addTag(tag.name)
-                        }}
-                        className="relative flex cursor-pointer select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-muted/80 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0"
-                      >
-                        <div className="flex items-center">
-                          {withColor && tag.color && (
-                            <div
-                              className="mr-2 size-4 rounded-full"
-                              style={{ backgroundColor: tag.color }}
-                            />
+                    {popoverOptions.map((option, index) => {
+                      const optionId = getOptionId(index)
+                      const isFocused = focusedIndex === index
+                      return (
+                        <article
+                          key={optionId || index} // Fallback key
+                          id={optionId}
+                          role="option"
+                          aria-selected={isFocused}
+                          onClick={(e) => {
+                            e.preventDefault()
+                            addTag(option.name)
+                            inputRef.current?.focus()
+                            setOpen(false)
+                          }}
+                          onMouseEnter={() => setFocusedIndex(index)}
+                          className={cn(
+                            "relative flex cursor-pointer select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-muted/80 data-[focused=true]:bg-muted",
+                            option.type === "create" && "text-muted-foreground"
                           )}
-                          {tag.name}
-                        </div>
-                      </article>
-                    ))}
-                    {showCreateOption && (
-                      <article
-                        role="option"
-                        aria-selected="false"
-                        onClick={(e) => {
-                          e.preventDefault()
-                          addTag(inputValue.trim())
-                        }}
-                        className="relative flex cursor-pointer select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm text-muted-foreground outline-none hover:bg-muted/80 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0"
-                      >
-                        <div className="flex items-center">
-                          {withColor && (
-                            <div className="mr-2 size-4 rounded-full bg-gray-300" />
-                          )}
-                          Create "{inputValue.trim()}"
-                        </div>
-                      </article>
-                    )}
+                          data-focused={isFocused}
+                          tabIndex={-1}
+                        >
+                          <div className="flex items-center">
+                            {withColor &&
+                              (option.type === "tag" && option.data.color ? (
+                                <div
+                                  className="mr-2 size-4 rounded-full"
+                                  style={{ backgroundColor: option.data.color }}
+                                />
+                              ) : option.type === "create" ? (
+                                <div className="mr-2 size-4 rounded-full bg-gray-300" />
+                              ) : null)}
+                            {option.type === "create"
+                              ? `Create "${option.name}"`
+                              : option.name}
+                          </div>
+                        </article>
+                      )
+                    })}
                   </section>
                 ) : (
                   <div className="py-6 text-center text-sm text-muted-foreground">
-                    No tags found
+                    {inputValue ? "No matching tags" : "No tags found"}
                   </div>
                 )}
 
-                <Separator />
+                {enableManage && (
+                  <>
+                    <Separator />
 
-                <section className="overflow-hidden p-1 text-foreground">
-                  <article className="relative flex cursor-pointer select-none items-center gap-2 rounded-sm text-sm outline-none [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0">
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      iconLeft={<Edit2 />}
-                      iconAnimation="zoomIn"
-                      onClick={(e) => {
-                        e.preventDefault()
-                        setOpenDialog(true)
-                        setOpen(false)
-                      }}
-                      className="flex h-8 w-full justify-start px-2"
-                    >
-                      Manage tags
-                    </Button>
-                  </article>
-                </section>
+                    <section className="overflow-hidden p-1 text-foreground">
+                      <article className="relative flex select-none items-center gap-2 rounded-sm text-sm outline-none [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0">
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          iconLeft={<Edit2 />}
+                          iconAnimation="zoomIn"
+                          onClick={(e) => {
+                            e.preventDefault()
+                            setOpenDialog(true)
+                            setOpen(false) // Close popover when opening dialog
+                          }}
+                          className="flex h-8 w-full justify-start px-2"
+                          tabIndex={0}
+                        >
+                          Manage tags
+                        </Button>
+                      </article>
+                    </section>
+                  </>
+                )}
               </div>
             </div>
           </PopoverPrimitive.Content>
         </PopoverPrimitive.Portal>
       </PopoverPrimitive.Root>
 
-      <div className="mt-2 flex flex-wrap gap-2">
-        {currentSelectedTags.map((tag) => (
-          <Badge
-            key={tag.id || tag.name}
-            shape={shape ?? "pill"}
-            style={withColor && tag.color ? getTagStyle(tag.color) : {}}
-            rightElement={
-              rightElement ?? (
-                <X
-                  role="button"
-                  onClick={() => removeTag(tag.name)}
-                  className="transition-colors hover:text-destructive"
-                  aria-label={`Remove tag ${tag.name}`}
-                />
-              )
-            }
-            className={tagClassName}
-            variant={variant}
-            size={size}
-            leftElement={leftElement}
-            disabled={disabledProp}
-          >
-            {tag.name}
-          </Badge>
-        ))}
-      </div>
+      {["top", "bottom"].includes(tagsPosition) &&
+        currentSelectedTags.length > 0 &&
+        tagList}
 
       <Modal open={openDialog} onOpenChange={setOpenDialog} separatedFooter>
         <ModalContent>

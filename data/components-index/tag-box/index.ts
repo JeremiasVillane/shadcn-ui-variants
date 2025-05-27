@@ -9,6 +9,7 @@ export const tagBox: ComponentDetails<TagBoxProps> = {
   playground: {
     placeholder: "Click here to see the dropdown...",
     maxTags: 4,
+    name: undefined,
     defaultValue: undefined,
     value: undefined,
     onChange: undefined,

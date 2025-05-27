@@ -107,7 +107,8 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         <div
           className={cn(
             "flex items-stretch rounded-md border border-input bg-background focus-within:ring-2 focus-within:ring-ring",
-            hasAddons && "overflow-hidden"
+            hasAddons && "overflow-hidden",
+            className
           )}
         >
           {startAddon && (

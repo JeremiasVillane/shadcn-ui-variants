@@ -32,10 +32,11 @@ export function TagBoxExample2() {
       userTags={allTags}
       onTagEdit={handleTagEdit}
       onTagRemove={handleTagRemove}
-      className="rounded-lg border border-gray-200 p-4 shadow-sm"
+      className="rounded-lg border bg-muted/10 p-4 shadow-md"
       tagClassName="font-medium"
       leftElement={<Star />}
       shape="rounded"
+      tagsPosition="inner"
       placeholder="Add project status..."
     />
   )

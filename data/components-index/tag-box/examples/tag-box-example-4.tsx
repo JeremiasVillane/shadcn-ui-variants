@@ -82,7 +82,7 @@ export function TagBoxExample4() {
         )
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 w-full">
       <div>
         <h3 className="mb-2 text-sm font-medium">Filter Tasks by Tags:</h3>
         <TagBox
@@ -92,6 +92,8 @@ export function TagBoxExample4() {
           onTagEdit={handleTagEdit}
           onTagRemove={handleTagRemove}
           placeholder="Select tags to filter tasks..."
+          enableCreate={false}
+          enableManage={false}
         />
       </div>
 

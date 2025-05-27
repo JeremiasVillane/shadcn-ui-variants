@@ -189,7 +189,7 @@ export async function TagBoxExtras() {
         },
         {
           id: "example2",
-          title: "Custom Styling",
+          title: "Custom Styling & Inner Tags",
           description: "Customize the appearance of the TagBox and its tags.",
           code: example2Code,
           name: "tag-box-example-2",
@@ -213,7 +213,8 @@ export async function TagBoxExtras() {
               <InlineCode>onTagEdit</InlineCode> and{" "}
               <InlineCode>onTagRemove</InlineCode> to manage{" "}
               <InlineCode>userTags</InlineCode>, and using selected tags to
-              filter a list of items in real-time.
+              filter a list of items in real-time. Tag editing and creation are
+              disabled.
             </>
           ),
           code: example4Code,
