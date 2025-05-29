@@ -12,7 +12,7 @@ import {
   AccordionTrigger
 } from "@/components/ui/accordion"
 import { Badge, type BadgeProps } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
 import { ColorPicker } from "@/components/ui/color-picker"
 import { Input } from "@/components/ui/input"
 import {
@@ -834,6 +834,8 @@ const TagForm = ({
     <Accordion
       type="single"
       variant="contained"
+      trigger="plus-minus"
+      triggerPosition="left"
       collapsible
       value={accordionValue}
       onValueChange={setAccordionValue}
@@ -847,8 +849,13 @@ const TagForm = ({
           >
             {name}
           </Badge>
-          <div className="flex items-center gap-4">
-            <AccordionTrigger className="gap-1 text-foreground/80 hover:text-foreground hover:no-underline">
+          <div className="flex items-center gap-4 py-2">
+            <AccordionTrigger
+              className={cn(
+                buttonVariants({ variant: "ghost", size: "sm" }),
+                "h-8 text-foreground/80 hover:bg-muted hover:text-foreground"
+              )}
+            >
               Edit
             </AccordionTrigger>
             <Modal
@@ -882,7 +889,7 @@ const TagForm = ({
             </Modal>
           </div>
         </div>
-        <AccordionContent>
+        <AccordionContent className="ps-0">
           <section className="flex items-end gap-4 pl-1 pt-1">
             <div className="w-full space-y-2">
               <label htmlFor={`name-${id || name}`}>Name</label>
