@@ -7,6 +7,7 @@ import { kineticPlaygroundCode } from "./kinetic-playground-code"
 
 export const kinetic: ComponentDetails<KineticProps> = {
   playground: {
+    offset: 0,
     className: undefined,
     style: undefined,
     children: undefined,

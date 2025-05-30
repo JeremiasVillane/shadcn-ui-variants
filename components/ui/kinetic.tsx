@@ -53,6 +53,15 @@ interface KineticProps extends Omit<MotionProps, "transition"> {
   onScroll?: boolean
 
   /**
+   * Defines the point (in pixels) from the top of the viewport at which the scroll-driven animation completes.
+   * Specifically, `scrollYProgress` will reach 1 when the top of the animating element is this many pixels
+   * from the top of the viewport. The animation (e.g., fade-in) will then map directly to this 0-1 progress.
+   * Only applies if `onScroll` is true. If undefined, the animation plays out over a default portion
+   * of the element's visibility duration in the viewport.
+   */
+  offset?: number
+
+  /**
    * Custom className for the wrapper
    */
   className?: string
@@ -156,7 +165,8 @@ const calculateTransformAnimationParams = (
   propKey: string, // e.g., "opacity", "y", "filter"
   isOnScroll: boolean,
   passedVariants: Variants | undefined, // The variants resolved for the current animation
-  animationName: KineticProps["animation"] // String name if predefined, or the custom Variants object
+  animationName: KineticProps["animation"], // String name if predefined, or the custom Variants object
+  isCustomScrollOffsetActive: boolean
 ) => {
   let defaultTargetVisibleVal: string | number
   switch (propKey) {
@@ -195,7 +205,10 @@ const calculateTransformAnimationParams = (
     }
   }
 
-  const scrollInputRange: [number, number] = [0.15, 0.85]
+  // Determine the input range for useTransform based on whether a custom offset is active
+  const scrollInputRange: [number, number] = isCustomScrollOffsetActive
+    ? [0, 1] // Use full 0-1 range of scrollYProgress
+    : [0.15, 0.85] // Default: animate between 15% and 85% of scrollYProgress
 
   // Prioritize values from the passedVariants
   const variantVisibleVal = (passedVariants?.visible as any)?.[propKey]
@@ -286,6 +299,7 @@ const Kinetic = React.forwardRef<HTMLElement, KineticProps>(
       once = true,
       loop = false,
       onScroll = false,
+      offset,
       className,
       children,
       viewportOptions = {},
@@ -381,9 +395,13 @@ const Kinetic = React.forwardRef<HTMLElement, KineticProps>(
       root: rootRefForInView
     })
 
+    const isCustomScrollOffsetActive = typeof offset === "number" && onScroll
+
     const { scrollYProgress } = useScroll({
       target: viewRef,
-      offset: ["start end", "end start"]
+      offset: isCustomScrollOffsetActive
+        ? ["start end", `start ${offset}px`]
+        : ["start end", "end start"]
     })
 
     // --- Scroll-driven animation setup ---
@@ -393,9 +411,15 @@ const Kinetic = React.forwardRef<HTMLElement, KineticProps>(
           "opacity",
           onScroll,
           resolvedAnimationVariants,
-          animation
+          animation,
+          isCustomScrollOffsetActive
         ),
-      [onScroll, resolvedAnimationVariants, animation]
+      [
+        onScroll,
+        resolvedAnimationVariants,
+        animation,
+        isCustomScrollOffsetActive
+      ]
     )
     const opacityScroll = useTransform(
       scrollYProgress,
@@ -410,9 +434,15 @@ const Kinetic = React.forwardRef<HTMLElement, KineticProps>(
           "x",
           onScroll,
           resolvedAnimationVariants,
-          animation
+          animation,
+          isCustomScrollOffsetActive
         ),
-      [onScroll, resolvedAnimationVariants, animation]
+      [
+        onScroll,
+        resolvedAnimationVariants,
+        animation,
+        isCustomScrollOffsetActive
+      ]
     )
     const xScroll = useTransform(
       scrollYProgress,
@@ -427,9 +457,15 @@ const Kinetic = React.forwardRef<HTMLElement, KineticProps>(
           "y",
           onScroll,
           resolvedAnimationVariants,
-          animation
+          animation,
+          isCustomScrollOffsetActive
         ),
-      [onScroll, resolvedAnimationVariants, animation]
+      [
+        onScroll,
+        resolvedAnimationVariants,
+        animation,
+        isCustomScrollOffsetActive
+      ]
     )
     const yScroll = useTransform(
       scrollYProgress,
@@ -444,9 +480,15 @@ const Kinetic = React.forwardRef<HTMLElement, KineticProps>(
           "scale",
           onScroll,
           resolvedAnimationVariants,
-          animation
+          animation,
+          isCustomScrollOffsetActive
         ),
-      [onScroll, resolvedAnimationVariants, animation]
+      [
+        onScroll,
+        resolvedAnimationVariants,
+        animation,
+        isCustomScrollOffsetActive
+      ]
     )
     const scaleScroll = useTransform(
       scrollYProgress,
@@ -461,9 +503,15 @@ const Kinetic = React.forwardRef<HTMLElement, KineticProps>(
           "rotate",
           onScroll,
           resolvedAnimationVariants,
-          animation
+          animation,
+          isCustomScrollOffsetActive
         ),
-      [onScroll, resolvedAnimationVariants, animation]
+      [
+        onScroll,
+        resolvedAnimationVariants,
+        animation,
+        isCustomScrollOffsetActive
+      ]
     )
     const rotateScroll = useTransform(
       scrollYProgress,
@@ -478,9 +526,15 @@ const Kinetic = React.forwardRef<HTMLElement, KineticProps>(
           "filter",
           onScroll,
           resolvedAnimationVariants,
-          animation
+          animation,
+          isCustomScrollOffsetActive
         ),
-      [onScroll, resolvedAnimationVariants, animation]
+      [
+        onScroll,
+        resolvedAnimationVariants,
+        animation,
+        isCustomScrollOffsetActive
+      ]
     )
     const filterScroll = useTransform(
       scrollYProgress,
