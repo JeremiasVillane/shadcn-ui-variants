@@ -133,6 +133,7 @@ export default async function ComponentPage({ params }: ComponentPageProps) {
           docs,
           playground,
           PlaygroundComponent: indexData.PlaygroundComponent,
+          showReload: indexData.showReload,
           playgroundCode: indexData.playgroundCode,
           DemoComponent: indexData.DemoComponent,
           ExtrasComponent: indexData.ExtrasComponent,

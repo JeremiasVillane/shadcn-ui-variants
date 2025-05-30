@@ -8,9 +8,8 @@ import {
 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
+import { Kinetic } from "@/components/ui/kinetic"
 import { ScrollDownButton } from "@/components/ui/scroll-down-button"
-import { BlurFade } from "@/components/local/ui/blur-fade"
-import { BlurIn } from "@/components/local/ui/blur-in"
 import { Card } from "@/components/local/ui/card"
 import { DotBackground } from "@/components/local/ui/dot-background"
 import { WordFadeIn } from "@/components/local/ui/word-fade-in"
@@ -37,24 +36,33 @@ export default function Home() {
       <section className="relative flex h-screen w-full items-center justify-center md:h-screen">
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center space-y-4 text-center">
-            <BlurFade>
+            <Kinetic animation="blurInUp" duration={0.4}>
               <GalleryVerticalEnd className="size-24" />
-            </BlurFade>
+            </Kinetic>
             <WordFadeIn words="Shadcn UI Variants" className="text-5xl" />
             <div className="space-y-2 pt-3">
-              <BlurIn
+              <Kinetic
+                animation="blurIn"
                 duration={0.25}
                 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none"
-                word="Custom variants for shadcn/ui"
-              />
-              <BlurIn
+              >
+                Custom variants for shadcn/ui
+              </Kinetic>
+              <Kinetic
+                animation="blurIn"
                 duration={0.5}
-                word="Beautiful components built upon shadcn/ui with interactive playgrounds."
                 className="mx-auto max-w-[700px] text-pretty text-base text-muted-foreground md:text-xl"
-              />
+              >
+                Beautiful components built upon shadcn/ui with interactive
+                playgrounds.
+              </Kinetic>
             </div>
 
-            <BlurFade className="flex w-full flex-col justify-center gap-3 space-x-0 px-20 py-6 md:flex-row md:items-center md:gap-0 md:space-x-4 md:px-0">
+            <Kinetic
+              animation="blurInUp"
+              duration={0.4}
+              className="flex w-full flex-col justify-center gap-3 space-x-0 px-20 py-6 md:flex-row md:items-center md:gap-0 md:space-x-4 md:px-0"
+            >
               <Link href="/components/accordion">
                 <Button
                   iconRight={<ArrowRight />}
@@ -69,7 +77,7 @@ export default function Home() {
                   Documentation
                 </Button>
               </Link>
-            </BlurFade>
+            </Kinetic>
           </div>
 
           <ScrollDownButton
@@ -86,17 +94,28 @@ export default function Home() {
             id="features"
             className="flex flex-col items-center justify-center space-y-12 text-center md:gap-8"
           >
-            <BlurFade inView delay={0.3} duration={0.7} className="space-y-4">
+            <Kinetic
+              animation="blurInUp"
+              startOnView
+              delay={0.3}
+              duration={0.7}
+              className="space-y-4"
+            >
               <h2 className="text-4xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
                 Key Features
               </h2>
               <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
                 Everything you need to customize and extend shadcn/ui components
               </p>
-            </BlurFade>
+            </Kinetic>
 
             <div className="flex min-h-[600px] w-full flex-col gap-4 lg:min-h-[250px] lg:flex-row">
-              <BlurFade inView delay={0.3} duration={0.3}>
+              <Kinetic
+                animation="blurInUp"
+                startOnView
+                delay={0.3}
+                duration={0.3}
+              >
                 <Card className={cardStyle}>
                   <header>
                     <div className={titleStyle}>
@@ -113,9 +132,14 @@ export default function Home() {
                     can easily implement in your projects.
                   </p>
                 </Card>
-              </BlurFade>
+              </Kinetic>
 
-              <BlurFade inView delay={0.5} duration={0.5}>
+              <Kinetic
+                animation="blurInUp"
+                startOnView
+                delay={0.5}
+                duration={0.5}
+              >
                 <Card className={cardStyle}>
                   <header>
                     <div className={titleStyle}>
@@ -134,9 +158,14 @@ export default function Home() {
                     our interactive playground.
                   </p>
                 </Card>
-              </BlurFade>
+              </Kinetic>
 
-              <BlurFade inView delay={0.6} duration={0.8}>
+              <Kinetic
+                animation="blurInUp"
+                startOnView
+                delay={0.6}
+                duration={0.8}
+              >
                 <Card className={cardStyle}>
                   <header>
                     <div className={titleStyle}>
@@ -153,7 +182,7 @@ export default function Home() {
                     shadcn/ui, with extended functionality and variants.
                   </p>
                 </Card>
-              </BlurFade>
+              </Kinetic>
             </div>
           </div>
         </article>

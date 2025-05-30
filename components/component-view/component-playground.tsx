@@ -1,18 +1,20 @@
 "use client"
 
 import * as React from "react"
+import { useForceRemount } from "@/hooks"
 import { RegistryItem } from "@/types"
+import { RefreshCcw } from "lucide-react"
 
-import { Card, CardContent } from "@/components/local/ui/card"
-import { CodeBlock } from "@/components/local/ui/code-block"
+import { H2, SubLead } from "@/components/ui/prose"
 import { Separator } from "@/components/ui/separator"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { H2, SubLead } from "@/components/ui/prose"
 import {
   CodeBlockWrapper,
   CopyToClipboardButton,
   DownloadFileButton
 } from "@/components/common"
+import { Card, CardContent } from "@/components/local/ui/card"
+import { CodeBlock } from "@/components/local/ui/code-block"
 
 import PlaygroundControls from "./playground-controls"
 
@@ -21,6 +23,7 @@ interface ComponentPlaygroundProps {
   title: RegistryItem["title"]
   playground: { [x: string]: string | number | boolean | string[] }
   PlaygroundComponent: (...args: any[]) => React.JSX.Element
+  showReload?: boolean
   playgroundCode: (...args: any[]) => string
 }
 
@@ -29,8 +32,11 @@ export default function ComponentPlayground({
   title,
   playground,
   PlaygroundComponent,
+  showReload,
   playgroundCode
 }: ComponentPlaygroundProps) {
+  const { remountKey, forceRemount } = useForceRemount()
+
   const initialState = Object.keys(playground).reduce(
     (acc, key) => {
       const value = playground[key]
@@ -67,13 +73,20 @@ export default function ComponentPlayground({
         <TabsContent value="preview" className="pt-4">
           <Card className="relative p-4 pt-9">
             <CardContent className="flex min-h-80 items-center justify-center overflow-auto px-0 md:px-12">
-              <PlaygroundComponent {...playgroundState} />
+              <PlaygroundComponent key={remountKey} {...playgroundState} />
               <div className="absolute right-2 top-2 flex">
                 <CopyToClipboardButton content={code} />
                 <DownloadFileButton
                   sourceCode={code}
                   name={`${name}-playground`}
                 />
+                {showReload && (
+                  <RefreshCcw
+                    role="button"
+                    onClick={forceRemount}
+                    className="m-1.5 size-3.5 shrink-0 text-muted-foreground hover:text-foreground"
+                  />
+                )}
               </div>
             </CardContent>
           </Card>

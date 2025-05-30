@@ -283,6 +283,19 @@
       ]
     },
     {
+      "name": "kinetic",
+      "type": "registry:ui",
+      "title": "Kinetic",
+      "description": "A flexible wrapper component for framer-motion animations.",
+      "files": [
+        {
+          "path": "components/ui/kinetic.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": ["motion"]
+    },
+    {
       "name": "list",
       "type": "registry:ui",
       "title": "List",

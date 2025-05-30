@@ -15,6 +15,7 @@ interface ComponentBlockProps {
   }
   playground: { [x: string]: string | number | boolean | string[] }
   PlaygroundComponent?: (...args: any[]) => React.JSX.Element
+  showReload?: boolean
   playgroundCode?: (...args: any[]) => string
   DemoComponent?: () => React.JSX.Element
   ExtrasComponent?: () => React.JSX.Element | Promise<React.JSX.Element>
@@ -27,6 +28,7 @@ export async function ComponentBlock({
   docs,
   playground,
   PlaygroundComponent,
+  showReload,
   playgroundCode,
   DemoComponent,
   ExtrasComponent,
@@ -47,6 +49,7 @@ export async function ComponentBlock({
             title: registryItem.title,
             playground,
             PlaygroundComponent,
+            showReload,
             playgroundCode
           }}
         />

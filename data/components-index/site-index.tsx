@@ -10,6 +10,7 @@ import { colorPicker } from "./color-picker"
 import { dynamicBreadcrumb } from "./dynamic-breadcrumb"
 import { flexTable } from "./flex-table"
 import { input } from "./input"
+import { kinetic } from "./kinetic"
 import { list } from "./list"
 import { modal } from "./modal"
 import { prose } from "./prose"
@@ -24,6 +25,7 @@ import { timeline } from "./timeline"
 
 export interface ComponentDetails<T = any> {
   playground?: Partial<T>
+  showReload?: boolean
   PlaygroundComponent?: (args: T) => React.JSX.Element
   playgroundCode?: (args: T) => string
   DemoComponent?: () => React.JSX.Element
@@ -46,6 +48,7 @@ export const componentsIndex: ComponentsIndex = {
   "dynamic-breadcrumb": dynamicBreadcrumb,
   "flex-table": flexTable,
   input,
+  kinetic,
   list,
   modal,
   prose,
