@@ -3,6 +3,7 @@
 import * as React from "react"
 import {
   motion,
+  motionValue,
   useInView,
   useScroll,
   useTransform,
@@ -61,14 +62,10 @@ interface KineticProps extends Omit<MotionProps, "transition"> {
    */
   offset?: number
 
-  /**
-   * Custom className for the wrapper
-   */
+  /** Custom className for the wrapper */
   className?: string
 
-  /**
-   * Children to animate
-   */
+  /** Children to animate */
   children: React.ReactNode
 
   // /**
@@ -76,9 +73,7 @@ interface KineticProps extends Omit<MotionProps, "transition"> {
   //  * @default 'div' */
   // as?: keyof HTMLElementTagNameMap
 
-  /**
-   * Viewport options for intersection observer
-   */
+  /** Viewport options for intersection observer */
   viewportOptions?: {
     root?: Element | null
     margin?:
@@ -87,13 +82,44 @@ interface KineticProps extends Omit<MotionProps, "transition"> {
     amount?: number | "some" | "all"
   }
 
-  /**
-   * Custom transition properties
-   */
+  /** Custom transition properties */
   transition?: MotionProps["transition"]
 
   /** Optional user-provided style */
   style?: React.CSSProperties
+
+  // Internal props used by KineticText for staggered scroll animations.
+
+  /**
+   * Internal prop used by KineticText to pass the parent's scroll progress.
+   * Do not use directly.
+   * @internal
+   */
+  externalScrollProgress?: MotionValue<number>
+
+  /** Internal prop used by KineticText to indicate if the parent is using a custom offset.
+   * Do not use directly.
+   * @internal
+   */
+  isParentScrollRangeCustom?: boolean
+
+  /** Internal prop used by KineticText to pass the index of the current segment.
+   * Do not use directly.
+   * @internal
+   */
+  staggerIndex?: number
+
+  /** Internal prop used by KineticText to pass the calculated scroll stagger amount.
+   * Do not use directly.
+   * @internal
+   */
+  scrollStaggerAmount?: number
+
+  /**  Internal prop used by KineticText to pass the calculated scroll span for a segment.
+   * Do not use directly.
+   * @internal
+   */
+  segmentScrollSpan?: number
 }
 
 const predefinedAnimations: Record<string, Variants> = {
@@ -162,11 +188,14 @@ const predefinedAnimations: Record<string, Variants> = {
 }
 
 const calculateTransformAnimationParams = (
-  propKey: string, // e.g., "opacity", "y", "filter"
+  propKey: string,
   isOnScroll: boolean,
-  passedVariants: Variants | undefined, // The variants resolved for the current animation
-  animationName: KineticProps["animation"], // String name if predefined, or the custom Variants object
-  isCustomScrollOffsetActive: boolean
+  passedVariants: Variants | undefined,
+  animationName: KineticProps["animation"],
+  useFullBaseRange: boolean,
+  staggerIndex?: number,
+  scrollStaggerValue?: number,
+  segmentAnimationSpanFromProps?: number
 ) => {
   let defaultTargetVisibleVal: string | number
   switch (propKey) {
@@ -178,7 +207,7 @@ const calculateTransformAnimationParams = (
       break
     case "filter":
       defaultTargetVisibleVal = "blur(0px)"
-      break // Target is no blur
+      break
     case "x":
       defaultTargetVisibleVal = 0
       break
@@ -194,7 +223,6 @@ const calculateTransformAnimationParams = (
   }
 
   if (!isOnScroll) {
-    // Return a non-animating range if not on scroll
     return {
       inputRange: [0, 1] as [number, number],
       outputRange: [defaultTargetVisibleVal, defaultTargetVisibleVal] as [
@@ -205,16 +233,39 @@ const calculateTransformAnimationParams = (
     }
   }
 
-  // Determine the input range for useTransform based on whether a custom offset is active
-  const scrollInputRange: [number, number] = isCustomScrollOffsetActive
-    ? [0, 1] // Use full 0-1 range of scrollYProgress
-    : [0.15, 0.85] // Default: animate between 15% and 85% of scrollYProgress
+  let currentInputStart: number
+  let currentInputEnd: number
+  let isValidRange = true
+  const currentSegmentAnimationSpan =
+    typeof segmentAnimationSpanFromProps === "number" &&
+    segmentAnimationSpanFromProps > 0 &&
+    segmentAnimationSpanFromProps <= 1
+      ? segmentAnimationSpanFromProps
+      : 0.2
 
-  // Prioritize values from the passedVariants
+  if (
+    typeof staggerIndex === "number" &&
+    typeof scrollStaggerValue === "number" &&
+    scrollStaggerValue >= 0
+  ) {
+    currentInputStart = staggerIndex * scrollStaggerValue
+    currentInputEnd = currentInputStart + currentSegmentAnimationSpan
+  } else {
+    currentInputStart = useFullBaseRange ? 0 : 0.15
+    currentInputEnd = useFullBaseRange ? 1 : 0.85
+  }
+
+  currentInputStart = Math.max(0, Math.min(1, currentInputStart))
+  currentInputEnd = Math.max(0, Math.min(1, currentInputEnd))
+  isValidRange = currentInputStart < currentInputEnd
+
+  const scrollInputRangeToUse: [number, number] = [
+    currentInputStart,
+    currentInputEnd
+  ]
+
   const variantVisibleVal = (passedVariants?.visible as any)?.[propKey]
   let variantHiddenVal = (passedVariants?.hidden as any)?.[propKey]
-
-  // Determine final visible value: Use variant's value or the default target.
   const finalVisibleVal = variantVisibleVal ?? defaultTargetVisibleVal
 
   if (variantHiddenVal === undefined) {
@@ -226,7 +277,6 @@ const calculateTransformAnimationParams = (
         propKey
       ]
     }
-
     if (variantHiddenVal === undefined) {
       switch (propKey) {
         case "opacity":
@@ -248,10 +298,10 @@ const calculateTransformAnimationParams = (
           break
         case "x":
           variantHiddenVal = finalVisibleVal === 0 ? 20 : finalVisibleVal
-          break // Default slide-in from right-ish
+          break
         case "y":
           variantHiddenVal = finalVisibleVal === 0 ? 20 : finalVisibleVal
-          break // Default slide-in from bottom-ish
+          break
         case "rotate":
           variantHiddenVal = finalVisibleVal === 0 ? -90 : finalVisibleVal
           break
@@ -263,29 +313,25 @@ const calculateTransformAnimationParams = (
   }
   const finalHiddenVal = variantHiddenVal
 
-  // Determine if this property should actually animate via scroll
-  let shouldAnimateProperty = false
+  let shouldAnimateBaseProperty = false
   const isPropInVariantVisible =
     (passedVariants?.visible as any)?.[propKey] !== undefined
   const isPropInVariantHidden =
     (passedVariants?.hidden as any)?.[propKey] !== undefined
 
   if (isPropInVariantVisible || isPropInVariantHidden) {
-    // If the property is explicitly mentioned in the variant, animate if values differ.
-    shouldAnimateProperty = finalHiddenVal !== finalVisibleVal
+    shouldAnimateBaseProperty = finalHiddenVal !== finalVisibleVal
   } else if (propKey === "opacity") {
-    // Opacity has a common implicit animation (0 to 1), animate if different.
-    shouldAnimateProperty = finalHiddenVal !== finalVisibleVal
+    shouldAnimateBaseProperty = finalHiddenVal !== finalVisibleVal
   }
-  // Other properties (filter, x, y, scale, rotate) will not animate by default if not in variants.
 
   return {
-    inputRange: scrollInputRange,
+    inputRange: scrollInputRangeToUse,
     outputRange: [
       finalHiddenVal as string | number,
       finalVisibleVal as string | number
     ],
-    defined: shouldAnimateProperty
+    defined: shouldAnimateBaseProperty && isValidRange
   }
 }
 
@@ -305,15 +351,22 @@ const Kinetic = React.forwardRef<HTMLElement, KineticProps>(
       viewportOptions = {},
       transition: customTransition,
       style: userStyle,
+      externalScrollProgress,
+      isParentScrollRangeCustom,
+      staggerIndex,
+      scrollStaggerAmount,
+      segmentScrollSpan,
       ...props
     },
     forwardedRef
   ) => {
-    const viewRef = React.useRef<HTMLElement>(null)
+    const internalViewRef = React.useRef<HTMLElement>(null)
 
     const setRefs = React.useCallback(
       (node: HTMLElement | null) => {
-        ;(viewRef as React.MutableRefObject<HTMLElement | null>).current = node
+        ;(
+          internalViewRef as React.MutableRefObject<HTMLElement | null>
+        ).current = node
         if (typeof forwardedRef === "function") {
           forwardedRef(node)
         } else if (forwardedRef) {
@@ -330,81 +383,84 @@ const Kinetic = React.forwardRef<HTMLElement, KineticProps>(
         typeof animation === "string"
           ? predefinedAnimations[animation] || predefinedAnimations.fadeIn
           : animation
-
       if (!baseVariants) return predefinedAnimations.fadeIn
-
       const animationIsString = typeof animation === "string"
-
       if (
         animationIsString &&
         (animation === "bounce" || animation === "elastic")
       ) {
-        // Deep clone to avoid mutating predefinedAnimations and allow instance-specific modifications
         const newVariants = JSON.parse(JSON.stringify(baseVariants))
-
         if (newVariants.visible) {
           const originalVariantTransition =
             typeof baseVariants.visible === "object" &&
             baseVariants.visible !== null &&
-            "transition" in baseVariants.visible
-              ? (baseVariants.visible as { transition?: any }).transition || {}
+            typeof (baseVariants.visible as any).transition === "object" &&
+            (baseVariants.visible as any).transition !== null
+              ? (baseVariants.visible as any).transition
               : {}
-
           newVariants.visible.transition = {
             type: "spring",
             ...originalVariantTransition
           }
-
           if (typeof duration === "number") {
-            newVariants.visible.transition.duration = duration // Set/override duration
-
-            // For "elastic" specifically: if we're applying a component-level duration,
-            // remove its predefined physical properties to let the new `duration` primarily drive the spring behavior.
+            newVariants.visible.transition.duration = duration
             if (animation === "elastic") {
               delete newVariants.visible.transition.stiffness
               delete newVariants.visible.transition.damping
               delete newVariants.visible.transition.mass
             }
           }
-          // If `typeof duration !== 'number'`, the newVariants.visible.transition will retain
-          // its original properties from baseVariants (e.g., bounce's original duration,
-          // or elastic's original stiffness/damping), because they were spread from
-          // originalVariantTransition and not subsequently overridden or deleted.
-
-          // If loop is true, also inject loop properties into the variant's transition
           if (loop) {
             newVariants.visible.transition.repeat = Number.POSITIVE_INFINITY
             newVariants.visible.transition.repeatType = "loop"
           }
+          if (!onScroll && typeof delay === "number") {
+            newVariants.visible.transition.delay = delay
+          } else if (
+            !onScroll &&
+            delay === undefined &&
+            newVariants.visible.transition.delay !== undefined
+          ) {
+            // If component delay is not set (e.g. baseDelay=0, stagger=0 for first item),
+            // remove any hardcoded delay from the original variant definition to ensure it starts immediately.
+            delete newVariants.visible.transition.delay
+          }
           return newVariants
         }
       }
-
-      // For other animations or custom variant objects, return them as is.
-      // Loop for these is handled by `componentBaseTransition`.
       return baseVariants
-    }, [animation, loop, duration])
+    }, [animation, loop, duration, delay, onScroll])
 
     const rootRefForInView = React.useRef<Element | null>(
       viewportOptions.root ?? null
     )
-    const isInView = useInView(viewRef, {
+    const isInView = useInView(internalViewRef, {
       once: onScroll ? false : once,
       margin: viewportOptions.margin,
       amount: viewportOptions.amount,
       root: rootRefForInView
     })
 
-    const isCustomScrollOffsetActive = typeof offset === "number" && onScroll
-
-    const { scrollYProgress } = useScroll({
-      target: viewRef,
-      offset: isCustomScrollOffsetActive
+    const useOwnOffsetForScroll =
+      typeof offset === "number" && onScroll && !externalScrollProgress
+    const internalScrollHook = useScroll({
+      target: internalViewRef,
+      offset: useOwnOffsetForScroll
         ? ["start end", `start ${offset}px`]
         : ["start end", "end start"]
     })
 
-    // --- Scroll-driven animation setup ---
+    const scrollYProgressToUse: MotionValue<number> =
+      onScroll && externalScrollProgress
+        ? externalScrollProgress
+        : onScroll
+          ? internalScrollHook.scrollYProgress
+          : motionValue(0)
+
+    const effectiveUseFullRangeForCalc = externalScrollProgress
+      ? (isParentScrollRangeCustom ?? false)
+      : useOwnOffsetForScroll
+
     const opacityAnimParams = React.useMemo(
       () =>
         calculateTransformAnimationParams(
@@ -412,20 +468,20 @@ const Kinetic = React.forwardRef<HTMLElement, KineticProps>(
           onScroll,
           resolvedAnimationVariants,
           animation,
-          isCustomScrollOffsetActive
+          effectiveUseFullRangeForCalc,
+          staggerIndex,
+          scrollStaggerAmount,
+          segmentScrollSpan
         ),
       [
         onScroll,
         resolvedAnimationVariants,
         animation,
-        isCustomScrollOffsetActive
+        effectiveUseFullRangeForCalc,
+        staggerIndex,
+        scrollStaggerAmount,
+        segmentScrollSpan
       ]
-    )
-    const opacityScroll = useTransform(
-      scrollYProgress,
-      opacityAnimParams.inputRange,
-      opacityAnimParams.outputRange,
-      { clamp: true }
     )
 
     const xAnimParams = React.useMemo(
@@ -435,20 +491,20 @@ const Kinetic = React.forwardRef<HTMLElement, KineticProps>(
           onScroll,
           resolvedAnimationVariants,
           animation,
-          isCustomScrollOffsetActive
+          effectiveUseFullRangeForCalc,
+          staggerIndex,
+          scrollStaggerAmount,
+          segmentScrollSpan
         ),
       [
         onScroll,
         resolvedAnimationVariants,
         animation,
-        isCustomScrollOffsetActive
+        effectiveUseFullRangeForCalc,
+        staggerIndex,
+        scrollStaggerAmount,
+        segmentScrollSpan
       ]
-    )
-    const xScroll = useTransform(
-      scrollYProgress,
-      xAnimParams.inputRange,
-      xAnimParams.outputRange,
-      { clamp: true }
     )
 
     const yAnimParams = React.useMemo(
@@ -458,20 +514,20 @@ const Kinetic = React.forwardRef<HTMLElement, KineticProps>(
           onScroll,
           resolvedAnimationVariants,
           animation,
-          isCustomScrollOffsetActive
+          effectiveUseFullRangeForCalc,
+          staggerIndex,
+          scrollStaggerAmount,
+          segmentScrollSpan
         ),
       [
         onScroll,
         resolvedAnimationVariants,
         animation,
-        isCustomScrollOffsetActive
+        effectiveUseFullRangeForCalc,
+        staggerIndex,
+        scrollStaggerAmount,
+        segmentScrollSpan
       ]
-    )
-    const yScroll = useTransform(
-      scrollYProgress,
-      yAnimParams.inputRange,
-      yAnimParams.outputRange,
-      { clamp: true }
     )
 
     const scaleAnimParams = React.useMemo(
@@ -481,20 +537,20 @@ const Kinetic = React.forwardRef<HTMLElement, KineticProps>(
           onScroll,
           resolvedAnimationVariants,
           animation,
-          isCustomScrollOffsetActive
+          effectiveUseFullRangeForCalc,
+          staggerIndex,
+          scrollStaggerAmount,
+          segmentScrollSpan
         ),
       [
         onScroll,
         resolvedAnimationVariants,
         animation,
-        isCustomScrollOffsetActive
+        effectiveUseFullRangeForCalc,
+        staggerIndex,
+        scrollStaggerAmount,
+        segmentScrollSpan
       ]
-    )
-    const scaleScroll = useTransform(
-      scrollYProgress,
-      scaleAnimParams.inputRange,
-      scaleAnimParams.outputRange,
-      { clamp: true }
     )
 
     const rotateAnimParams = React.useMemo(
@@ -504,20 +560,20 @@ const Kinetic = React.forwardRef<HTMLElement, KineticProps>(
           onScroll,
           resolvedAnimationVariants,
           animation,
-          isCustomScrollOffsetActive
+          effectiveUseFullRangeForCalc,
+          staggerIndex,
+          scrollStaggerAmount,
+          segmentScrollSpan
         ),
       [
         onScroll,
         resolvedAnimationVariants,
         animation,
-        isCustomScrollOffsetActive
+        effectiveUseFullRangeForCalc,
+        staggerIndex,
+        scrollStaggerAmount,
+        segmentScrollSpan
       ]
-    )
-    const rotateScroll = useTransform(
-      scrollYProgress,
-      rotateAnimParams.inputRange,
-      rotateAnimParams.outputRange,
-      { clamp: true }
     )
 
     const filterAnimParams = React.useMemo(
@@ -527,17 +583,54 @@ const Kinetic = React.forwardRef<HTMLElement, KineticProps>(
           onScroll,
           resolvedAnimationVariants,
           animation,
-          isCustomScrollOffsetActive
+          effectiveUseFullRangeForCalc,
+          staggerIndex,
+          scrollStaggerAmount,
+          segmentScrollSpan
         ),
       [
         onScroll,
         resolvedAnimationVariants,
         animation,
-        isCustomScrollOffsetActive
+        effectiveUseFullRangeForCalc,
+        staggerIndex,
+        scrollStaggerAmount,
+        segmentScrollSpan
       ]
     )
+
+    const opacityScroll = useTransform(
+      scrollYProgressToUse,
+      opacityAnimParams.inputRange,
+      opacityAnimParams.outputRange,
+      { clamp: true }
+    )
+    const xScroll = useTransform(
+      scrollYProgressToUse,
+      xAnimParams.inputRange,
+      xAnimParams.outputRange,
+      { clamp: true }
+    )
+    const yScroll = useTransform(
+      scrollYProgressToUse,
+      yAnimParams.inputRange,
+      yAnimParams.outputRange,
+      { clamp: true }
+    )
+    const scaleScroll = useTransform(
+      scrollYProgressToUse,
+      scaleAnimParams.inputRange,
+      scaleAnimParams.outputRange,
+      { clamp: true }
+    )
+    const rotateScroll = useTransform(
+      scrollYProgressToUse,
+      rotateAnimParams.inputRange,
+      rotateAnimParams.outputRange,
+      { clamp: true }
+    )
     const filterScroll = useTransform(
-      scrollYProgress,
+      scrollYProgressToUse,
       filterAnimParams.inputRange,
       filterAnimParams.outputRange,
       { clamp: true }
@@ -568,7 +661,6 @@ const Kinetic = React.forwardRef<HTMLElement, KineticProps>(
       rotateScroll,
       filterScroll
     ])
-    // --- End of scroll-driven animation setup ---
 
     const animateControl = React.useMemo(() => {
       if (onScroll) return undefined
@@ -578,16 +670,22 @@ const Kinetic = React.forwardRef<HTMLElement, KineticProps>(
 
     const componentBaseTransition = React.useMemo(() => {
       if (onScroll) return undefined
+
+      const isSpringWithVariantTransition =
+        typeof animation === "string" &&
+        (animation === "bounce" || animation === "elastic")
+
       const trans: MotionProps["transition"] = {
-        duration:
-          typeof animation === "string" &&
-          (animation === "bounce" || animation === "elastic")
-            ? undefined
-            : duration,
-        delay,
+        duration: isSpringWithVariantTransition ? undefined : duration,
+        delay: isSpringWithVariantTransition ? undefined : delay,
         ...customTransition
       }
-      if (loop) {
+
+      if (
+        loop &&
+        !isSpringWithVariantTransition &&
+        customTransition?.repeat === undefined
+      ) {
         trans.repeat = Number.POSITIVE_INFINITY
         trans.repeatType = "loop"
       }
@@ -622,8 +720,7 @@ const Kinetic = React.forwardRef<HTMLElement, KineticProps>(
     )
   }
 )
-
 Kinetic.displayName = "Kinetic"
 
-export { Kinetic }
+export { Kinetic, predefinedAnimations }
 export type { KineticProps }

@@ -296,6 +296,22 @@
       "dependencies": ["motion"]
     },
     {
+      "name": "kinetic-text",
+      "type": "registry:ui",
+      "title": "Kinetic Text",
+      "description": "The KineticText component, built upon the versatile Kinetic component, offers a powerful way to create engaging and dynamic text animations.",
+      "files": [
+        {
+          "path": "components/ui/kinetic-text.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "https://shadcn-ui-variants.vercel.app/r/kinetic.json"
+      ]
+    },
+    {
       "name": "list",
       "type": "registry:ui",
       "title": "List",

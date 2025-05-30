@@ -11,6 +11,7 @@ import { dynamicBreadcrumb } from "./dynamic-breadcrumb"
 import { flexTable } from "./flex-table"
 import { input } from "./input"
 import { kinetic } from "./kinetic"
+import { kineticText } from "./kinetic-text"
 import { list } from "./list"
 import { modal } from "./modal"
 import { prose } from "./prose"
@@ -49,6 +50,7 @@ export const componentsIndex: ComponentsIndex = {
   "flex-table": flexTable,
   input,
   kinetic,
+  "kinetic-text": kineticText,
   list,
   modal,
   prose,

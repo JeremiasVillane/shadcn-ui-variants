@@ -12,7 +12,12 @@ export const kinetic: ComponentDetails<KineticProps> = {
     style: undefined,
     children: undefined,
     viewportOptions: undefined,
-    transition: undefined
+    transition: undefined,
+    externalScrollProgress: undefined,
+    isParentScrollRangeCustom: undefined,
+    staggerIndex: undefined,
+    scrollStaggerAmount: undefined,
+    segmentScrollSpan: undefined
   },
   showReload: true,
   PlaygroundComponent: KineticPlayground,
