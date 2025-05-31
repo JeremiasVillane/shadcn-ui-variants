@@ -56,7 +56,7 @@ export function SimpleToastExample5() {
           // Dismiss of initial toast already happens automatically when clicking
         }
       },
-      onDismiss: () => console.log("Toast de confirmación descartado.")
+      onDismiss: () => console.log("Confirmation tost dismissed.")
     })
   }
 
